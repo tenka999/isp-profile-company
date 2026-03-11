@@ -95,7 +95,7 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="gradient"></div>
-      <section className="remark ">
+      {/* <section className="remark ">
         <div className="container remark-container">
           <div className="border-container">
             <span className="border-span border-satu"></span>
@@ -106,8 +106,8 @@ const LandingPage = () => {
             <TypingText />
           </div>
         </div>
-      </section>
-      {/* <NoteSection /> */}
+      </section> */}
+      <NoteSection />
       {/* <ParallaxText /> */}
       {/* <JawaBaratMap /> */}
       {/* <JawaTengahMap /> */}
@@ -122,8 +122,7 @@ const LandingPage = () => {
             <img
               src="/layout/background/server-center.webp"
               alt="About Veloxity"
-              loading="eager"
-              decoding="async"
+              loading="lazy"
             />
           </div>
           <div className="about-box3">
