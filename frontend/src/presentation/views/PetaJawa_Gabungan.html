@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peta Jawa – Jawa Barat · Jawa Tengah · Jawa Timur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg: #060606;
+  --surface: #0d0d0d;
+  --border: #161616;
+  --border2: #1e1e1e;
+  --text: #fff;
+  --muted: #333;
+  --muted2: #555;
+  --accent-jb: #e53935;
+  --accent-jt: #f97316;
+  --accent-ji: #3b82f6;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  font-family: 'DM Mono', monospace;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 60px 32px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  border-bottom: 1px solid var(--border2);
+}
+.hero-left {}
+.hero-eyebrow {
+  font-size: 8px; letter-spacing: 0.28em; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 24px; height: 1px; background: var(--muted);
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  letter-spacing: 0.03em;
+  line-height: 0.88;
+  color: #fff;
+}
+.hero-title span.jb { color: var(--accent-jb); }
+.hero-title span.jt { color: var(--accent-jt); }
+.hero-title span.ji { color: var(--accent-ji); }
+.hero-sub {
+  font-size: 10px; color: var(--muted); letter-spacing: 0.14em;
+  margin-top: 16px; text-transform: uppercase;
+}
+.hero-stats {
+  display: flex; gap: 32px; flex-wrap: wrap;
+}
+.stat {
+  text-align: right;
+}
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem; line-height: 1;
+  color: #fff; letter-spacing: 0.02em;
+}
+.stat-label {
+  font-size: 7px; color: var(--muted); letter-spacing: 0.2em;
+  text-transform: uppercase; margin-top: 2px;
+}
+
+/* ── TAB NAV ── */
+.tab-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(6,6,6,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border2);
+  padding: 0 32px;
+  display: flex; gap: 0;
+}
+.tab-btn {
+  background: none; border: none; color: var(--muted2);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 18px 24px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.tab-btn::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--tab-color, #fff);
+  transform: scaleX(0); transition: transform 0.2s;
+  transform-origin: left;
+}
+.tab-btn:hover { color: #aaa; }
+.tab-btn.active { color: var(--tab-color, #fff); }
+.tab-btn.active::after { transform: scaleX(1); }
+
+/* ── PANEL ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── PROVINCE SECTION ── */
+.province-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px 60px;
+}
+.prov-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
+}
+.prov-title-block {}
+.prov-tags { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.prov-tag {
+  font-size: 7px; letter-spacing: 0.18em; color: var(--muted);
+  border: 1px solid var(--border2); padding: 3px 9px; border-radius: 2px;
+}
+.prov-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  letter-spacing: 0.04em; line-height: 0.92;
+}
+.prov-capital {
+  font-size: 9px; color: var(--muted); letter-spacing: 0.12em;
+  margin-top: 8px; text-transform: uppercase;
+}
+.prov-capital span { color: var(--muted2); }
+
+/* ── MAP ── */
+.map-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 16px 14px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.map-watermark {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  font-size: 6px; color: #161616; letter-spacing: 4px; white-space: nowrap;
+  pointer-events: none;
+}
+svg.city-map { width: 100%; height: auto; display: block; }
+.city { cursor: pointer; }
+.city path { transition: fill 0.18s ease, stroke 0.18s ease; }
+
+/* ── INFO PANEL ── */
+.info-panel {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px 20px;
+  margin-bottom: 12px; min-height: 60px;
+  transition: border-color 0.25s;
+}
+.info-dot {
+  width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0;
+}
+.info-name { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+.info-meta { font-size: 9px; color: #444; margin-top: 3px; letter-spacing: 0.08em; }
+.info-capital { color: #666; }
+.info-empty { font-size: 10px; color: #202020; letter-spacing: 0.1em; }
+
+/* ── LEGEND ── */
+.legend-label {
+  font-size: 7px; color: #1e1e1e; letter-spacing: 0.22em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: 3px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 5px 8px; border-radius: 3px; cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.legend-item:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 8%, transparent); }
+.legend-item:hover .leg-name { color: #bbb; }
+.legend-item.active { border-color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+.legend-item.active .leg-num { color: var(--c); }
+.legend-item.active .leg-name { color: #ddd; }
+.leg-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: var(--c);
+}
+.legend-item.active .leg-dot { box-shadow: 0 0 7px color-mix(in srgb, var(--c) 60%, transparent); }
+.leg-num { font-size: 8px; font-weight: 700; min-width: 18px; color: #333; }
+.leg-name { font-size: 8px; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── OVERVIEW (ALL 3 on one page) ── */
+.overview-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 0;
+}
+.ov-row {
+  border-bottom: 1px solid var(--border);
+  padding: 48px 32px;
+  max-width: 1100px; margin: 0 auto;
+  width: 100%;
+}
+.ov-prov-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: 0.12em; color: var(--muted);
+  margin-bottom: 12px;
+}
+.ov-map-mini { width: 100%; max-width: 800px; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
+
+@media (max-width: 600px) {
+  .hero { padding: 40px 16px 28px; }
+  .tab-nav { padding: 0 8px; overflow-x: auto; }
+  .province-section { padding: 28px 16px 40px; }
+  .hero-stats { display: none; }
+  .ov-row { padding: 32px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Peta Interaktif · Pulau Jawa</div>
+    <div class="hero-title">
+      <span class="jb">JAWA</span><br>
+      <span class="jt">BARAT</span> · <span class="ji">TENGAH</span><br>
+      TIMUR
+    </div>
+    <div class="hero-sub">Klik wilayah untuk detail · 100 kabupaten &amp; kota</div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num" style="color:var(--accent-jb)">27</div><div class="stat-label">Jawa Barat</div></div>
+    <div class="stat"><div class="stat-num" style="color:var(--accent-jt)">35</div><div class="stat-label">Jawa Tengah</div></div>
+    <div class="stat"><div class="stat-num" style="color:var(--accent-ji)">38</div><div class="stat-label">Jawa Timur</div></div>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="jabar" style="--tab-color: var(--accent-jb)">Jawa Barat</button>
+  <button class="tab-btn" data-tab="jateng" style="--tab-color: var(--accent-jt)">Jawa Tengah</button>
+  <button class="tab-btn" data-tab="jatim" style="--tab-color: var(--accent-ji)">Jawa Timur</button>
+  <button class="tab-btn" data-tab="semua" style="--tab-color: #aaa">Semua</button>
+</nav>
+
+<!-- ═══════════════════════════════════
+     PANEL 1 — JAWA BARAT
+═══════════════════════════════════ -->
+<div class="panel active" id="panel-jabar">
+<div class="province-section">
+  <div class="prov-header">
+    <div class="prov-title-block">
+      <div class="prov-tags">
+        <span class="prov-tag">Provinsi</span>
+        <span class="prov-tag">18 Kabupaten</span>
+        <span class="prov-tag">9 Kota</span>
+        <span class="prov-tag">27 Wilayah</span>
+      </div>
+      <div class="prov-name" style="color:var(--accent-jb)">JAWA BARAT</div>
+      <div class="prov-capital">Ibu Kota: <span>Bandung</span></div>
+    </div>
+  </div>
+
+  <div class="map-wrap">
+    <svg class="city-map" viewBox="0 0 470 210" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow-jb"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="aglow-jb"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <g class="city" id="jb-1" data-prov="jabar" data-id="1" data-name="Kab. Bogor" data-capital="Cibinong" data-color="#E53935"><path d="M 118,42 L 148,36 L 172,38 L 185,52 L 188,70 L 180,88 L 168,100 L 155,108 L 140,112 L 125,108 L 112,98 L 104,84 L 102,68 L 108,54 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="145" cy="76" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="145" y="79" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">01</text></g>
+
+      <g class="city" id="jb-2" data-prov="jabar" data-id="2" data-name="Kota Bogor" data-capital="Bogor" data-color="#1E88E5"><path d="M 112,98 L 125,108 L 122,122 L 110,128 L 100,122 L 96,110 L 102,100 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="112" cy="112" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="112" y="115" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">02</text></g>
+
+      <g class="city" id="jb-3" data-prov="jabar" data-id="3" data-name="Kab. Bekasi" data-capital="Cikarang" data-color="#43A047"><path d="M 60,32 L 88,28 L 118,42 L 108,54 L 102,68 L 86,72 L 70,68 L 56,56 L 52,42 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="86" cy="52" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="86" y="55" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">03</text></g>
+
+      <g class="city" id="jb-4" data-prov="jabar" data-id="4" data-name="Kota Bekasi" data-capital="Bekasi" data-color="#8E24AA"><path d="M 30,28 L 60,32 L 52,42 L 56,56 L 44,62 L 28,58 L 20,44 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="40" cy="44" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="40" y="47" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">04</text></g>
+
+      <g class="city" id="jb-5" data-prov="jabar" data-id="5" data-name="Kota Depok" data-capital="Depok" data-color="#F4511E"><path d="M 56,56 L 70,68 L 68,82 L 56,88 L 44,82 L 44,62 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="56" cy="72" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="56" y="75" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">05</text></g>
+
+      <g class="city" id="jb-6" data-prov="jabar" data-id="6" data-name="Kab. Karawang" data-capital="Karawang" data-color="#00897B"><path d="M 88,28 L 128,22 L 162,26 L 172,38 L 148,36 L 118,42 L 88,28 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="130" cy="33" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="130" y="36" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">06</text></g>
+
+      <g class="city" id="jb-7" data-prov="jabar" data-id="7" data-name="Kab. Purwakarta" data-capital="Purwakarta" data-color="#FB8C00"><path d="M 162,26 L 195,24 L 210,38 L 205,52 L 188,52 L 185,52 L 172,38 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="190" cy="38" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="190" y="41" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">07</text></g>
+
+      <g class="city" id="jb-8" data-prov="jabar" data-id="8" data-name="Kab. Subang" data-capital="Subang" data-color="#3949AB"><path d="M 195,24 L 242,18 L 268,26 L 265,44 L 248,52 L 228,56 L 210,52 L 210,38 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="234" cy="36" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="234" y="39" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">08</text></g>
+
+      <g class="city" id="jb-9" data-prov="jabar" data-id="9" data-name="Kab. Indramayu" data-capital="Indramayu" data-color="#D81B60"><path d="M 268,26 L 320,18 L 358,22 L 362,38 L 345,50 L 320,56 L 295,58 L 268,50 L 265,44 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="316" cy="36" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="316" y="39" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">09</text></g>
+
+      <g class="city" id="jb-10" data-prov="jabar" data-id="10" data-name="Kab. Cirebon" data-capital="Sumber" data-color="#546E7A"><path d="M 358,22 L 398,28 L 408,44 L 400,60 L 380,68 L 362,62 L 345,50 L 362,38 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="378" cy="44" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="378" y="47" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">10</text></g>
+
+      <g class="city" id="jb-11" data-prov="jabar" data-id="11" data-name="Kota Cirebon" data-capital="Cirebon" data-color="#6D4C41"><path d="M 398,28 L 418,34 L 416,50 L 408,60 L 400,60 L 408,44 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="410" cy="44" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="410" y="47" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">11</text></g>
+
+      <g class="city" id="jb-12" data-prov="jabar" data-id="12" data-name="Kab. Majalengka" data-capital="Majalengka" data-color="#039BE5"><path d="M 345,50 L 380,68 L 375,86 L 360,98 L 338,96 L 322,82 L 320,66 L 320,56 L 345,50 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="348" cy="74" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="348" y="77" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">12</text></g>
+
+      <g class="city" id="jb-13" data-prov="jabar" data-id="13" data-name="Kab. Kuningan" data-capital="Kuningan" data-color="#7CB342"><path d="M 380,68 L 400,60 L 416,70 L 418,90 L 404,104 L 385,108 L 370,98 L 360,98 L 375,86 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="392" cy="86" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="392" y="89" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">13</text></g>
+
+      <g class="city" id="jb-14" data-prov="jabar" data-id="14" data-name="Kab. Sumedang" data-capital="Sumedang" data-color="#C0CA33"><path d="M 248,52 L 295,58 L 320,66 L 322,82 L 310,96 L 290,104 L 268,100 L 252,86 L 248,68 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="286" cy="76" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="286" y="79" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">14</text></g>
+
+      <g class="city" id="jb-15" data-prov="jabar" data-id="15" data-name="Kab. Bandung" data-capital="Soreang" data-color="#FFB300"><path d="M 205,52 L 228,56 L 248,68 L 252,86 L 240,104 L 222,114 L 205,118 L 190,112 L 180,98 L 180,88 L 188,70 L 205,52 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="218" cy="86" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="218" y="89" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">15</text></g>
+
+      <g class="city" id="jb-16" data-prov="jabar" data-id="16" data-name="Kota Bandung" data-capital="Bandung" data-color="#e53935"><path d="M 205,68 L 220,66 L 228,74 L 224,86 L 212,90 L 200,84 L 198,74 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="212" cy="78" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="212" y="81" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">16</text></g>
+
+      <g class="city" id="jb-17" data-prov="jabar" data-id="17" data-name="Kab. Bandung Barat" data-capital="Ngamprah" data-color="#5E35B1"><path d="M 185,52 L 205,52 L 205,68 L 198,74 L 186,76 L 175,66 L 172,54 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="192" cy="63" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="192" y="66" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">17</text></g>
+
+      <g class="city" id="jb-18" data-prov="jabar" data-id="18" data-name="Kota Cimahi" data-capital="Cimahi" data-color="#E67C73"><path d="M 186,76 L 198,74 L 200,84 L 194,90 L 184,88 L 178,80 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="190" cy="82" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="190" y="85" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">18</text></g>
+
+      <g class="city" id="jb-19" data-prov="jabar" data-id="19" data-name="Kab. Cianjur" data-capital="Cianjur" data-color="#33691E"><path d="M 102,68 L 125,68 L 140,72 L 155,80 L 165,92 L 168,100 L 155,108 L 140,112 L 125,108 L 110,116 L 100,122 L 96,110 L 102,100 L 104,84 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="132" cy="92" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="132" y="95" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">19</text></g>
+
+      <g class="city" id="jb-20" data-prov="jabar" data-id="20" data-name="Kab. Garut" data-capital="Garut" data-color="#BF360C"><path d="M 190,112 L 222,114 L 240,104 L 268,100 L 290,104 L 310,96 L 338,96 L 338,120 L 322,138 L 300,150 L 275,158 L 252,156 L 230,148 L 215,134 L 205,118 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="268" cy="128" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="268" y="131" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">20</text></g>
+
+      <g class="city" id="jb-21" data-prov="jabar" data-id="21" data-name="Kab. Tasikmalaya" data-capital="Singaparna" data-color="#006064"><path d="M 338,120 L 360,110 L 385,108 L 404,118 L 408,138 L 395,155 L 375,166 L 350,168 L 322,160 L 300,150 L 322,138 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="360" cy="136" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="360" y="139" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">21</text></g>
+
+      <g class="city" id="jb-22" data-prov="jabar" data-id="22" data-name="Kota Tasikmalaya" data-capital="Tasikmalaya" data-color="#4527A0"><path d="M 338,120 L 360,110 L 365,122 L 352,132 L 338,128 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="350" cy="118" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="350" y="121" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">22</text></g>
+
+      <g class="city" id="jb-23" data-prov="jabar" data-id="23" data-name="Kab. Ciamis" data-capital="Ciamis" data-color="#880E4F"><path d="M 404,118 L 418,110 L 435,116 L 440,132 L 430,150 L 415,160 L 395,155 L 408,138 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="420" cy="134" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="420" y="137" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">23</text></g>
+
+      <g class="city" id="jb-24" data-prov="jabar" data-id="24" data-name="Kota Banjar" data-capital="Banjar" data-color="#37474F"><path d="M 435,116 L 450,120 L 452,134 L 440,140 L 430,136 L 435,122 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="442" cy="128" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="442" y="131" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">24</text></g>
+
+      <g class="city" id="jb-25" data-prov="jabar" data-id="25" data-name="Kab. Pangandaran" data-capital="Parigi" data-color="#1B5E20"><path d="M 395,155 L 415,160 L 430,150 L 438,166 L 425,178 L 405,182 L 385,178 L 375,166 L 395,155 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="405" cy="168" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="405" y="171" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">25</text></g>
+
+      <g class="city" id="jb-26" data-prov="jabar" data-id="26" data-name="Kab. Sukabumi" data-capital="Palabuhanratu" data-color="#0D47A1"><path d="M 68,82 L 86,72 L 102,68 L 104,84 L 100,100 L 96,110 L 88,130 L 76,148 L 58,152 L 42,138 L 36,120 L 40,100 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="72" cy="116" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="72" y="119" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">26</text></g>
+
+      <g class="city" id="jb-27" data-prov="jabar" data-id="27" data-name="Kota Sukabumi" data-capital="Sukabumi" data-color="#4A148C"><path d="M 96,110 L 110,128 L 100,136 L 88,130 L 96,118 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="98" cy="122" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="98" y="125" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">27</text></g>
+
+      <text x="235" y="205" text-anchor="middle" font-size="6" font-family="monospace" fill="#161616" letter-spacing="3">JAWA BARAT · INDONESIA · 27 WILAYAH</text>
+    </svg>
+    <div class="map-watermark">JAWA BARAT</div>
+  </div>
+
+  <div class="info-panel" id="info-jabar"><div class="info-empty">← Klik wilayah untuk detail</div></div>
+  <div class="legend-label">Daftar Wilayah</div>
+  <div class="legend-grid" id="legend-jabar"></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════
+     PANEL 2 — JAWA TENGAH
+═══════════════════════════════════ -->
+<div class="panel" id="panel-jateng">
+<div class="province-section">
+  <div class="prov-header">
+    <div class="prov-title-block">
+      <div class="prov-tags">
+        <span class="prov-tag">Provinsi</span>
+        <span class="prov-tag">29 Kabupaten</span>
+        <span class="prov-tag">6 Kota</span>
+        <span class="prov-tag">35 Wilayah</span>
+      </div>
+      <div class="prov-name" style="color:var(--accent-jt)">JAWA TENGAH</div>
+      <div class="prov-capital">Ibu Kota: <span>Semarang</span></div>
+    </div>
+  </div>
+
+  <div class="map-wrap">
+    <svg class="city-map" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow-jt"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="aglow-jt"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <g class="city" id="jt-1" data-prov="jateng" data-id="1" data-name="Kab. Cilacap" data-capital="Cilacap" data-color="#E53935"><path d="M 20,145 L 48,138 L 70,135 L 85,140 L 92,158 L 88,178 L 78,195 L 60,208 L 40,215 L 22,212 L 12,198 L 10,178 L 14,160 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="52" cy="175" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="52" y="178" text-anchor="middle" font-size="6" font-family="monospace" font-weight="700" fill="#555">01</text></g>
+      <g class="city" id="jt-2" data-prov="jateng" data-id="2" data-name="Kab. Banyumas" data-capital="Purwokerto" data-color="#1E88E5"><path d="M 48,138 L 78,128 L 105,125 L 115,135 L 112,155 L 100,168 L 85,172 L 70,168 L 55,162 L 48,148 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="82" cy="148" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="82" y="151" text-anchor="middle" font-size="6" font-family="monospace" font-weight="700" fill="#555">02</text></g>
+      <g class="city" id="jt-3" data-prov="jateng" data-id="3" data-name="Kab. Purbalingga" data-capital="Purbalingga" data-color="#43A047"><path d="M 105,125 L 128,118 L 145,122 L 148,138 L 138,150 L 122,155 L 112,150 L 112,135 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="128" cy="137" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="128" y="140" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">03</text></g>
+      <g class="city" id="jt-4" data-prov="jateng" data-id="4" data-name="Kab. Banjarnegara" data-capital="Banjarnegara" data-color="#8E24AA"><path d="M 128,118 L 155,108 L 178,112 L 185,128 L 180,145 L 165,155 L 148,155 L 138,148 L 148,135 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="158" cy="132" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="158" y="135" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">04</text></g>
+      <g class="city" id="jt-5" data-prov="jateng" data-id="5" data-name="Kab. Brebes" data-capital="Brebes" data-color="#F4511E"><path d="M 20,80 L 50,70 L 72,68 L 85,75 L 90,90 L 82,108 L 68,118 L 50,122 L 32,118 L 18,108 L 14,92 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="55" cy="95" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="55" y="98" text-anchor="middle" font-size="6" font-family="monospace" font-weight="700" fill="#555">05</text></g>
+      <g class="city" id="jt-6" data-prov="jateng" data-id="6" data-name="Kota Tegal" data-capital="Tegal" data-color="#00897B"><path d="M 50,70 L 68,65 L 78,72 L 78,82 L 68,88 L 56,84 L 50,76 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="64" cy="77" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="64" y="80" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">06</text></g>
+      <g class="city" id="jt-7" data-prov="jateng" data-id="7" data-name="Kab. Tegal" data-capital="Slawi" data-color="#FB8C00"><path d="M 68,65 L 95,58 L 112,62 L 115,78 L 108,92 L 90,100 L 75,100 L 68,90 L 75,78 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="92" cy="80" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="92" y="83" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">07</text></g>
+      <g class="city" id="jt-8" data-prov="jateng" data-id="8" data-name="Kab. Pemalang" data-capital="Pemalang" data-color="#3949AB"><path d="M 112,62 L 138,55 L 155,58 L 158,75 L 150,90 L 135,98 L 118,96 L 108,86 L 115,72 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="135" cy="76" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="135" y="79" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">08</text></g>
+      <g class="city" id="jt-9" data-prov="jateng" data-id="9" data-name="Kota Pekalongan" data-capital="Pekalongan" data-color="#D81B60"><path d="M 155,58 L 170,54 L 178,62 L 174,72 L 162,76 L 155,68 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="164" cy="64" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="164" y="67" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">09</text></g>
+      <g class="city" id="jt-10" data-prov="jateng" data-id="10" data-name="Kab. Pekalongan" data-capital="Kajen" data-color="#546E7A"><path d="M 155,68 L 162,76 L 175,72 L 185,78 L 185,95 L 172,105 L 155,108 L 143,100 L 138,85 L 148,72 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="162" cy="90" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="162" y="93" text-anchor="middle" font-size="5" font-family="monospace" font-weight="700" fill="#555">10</text></g>
+      <g class="city" id="jt-11" data-prov="jateng" data-id="11" data-name="Kab. Batang" data-capital="Batang" data-color="#6D4C41"><path d="M 170,54 L 198,48 L 215,52 L 215,68 L 205,80 L 190,85 L 178,80 L 175,68 L 178,60 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="198" cy="67" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="198" y="70" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">11</text></g>
+      <g class="city" id="jt-12" data-prov="jateng" data-id="12" data-name="Kab. Wonosobo" data-capital="Wonosobo" data-color="#039BE5"><path d="M 155,108 L 178,112 L 195,108 L 200,125 L 192,140 L 175,148 L 158,145 L 148,132 L 150,115 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="175" cy="128" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="175" y="131" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">12</text></g>
+      <g class="city" id="jt-13" data-prov="jateng" data-id="13" data-name="Kab. Kebumen" data-capital="Kebumen" data-color="#7CB342"><path d="M 115,155 L 138,150 L 148,155 L 148,172 L 138,185 L 120,192 L 102,188 L 92,175 L 95,158 L 108,152 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="122" cy="172" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="122" y="175" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">13</text></g>
+      <g class="city" id="jt-14" data-prov="jateng" data-id="14" data-name="Kab. Purworejo" data-capital="Purworejo" data-color="#C0CA33"><path d="M 148,155 L 165,155 L 180,160 L 182,178 L 172,192 L 155,198 L 138,192 L 130,180 L 138,168 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="158" cy="175" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="158" y="178" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">14</text></g>
+      <g class="city" id="jt-15" data-prov="jateng" data-id="15" data-name="Kab. Magelang" data-capital="Mungkid" data-color="#FFB300"><path d="M 192,140 L 215,135 L 232,140 L 235,158 L 225,172 L 208,178 L 192,172 L 182,158 L 185,142 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="210" cy="158" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="210" y="161" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">15</text></g>
+      <g class="city" id="jt-16" data-prov="jateng" data-id="16" data-name="Kota Magelang" data-capital="Magelang" data-color="#00ACC1"><path d="M 215,148 L 225,145 L 230,155 L 222,162 L 214,158 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="220" cy="152" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="220" y="155" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">16</text></g>
+      <g class="city" id="jt-17" data-prov="jateng" data-id="17" data-name="Kab. Temanggung" data-capital="Temanggung" data-color="#5E35B1"><path d="M 195,108 L 218,104 L 235,108 L 238,125 L 232,140 L 215,138 L 200,130 L 195,118 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="218" cy="120" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="218" y="123" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">17</text></g>
+      <g class="city" id="jt-18" data-prov="jateng" data-id="18" data-name="Kab. Kendal" data-capital="Kendal" data-color="#E67C73"><path d="M 215,52 L 248,46 L 265,52 L 265,68 L 255,82 L 240,88 L 225,85 L 215,75 L 215,60 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="242" cy="67" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="242" y="70" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">18</text></g>
+      <g class="city" id="jt-19" data-prov="jateng" data-id="19" data-name="Kab. Semarang" data-capital="Ungaran" data-color="#33691E"><path d="M 238,88 L 255,82 L 272,85 L 282,98 L 278,115 L 262,122 L 248,120 L 235,112 L 232,98 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="258" cy="104" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="258" y="107" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">19</text></g>
+      <g class="city" id="jt-20" data-prov="jateng" data-id="20" data-name="Kota Semarang" data-capital="Semarang" data-color="#f97316"><path d="M 248,46 L 272,40 L 290,44 L 292,58 L 282,68 L 268,72 L 255,68 L 248,58 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="270" cy="56" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="270" y="59" text-anchor="middle" font-size="6" font-family="monospace" font-weight="700" fill="#555">20</text></g>
+      <g class="city" id="jt-21" data-prov="jateng" data-id="21" data-name="Kota Salatiga" data-capital="Salatiga" data-color="#BF360C"><path d="M 255,90 L 265,87 L 272,95 L 266,104 L 256,103 L 252,96 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="262" cy="96" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="262" y="99" text-anchor="middle" font-size="4" font-family="monospace" font-weight="700" fill="#555">21</text></g>
+      <g class="city" id="jt-22" data-prov="jateng" data-id="22" data-name="Kab. Boyolali" data-capital="Boyolali" data-color="#006064"><path d="M 278,100 L 298,95 L 315,100 L 318,115 L 308,128 L 292,132 L 278,125 L 272,112 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="296" cy="114" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="296" y="117" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">22</text></g>
+      <g class="city" id="jt-23" data-prov="jateng" data-id="23" data-name="Kab. Demak" data-capital="Demak" data-color="#4527A0"><path d="M 290,44 L 318,38 L 335,44 L 335,60 L 322,70 L 305,72 L 292,65 L 290,52 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="314" cy="55" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="314" y="58" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">23</text></g>
+      <g class="city" id="jt-24" data-prov="jateng" data-id="24" data-name="Kab. Kudus" data-capital="Kudus" data-color="#880E4F"><path d="M 335,44 L 358,40 L 370,48 L 368,62 L 355,70 L 340,68 L 330,58 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="350" cy="55" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="350" y="58" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">24</text></g>
+      <g class="city" id="jt-25" data-prov="jateng" data-id="25" data-name="Kab. Jepara" data-capital="Jepara" data-color="#37474F"><path d="M 318,38 L 348,28 L 368,30 L 375,42 L 368,54 L 355,60 L 335,58 L 322,50 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="348" cy="44" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="348" y="47" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">25</text></g>
+      <g class="city" id="jt-26" data-prov="jateng" data-id="26" data-name="Kab. Pati" data-capital="Pati" data-color="#1B5E20"><path d="M 370,48 L 400,42 L 420,48 L 422,65 L 410,78 L 392,82 L 375,78 L 365,65 L 368,54 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="394" cy="62" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="394" y="65" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">26</text></g>
+      <g class="city" id="jt-27" data-prov="jateng" data-id="27" data-name="Kab. Rembang" data-capital="Rembang" data-color="#0D47A1"><path d="M 420,48 L 462,40 L 488,46 L 490,62 L 475,72 L 452,75 L 430,72 L 418,62 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="454" cy="58" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="454" y="61" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">27</text></g>
+      <g class="city" id="jt-28" data-prov="jateng" data-id="28" data-name="Kab. Blora" data-capital="Blora" data-color="#4A148C"><path d="M 462,62 L 488,58 L 512,62 L 525,78 L 520,98 L 505,110 L 486,112 L 468,105 L 460,88 L 462,72 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="492" cy="86" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="492" y="89" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">28</text></g>
+      <g class="city" id="jt-29" data-prov="jateng" data-id="29" data-name="Kab. Grobogan" data-capital="Purwodadi" data-color="#B71C1C"><path d="M 322,70 L 355,68 L 392,78 L 420,68 L 452,75 L 462,88 L 452,105 L 428,115 L 400,118 L 372,115 L 345,108 L 322,100 L 315,85 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="388" cy="96" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="388" y="99" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">29</text></g>
+      <g class="city" id="jt-30" data-prov="jateng" data-id="30" data-name="Kab. Klaten" data-capital="Klaten" data-color="#00897B"><path d="M 290,152 L 312,148 L 325,158 L 322,172 L 308,180 L 292,178 L 282,168 L 284,156 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="305" cy="164" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="305" y="167" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">30</text></g>
+      <g class="city" id="jt-31" data-prov="jateng" data-id="31" data-name="Kota Surakarta" data-capital="Solo" data-color="#f97316"><path d="M 330,148 L 345,145 L 352,155 L 345,164 L 332,163 L 326,155 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="338" cy="155" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="338" y="158" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">31</text></g>
+      <g class="city" id="jt-32" data-prov="jateng" data-id="32" data-name="Kab. Sukoharjo" data-capital="Sukoharjo" data-color="#FB8C00"><path d="M 315,160 L 332,158 L 345,168 L 342,182 L 328,190 L 312,186 L 306,175 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="326" cy="174" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="326" y="177" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">32</text></g>
+      <g class="city" id="jt-33" data-prov="jateng" data-id="33" data-name="Kab. Karanganyar" data-capital="Karanganyar" data-color="#3949AB"><path d="M 352,138 L 375,132 L 390,140 L 388,158 L 372,168 L 355,165 L 344,155 L 348,142 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="368" cy="152" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="368" y="155" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">33</text></g>
+      <g class="city" id="jt-34" data-prov="jateng" data-id="34" data-name="Kab. Sragen" data-capital="Sragen" data-color="#D81B60"><path d="M 390,118 L 420,115 L 445,122 L 448,138 L 435,150 L 415,155 L 395,150 L 382,138 L 385,124 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="415" cy="136" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="415" y="139" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">34</text></g>
+      <g class="city" id="jt-35" data-prov="jateng" data-id="35" data-name="Kab. Wonogiri" data-capital="Wonogiri" data-color="#546E7A"><path d="M 342,182 L 368,172 L 395,168 L 420,162 L 445,170 L 452,188 L 440,208 L 418,220 L 392,225 L 365,218 L 342,205 L 332,192 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="390" cy="196" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="390" y="199" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">35</text></g>
+
+      <text x="300" y="272" text-anchor="middle" font-size="6.5" font-family="monospace" fill="#161616" letter-spacing="4">JAWA TENGAH · INDONESIA · 35 WILAYAH</text>
+    </svg>
+    <div class="map-watermark">JAWA TENGAH</div>
+  </div>
+
+  <div class="info-panel" id="info-jateng"><div class="info-empty">← Klik wilayah untuk detail</div></div>
+  <div class="legend-label">Daftar Wilayah</div>
+  <div class="legend-grid" id="legend-jateng"></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════
+     PANEL 3 — JAWA TIMUR
+═══════════════════════════════════ -->
+<div class="panel" id="panel-jatim">
+<div class="province-section">
+  <div class="prov-header">
+    <div class="prov-title-block">
+      <div class="prov-tags">
+        <span class="prov-tag">Provinsi</span>
+        <span class="prov-tag">29 Kabupaten</span>
+        <span class="prov-tag">9 Kota</span>
+        <span class="prov-tag">38 Wilayah</span>
+      </div>
+      <div class="prov-name" style="color:var(--accent-ji)">JAWA TIMUR</div>
+      <div class="prov-capital">Ibu Kota: <span>Surabaya</span></div>
+    </div>
+  </div>
+
+  <div class="map-wrap">
+    <svg class="city-map" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow-ji"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="aglow-ji"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <!-- DARATAN UTAMA JAWA TIMUR -->
+      <!-- Barat daya -->
+      <g class="city" id="ji-1" data-prov="jatim" data-id="1" data-name="Kab. Pacitan" data-capital="Pacitan" data-color="#E53935"><path d="M 10,185 L 40,178 L 65,182 L 75,200 L 68,220 L 50,232 L 28,230 L 12,218 L 8,200 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="42" cy="204" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="42" y="207" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">01</text></g>
+
+      <g class="city" id="ji-2" data-prov="jatim" data-id="2" data-name="Kab. Ponorogo" data-capital="Ponorogo" data-color="#1E88E5"><path d="M 65,182 L 95,175 L 120,178 L 125,198 L 115,215 L 95,222 L 72,218 L 65,200 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="95" cy="198" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="95" y="201" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">02</text></g>
+
+      <g class="city" id="ji-3" data-prov="jatim" data-id="3" data-name="Kab. Trenggalek" data-capital="Trenggalek" data-color="#43A047"><path d="M 95,175 L 122,168 L 142,172 L 148,190 L 138,208 L 118,215 L 98,210 L 90,195 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="120" cy="191" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="120" y="194" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">03</text></g>
+
+      <g class="city" id="ji-4" data-prov="jatim" data-id="4" data-name="Kab. Tulungagung" data-capital="Tulungagung" data-color="#8E24AA"><path d="M 122,168 L 148,162 L 165,168 L 168,185 L 158,200 L 140,205 L 122,200 L 115,185 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="143" cy="184" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="143" y="187" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">04</text></g>
+
+      <g class="city" id="ji-5" data-prov="jatim" data-id="5" data-name="Kab. Blitar" data-capital="Kanigoro" data-color="#F4511E"><path d="M 148,162 L 175,156 L 196,160 L 198,178 L 186,192 L 168,198 L 152,192 L 145,178 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="172" cy="177" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="172" y="180" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">05</text></g>
+
+      <g class="city" id="ji-6" data-prov="jatim" data-id="6" data-name="Kota Blitar" data-capital="Blitar" data-color="#00897B"><path d="M 175,168 L 188,165 L 193,175 L 185,183 L 174,180 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="183" cy="174" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="183" y="177" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">06</text></g>
+
+      <g class="city" id="ji-7" data-prov="jatim" data-id="7" data-name="Kab. Kediri" data-capital="Kediri" data-color="#FB8C00"><path d="M 148,140 L 178,133 L 200,138 L 205,155 L 195,168 L 175,172 L 155,165 L 145,150 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="175" cy="153" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="175" y="156" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">07</text></g>
+
+      <g class="city" id="ji-8" data-prov="jatim" data-id="8" data-name="Kota Kediri" data-capital="Kediri" data-color="#3949AB"><path d="M 178,146 L 190,143 L 195,152 L 188,160 L 178,157 L 174,149 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="185" cy="151" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="185" y="154" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">08</text></g>
+
+      <g class="city" id="ji-9" data-prov="jatim" data-id="9" data-name="Kab. Nganjuk" data-capital="Nganjuk" data-color="#D81B60"><path d="M 118,132 L 148,126 L 165,132 L 165,148 L 150,158 L 130,158 L 112,148 L 110,136 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="138" cy="143" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="138" y="146" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">09</text></g>
+
+      <g class="city" id="ji-10" data-prov="jatim" data-id="10" data-name="Kab. Madiun" data-capital="Mejayan" data-color="#546E7A"><path d="M 60,140 L 90,133 L 118,132 L 120,148 L 110,162 L 92,168 L 68,162 L 55,150 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="88" cy="150" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="88" y="153" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">10</text></g>
+
+      <g class="city" id="ji-11" data-prov="jatim" data-id="11" data-name="Kota Madiun" data-capital="Madiun" data-color="#6D4C41"><path d="M 88,143 L 100,140 L 105,150 L 97,158 L 86,155 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="95" cy="149" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="95" y="152" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">11</text></g>
+
+      <g class="city" id="ji-12" data-prov="jatim" data-id="12" data-name="Kab. Magetan" data-capital="Magetan" data-color="#039BE5"><path d="M 25,130 L 58,122 L 78,126 L 80,140 L 65,150 L 42,152 L 22,145 L 18,134 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="50" cy="137" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="50" y="140" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">12</text></g>
+
+      <g class="city" id="ji-13" data-prov="jatim" data-id="13" data-name="Kab. Ngawi" data-capital="Ngawi" data-color="#7CB342"><path d="M 10,108 L 42,100 L 70,102 L 82,116 L 78,126 L 55,130 L 28,128 L 10,118 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="46" cy="114" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="46" y="117" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">13</text></g>
+
+      <g class="city" id="ji-14" data-prov="jatim" data-id="14" data-name="Kab. Bojonegoro" data-capital="Bojonegoro" data-color="#C0CA33"><path d="M 42,80 L 88,68 L 128,70 L 135,86 L 125,100 L 100,108 L 70,110 L 42,104 L 30,90 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="85" cy="90" r="8" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="85" y="93" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">14</text></g>
+
+      <g class="city" id="ji-15" data-prov="jatim" data-id="15" data-name="Kab. Tuban" data-capital="Tuban" data-color="#FFB300"><path d="M 42,60 L 88,50 L 125,54 L 132,68 L 110,75 L 80,72 L 50,74 L 35,68 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="85" cy="62" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="85" y="65" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">15</text></g>
+
+      <g class="city" id="ji-16" data-prov="jatim" data-id="16" data-name="Kab. Lamongan" data-capital="Lamongan" data-color="#00ACC1"><path d="M 128,50 L 175,42 L 210,46 L 215,62 L 200,72 L 175,76 L 148,74 L 130,66 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="172" cy="59" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="172" y="62" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">16</text></g>
+
+      <g class="city" id="ji-17" data-prov="jatim" data-id="17" data-name="Kab. Jombang" data-capital="Jombang" data-color="#5E35B1"><path d="M 175,106 L 205,100 L 225,106 L 228,122 L 215,132 L 195,135 L 175,128 L 168,115 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="198" cy="117" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="198" y="120" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">17</text></g>
+
+      <g class="city" id="ji-18" data-prov="jatim" data-id="18" data-name="Kab. Mojokerto" data-capital="Mojokerto" data-color="#E67C73"><path d="M 225,90 L 255,85 L 272,92 L 270,108 L 255,118 L 235,120 L 218,112 L 218,96 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="245" cy="103" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="245" y="106" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">18</text></g>
+
+      <g class="city" id="ji-19" data-prov="jatim" data-id="19" data-name="Kota Mojokerto" data-capital="Mojokerto" data-color="#33691E"><path d="M 248,100 L 258,97 L 263,106 L 255,114 L 245,111 L 243,103 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="253" cy="106" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="253" y="109" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">19</text></g>
+
+      <g class="city" id="ji-20" data-prov="jatim" data-id="20" data-name="Kab. Gresik" data-capital="Gresik" data-color="#BF360C"><path d="M 215,62 L 255,56 L 278,62 L 278,78 L 262,86 L 238,88 L 218,82 L 212,70 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="248" cy="72" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="248" y="75" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">20</text></g>
+
+      <g class="city" id="ji-21" data-prov="jatim" data-id="21" data-name="Kota Surabaya" data-capital="Surabaya" data-color="#3b82f6"><path d="M 278,52 L 308,46 L 325,52 L 325,68 L 312,78 L 295,80 L 278,74 L 274,62 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="300" cy="63" r="8" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="300" y="66" text-anchor="middle" font-size="6" font-family="monospace" font-weight="700" fill="#555">21</text></g>
+
+      <g class="city" id="ji-22" data-prov="jatim" data-id="22" data-name="Kab. Sidoarjo" data-capital="Sidoarjo" data-color="#006064"><path d="M 295,82 L 322,78 L 335,88 L 332,104 L 318,112 L 300,112 L 285,104 L 283,90 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="310" cy="96" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="310" y="99" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">22</text></g>
+
+      <g class="city" id="ji-23" data-prov="jatim" data-id="23" data-name="Kab. Malang" data-capital="Kepanjen" data-color="#4527A0"><path d="M 228,140 L 265,132 L 295,138 L 302,158 L 290,175 L 265,182 L 240,178 L 222,165 L 218,148 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="262" cy="158" r="8" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="262" y="161" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">23</text></g>
+
+      <g class="city" id="ji-24" data-prov="jatim" data-id="24" data-name="Kota Malang" data-capital="Malang" data-color="#880E4F"><path d="M 258,145 L 272,142 L 278,152 L 270,162 L 257,160 L 250,152 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="263" cy="152" r="5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="263" y="155" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">24</text></g>
+
+      <g class="city" id="ji-25" data-prov="jatim" data-id="25" data-name="Kota Batu" data-capital="Batu" data-color="#37474F"><path d="M 242,138 L 255,135 L 260,144 L 252,150 L 240,148 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="249" cy="143" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="249" y="146" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">25</text></g>
+
+      <g class="city" id="ji-26" data-prov="jatim" data-id="26" data-name="Kab. Pasuruan" data-capital="Bangil" data-color="#1B5E20"><path d="M 322,110 L 355,106 L 372,118 L 368,135 L 350,145 L 328,142 L 312,130 L 315,116 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="342" cy="125" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="342" y="128" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">26</text></g>
+
+      <g class="city" id="ji-27" data-prov="jatim" data-id="27" data-name="Kota Pasuruan" data-capital="Pasuruan" data-color="#0D47A1"><path d="M 355,112 L 368,110 L 372,120 L 364,128 L 352,126 L 348,116 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="360" cy="119" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="360" y="122" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">27</text></g>
+
+      <g class="city" id="ji-28" data-prov="jatim" data-id="28" data-name="Kab. Probolinggo" data-capital="Kraksaan" data-color="#4A148C"><path d="M 372,88 L 408,80 L 432,86 L 435,102 L 420,116 L 398,120 L 375,115 L 368,100 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="402" cy="100" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="402" y="103" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">28</text></g>
+
+      <g class="city" id="ji-29" data-prov="jatim" data-id="29" data-name="Kota Probolinggo" data-capital="Probolinggo" data-color="#B71C1C"><path d="M 408,90 L 422,87 L 428,97 L 420,106 L 408,104 L 403,95 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="416" cy="97" r="4.5" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="416" y="100" text-anchor="middle" font-size="4.5" font-family="monospace" font-weight="700" fill="#555">29</text></g>
+
+      <g class="city" id="ji-30" data-prov="jatim" data-id="30" data-name="Kab. Lumajang" data-capital="Lumajang" data-color="#00897B"><path d="M 358,148 L 390,142 L 415,148 L 418,168 L 405,182 L 382,188 L 358,182 L 345,168 L 348,152 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="382" cy="165" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="382" y="168" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">30</text></g>
+
+      <g class="city" id="ji-31" data-prov="jatim" data-id="31" data-name="Kab. Jember" data-capital="Jember" data-color="#E53935"><path d="M 435,148 L 475,142 L 505,150 L 508,172 L 492,188 L 465,195 L 438,190 L 422,175 L 422,158 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="465" cy="168" r="8" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="465" y="171" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">31</text></g>
+
+      <g class="city" id="ji-32" data-prov="jatim" data-id="32" data-name="Kab. Bondowoso" data-capital="Bondowoso" data-color="#1E88E5"><path d="M 460,115 L 495,108 L 518,115 L 520,135 L 505,148 L 480,152 L 458,145 L 450,130 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="485" cy="130" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="485" y="133" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">32</text></g>
+
+      <g class="city" id="ji-33" data-prov="jatim" data-id="33" data-name="Kab. Situbondo" data-capital="Situbondo" data-color="#43A047"><path d="M 435,82 L 480,72 L 525,75 L 545,85 L 542,100 L 520,108 L 490,110 L 460,108 L 438,98 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="492" cy="90" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="492" y="93" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">33</text></g>
+
+      <g class="city" id="ji-34" data-prov="jatim" data-id="34" data-name="Kab. Banyuwangi" data-capital="Banyuwangi" data-color="#8E24AA"><path d="M 520,112 L 548,108 L 575,118 L 582,140 L 570,165 L 548,182 L 522,188 L 500,178 L 490,158 L 492,135 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="538" cy="148" r="8" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="538" y="151" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">34</text></g>
+
+      <!-- MADURA ISLAND -->
+      <g class="city" id="ji-35" data-prov="jatim" data-id="35" data-name="Kab. Bangkalan" data-capital="Bangkalan" data-color="#F4511E"><path d="M 310,28 L 342,22 L 362,28 L 360,42 L 345,50 L 322,48 L 308,38 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="335" cy="36" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="335" y="39" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">35</text></g>
+
+      <g class="city" id="ji-36" data-prov="jatim" data-id="36" data-name="Kab. Sampang" data-capital="Sampang" data-color="#00897B"><path d="M 360,22 L 395,18 L 418,24 L 416,38 L 400,46 L 378,44 L 358,36 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="390" cy="32" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="390" y="35" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">36</text></g>
+
+      <g class="city" id="ji-37" data-prov="jatim" data-id="37" data-name="Kab. Pamekasan" data-capital="Pamekasan" data-color="#FB8C00"><path d="M 418,18 L 452,14 L 470,20 L 468,34 L 452,42 L 430,40 L 415,30 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="443" cy="28" r="6" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="443" y="31" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">37</text></g>
+
+      <g class="city" id="ji-38" data-prov="jatim" data-id="38" data-name="Kab. Sumenep" data-capital="Sumenep" data-color="#3949AB"><path d="M 470,14 L 518,10 L 548,16 L 555,30 L 538,40 L 510,44 L 482,38 L 465,26 Z" fill="#181818" stroke="#2a2a2a" stroke-width="0.7" stroke-linejoin="round"/><circle class="badge-bg" cx="512" cy="27" r="7" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/><text class="badge-num" x="512" y="30" text-anchor="middle" font-size="5.5" font-family="monospace" font-weight="700" fill="#555">38</text></g>
+
+      <!-- Label Madura -->
+      <text x="440" y="58" text-anchor="middle" font-size="5.5" font-family="monospace" fill="#252525" letter-spacing="2">P. MADURA</text>
+
+      <text x="340" y="292" text-anchor="middle" font-size="6.5" font-family="monospace" fill="#161616" letter-spacing="4">JAWA TIMUR · INDONESIA · 38 WILAYAH</text>
+    </svg>
+    <div class="map-watermark">JAWA TIMUR</div>
+  </div>
+
+  <div class="info-panel" id="info-jatim"><div class="info-empty">← Klik wilayah untuk detail</div></div>
+  <div class="legend-label">Daftar Wilayah</div>
+  <div class="legend-grid" id="legend-jatim"></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════
+     PANEL 4 — SEMUA (Overview)
+═══════════════════════════════════ -->
+<div class="panel" id="panel-semua">
+  <div style="max-width:1100px; margin:0 auto; padding:40px 32px 60px;">
+    <p style="font-size:9px; color:#2a2a2a; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:32px;">Tampilan Ringkas Semua Provinsi</p>
+
+    <div style="display:flex; flex-direction:column; gap:40px;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:var(--accent-jb); letter-spacing:0.08em; margin-bottom:12px;">JAWA BARAT <span style="font-size:0.8rem; color:#333; font-family:'DM Mono',monospace;">27 wilayah · Bandung</span></div>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:16px;">
+          <svg class="city-map ov-map-mini" viewBox="0 0 470 210" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto; display:block; opacity:0.75;">
+            <path d="M 10,30 L 420,18 L 455,120 L 440,150 L 400,185 L 320,165 L 220,120 L 60,155 L 30,152 L 8,135 Z" fill="none" stroke="#E53935" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="4,3"/>
+            <path d="M 118,42 L 148,36 L 172,38 L 185,52 L 188,70 L 180,88 L 168,100 L 155,108 L 140,112 L 125,108 L 112,98 L 104,84 L 102,68 L 108,54 Z M 60,32 L 88,28 L 118,42 L 108,54 L 102,68 L 86,72 L 70,68 L 56,56 L 52,42 Z M 88,28 L 128,22 L 162,26 L 172,38 L 148,36 L 118,42 L 88,28 Z M 195,24 L 242,18 L 268,26 L 265,44 L 248,52 L 228,56 L 210,52 L 210,38 Z M 162,26 L 195,24 L 210,38 L 205,52 L 188,52 L 185,52 L 172,38 Z M 268,26 L 320,18 L 358,22 L 362,38 L 345,50 L 320,56 L 295,58 L 268,50 L 265,44 Z M 358,22 L 398,28 L 408,44 L 400,60 L 380,68 L 362,62 L 345,50 L 362,38 Z M 398,28 L 418,34 L 416,50 L 408,60 L 400,60 L 408,44 Z M 345,50 L 380,68 L 375,86 L 360,98 L 338,96 L 322,82 L 320,66 L 320,56 L 345,50 Z M 380,68 L 400,60 L 416,70 L 418,90 L 404,104 L 385,108 L 370,98 L 360,98 L 375,86 Z M 248,52 L 295,58 L 320,66 L 322,82 L 310,96 L 290,104 L 268,100 L 252,86 L 248,68 Z M 205,52 L 228,56 L 248,68 L 252,86 L 240,104 L 222,114 L 205,118 L 190,112 L 180,98 L 180,88 L 188,70 L 205,52 Z M 185,52 L 205,52 L 205,68 L 198,74 L 186,76 L 175,66 L 172,54 Z M 186,76 L 198,74 L 200,84 L 194,90 L 184,88 L 178,80 Z M 102,68 L 125,68 L 140,72 L 155,80 L 165,92 L 168,100 L 155,108 L 140,112 L 125,108 L 110,116 L 100,122 L 96,110 L 102,100 L 104,84 Z M 190,112 L 222,114 L 240,104 L 268,100 L 290,104 L 310,96 L 338,96 L 338,120 L 322,138 L 300,150 L 275,158 L 252,156 L 230,148 L 215,134 L 205,118 Z M 338,120 L 360,110 L 385,108 L 404,118 L 408,138 L 395,155 L 375,166 L 350,168 L 322,160 L 300,150 L 322,138 Z M 404,118 L 418,110 L 435,116 L 440,132 L 430,150 L 415,160 L 395,155 L 408,138 Z M 435,116 L 450,120 L 452,134 L 440,140 L 430,136 L 435,122 Z M 395,155 L 415,160 L 430,150 L 438,166 L 425,178 L 405,182 L 385,178 L 375,166 L 395,155 Z M 68,82 L 86,72 L 102,68 L 104,84 L 100,100 L 96,110 L 88,130 L 76,148 L 58,152 L 42,138 L 36,120 L 40,100 Z M 30,28 L 60,32 L 52,42 L 56,56 L 44,62 L 28,58 L 20,44 Z M 56,56 L 70,68 L 68,82 L 56,88 L 44,82 L 44,62 Z M 205,68 L 220,66 L 228,74 L 224,86 L 212,90 L 200,84 L 198,74 Z M 112,98 L 125,108 L 122,122 L 110,128 L 100,122 L 96,110 L 102,100 Z M 338,120 L 360,110 L 365,122 L 352,132 L 338,128 Z M 96,110 L 110,128 L 100,136 L 88,130 L 96,118 Z" fill="#E53935" fill-opacity="0.25" stroke="#E53935" stroke-width="0.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:var(--accent-jt); letter-spacing:0.08em; margin-bottom:12px;">JAWA TENGAH <span style="font-size:0.8rem; color:#333; font-family:'DM Mono',monospace;">35 wilayah · Semarang</span></div>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:16px;">
+          <svg class="city-map ov-map-mini" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto; display:block; opacity:0.75;">
+            <path d="M 20,145 L 48,138 L 70,135 L 85,140 L 92,158 L 88,178 L 78,195 L 60,208 L 40,215 L 22,212 L 12,198 L 10,178 L 14,160 Z M 48,138 L 78,128 L 105,125 L 115,135 L 112,155 L 100,168 L 85,172 L 70,168 L 55,162 L 48,148 Z M 105,125 L 128,118 L 145,122 L 148,138 L 138,150 L 122,155 L 112,150 L 112,135 Z M 128,118 L 155,108 L 178,112 L 185,128 L 180,145 L 165,155 L 148,155 L 138,148 L 148,135 Z M 20,80 L 50,70 L 72,68 L 85,75 L 90,90 L 82,108 L 68,118 L 50,122 L 32,118 L 18,108 L 14,92 Z M 50,70 L 68,65 L 78,72 L 78,82 L 68,88 L 56,84 L 50,76 Z M 68,65 L 95,58 L 112,62 L 115,78 L 108,92 L 90,100 L 75,100 L 68,90 L 75,78 Z M 112,62 L 138,55 L 155,58 L 158,75 L 150,90 L 135,98 L 118,96 L 108,86 L 115,72 Z M 155,58 L 170,54 L 178,62 L 174,72 L 162,76 L 155,68 Z M 155,68 L 162,76 L 175,72 L 185,78 L 185,95 L 172,105 L 155,108 L 143,100 L 138,85 L 148,72 Z M 170,54 L 198,48 L 215,52 L 215,68 L 205,80 L 190,85 L 178,80 L 175,68 L 178,60 Z M 155,108 L 178,112 L 195,108 L 200,125 L 192,140 L 175,148 L 158,145 L 148,132 L 150,115 Z M 115,155 L 138,150 L 148,155 L 148,172 L 138,185 L 120,192 L 102,188 L 92,175 L 95,158 L 108,152 Z M 148,155 L 165,155 L 180,160 L 182,178 L 172,192 L 155,198 L 138,192 L 130,180 L 138,168 Z M 192,140 L 215,135 L 232,140 L 235,158 L 225,172 L 208,178 L 192,172 L 182,158 L 185,142 Z M 215,148 L 225,145 L 230,155 L 222,162 L 214,158 Z M 195,108 L 218,104 L 235,108 L 238,125 L 232,140 L 215,138 L 200,130 L 195,118 Z M 215,52 L 248,46 L 265,52 L 265,68 L 255,82 L 240,88 L 225,85 L 215,75 L 215,60 Z M 238,88 L 255,82 L 272,85 L 282,98 L 278,115 L 262,122 L 248,120 L 235,112 L 232,98 Z M 248,46 L 272,40 L 290,44 L 292,58 L 282,68 L 268,72 L 255,68 L 248,58 Z M 255,90 L 265,87 L 272,95 L 266,104 L 256,103 L 252,96 Z M 278,100 L 298,95 L 315,100 L 318,115 L 308,128 L 292,132 L 278,125 L 272,112 Z M 290,44 L 318,38 L 335,44 L 335,60 L 322,70 L 305,72 L 292,65 L 290,52 Z M 335,44 L 358,40 L 370,48 L 368,62 L 355,70 L 340,68 L 330,58 Z M 318,38 L 348,28 L 368,30 L 375,42 L 368,54 L 355,60 L 335,58 L 322,50 Z M 370,48 L 400,42 L 420,48 L 422,65 L 410,78 L 392,82 L 375,78 L 365,65 L 368,54 Z M 420,48 L 462,40 L 488,46 L 490,62 L 475,72 L 452,75 L 430,72 L 418,62 Z M 462,62 L 488,58 L 512,62 L 525,78 L 520,98 L 505,110 L 486,112 L 468,105 L 460,88 L 462,72 Z M 322,70 L 355,68 L 392,78 L 420,68 L 452,75 L 462,88 L 452,105 L 428,115 L 400,118 L 372,115 L 345,108 L 322,100 L 315,85 Z M 290,152 L 312,148 L 325,158 L 322,172 L 308,180 L 292,178 L 282,168 L 284,156 Z M 330,148 L 345,145 L 352,155 L 345,164 L 332,163 L 326,155 Z M 315,160 L 332,158 L 345,168 L 342,182 L 328,190 L 312,186 L 306,175 Z M 352,138 L 375,132 L 390,140 L 388,158 L 372,168 L 355,165 L 344,155 L 348,142 Z M 390,118 L 420,115 L 445,122 L 448,138 L 435,150 L 415,155 L 395,150 L 382,138 L 385,124 Z M 342,182 L 368,172 L 395,168 L 420,162 L 445,170 L 452,188 L 440,208 L 418,220 L 392,225 L 365,218 L 342,205 L 332,192 Z" fill="#f97316" fill-opacity="0.2" stroke="#f97316" stroke-width="0.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:var(--accent-ji); letter-spacing:0.08em; margin-bottom:12px;">JAWA TIMUR <span style="font-size:0.8rem; color:#333; font-family:'DM Mono',monospace;">38 wilayah · Surabaya</span></div>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:16px;">
+          <svg class="city-map ov-map-mini" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto; display:block; opacity:0.75;">
+            <path d="M 10,185 L 40,178 L 65,182 L 75,200 L 68,220 L 50,232 L 28,230 L 12,218 L 8,200 Z M 65,182 L 95,175 L 120,178 L 125,198 L 115,215 L 95,222 L 72,218 L 65,200 Z M 95,175 L 122,168 L 142,172 L 148,190 L 138,208 L 118,215 L 98,210 L 90,195 Z M 122,168 L 148,162 L 165,168 L 168,185 L 158,200 L 140,205 L 122,200 L 115,185 Z M 148,162 L 175,156 L 196,160 L 198,178 L 186,192 L 168,198 L 152,192 L 145,178 Z M 175,168 L 188,165 L 193,175 L 185,183 L 174,180 Z M 148,140 L 178,133 L 200,138 L 205,155 L 195,168 L 175,172 L 155,165 L 145,150 Z M 178,146 L 190,143 L 195,152 L 188,160 L 178,157 L 174,149 Z M 118,132 L 148,126 L 165,132 L 165,148 L 150,158 L 130,158 L 112,148 L 110,136 Z M 60,140 L 90,133 L 118,132 L 120,148 L 110,162 L 92,168 L 68,162 L 55,150 Z M 88,143 L 100,140 L 105,150 L 97,158 L 86,155 Z M 25,130 L 58,122 L 78,126 L 80,140 L 65,150 L 42,152 L 22,145 L 18,134 Z M 10,108 L 42,100 L 70,102 L 82,116 L 78,126 L 55,130 L 28,128 L 10,118 Z M 42,80 L 88,68 L 128,70 L 135,86 L 125,100 L 100,108 L 70,110 L 42,104 L 30,90 Z M 42,60 L 88,50 L 125,54 L 132,68 L 110,75 L 80,72 L 50,74 L 35,68 Z M 128,50 L 175,42 L 210,46 L 215,62 L 200,72 L 175,76 L 148,74 L 130,66 Z M 175,106 L 205,100 L 225,106 L 228,122 L 215,132 L 195,135 L 175,128 L 168,115 Z M 225,90 L 255,85 L 272,92 L 270,108 L 255,118 L 235,120 L 218,112 L 218,96 Z M 248,100 L 258,97 L 263,106 L 255,114 L 245,111 L 243,103 Z M 215,62 L 255,56 L 278,62 L 278,78 L 262,86 L 238,88 L 218,82 L 212,70 Z M 278,52 L 308,46 L 325,52 L 325,68 L 312,78 L 295,80 L 278,74 L 274,62 Z M 295,82 L 322,78 L 335,88 L 332,104 L 318,112 L 300,112 L 285,104 L 283,90 Z M 228,140 L 265,132 L 295,138 L 302,158 L 290,175 L 265,182 L 240,178 L 222,165 L 218,148 Z M 258,145 L 272,142 L 278,152 L 270,162 L 257,160 L 250,152 Z M 242,138 L 255,135 L 260,144 L 252,150 L 240,148 Z M 322,110 L 355,106 L 372,118 L 368,135 L 350,145 L 328,142 L 312,130 L 315,116 Z M 355,112 L 368,110 L 372,120 L 364,128 L 352,126 L 348,116 Z M 372,88 L 408,80 L 432,86 L 435,102 L 420,116 L 398,120 L 375,115 L 368,100 Z M 408,90 L 422,87 L 428,97 L 420,106 L 408,104 L 403,95 Z M 358,148 L 390,142 L 415,148 L 418,168 L 405,182 L 382,188 L 358,182 L 345,168 L 348,152 Z M 435,148 L 475,142 L 505,150 L 508,172 L 492,188 L 465,195 L 438,190 L 422,175 L 422,158 Z M 460,115 L 495,108 L 518,115 L 520,135 L 505,148 L 480,152 L 458,145 L 450,130 Z M 435,82 L 480,72 L 525,75 L 545,85 L 542,100 L 520,108 L 490,110 L 460,108 L 438,98 Z M 520,112 L 548,108 L 575,118 L 582,140 L 570,165 L 548,182 L 522,188 L 500,178 L 490,158 L 492,135 Z M 310,28 L 342,22 L 362,28 L 360,42 L 345,50 L 322,48 L 308,38 Z M 360,22 L 395,18 L 418,24 L 416,38 L 400,46 L 378,44 L 358,36 Z M 418,18 L 452,14 L 470,20 L 468,34 L 452,42 L 430,40 L 415,30 Z M 470,14 L 518,10 L 548,16 L 555,30 L 538,40 L 510,44 L 482,38 L 465,26 Z" fill="#3b82f6" fill-opacity="0.2" stroke="#3b82f6" stroke-width="0.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// DATA
+// ══════════════════════════════════════
+const DATA = {
+  jabar: [
+    {id:1,name:"Kab. Bogor",capital:"Cibinong",color:"#E53935"},
+    {id:2,name:"Kota Bogor",capital:"Bogor",color:"#1E88E5"},
+    {id:3,name:"Kab. Bekasi",capital:"Cikarang",color:"#43A047"},
+    {id:4,name:"Kota Bekasi",capital:"Bekasi",color:"#8E24AA"},
+    {id:5,name:"Kota Depok",capital:"Depok",color:"#F4511E"},
+    {id:6,name:"Kab. Karawang",capital:"Karawang",color:"#00897B"},
+    {id:7,name:"Kab. Purwakarta",capital:"Purwakarta",color:"#FB8C00"},
+    {id:8,name:"Kab. Subang",capital:"Subang",color:"#3949AB"},
+    {id:9,name:"Kab. Indramayu",capital:"Indramayu",color:"#D81B60"},
+    {id:10,name:"Kab. Cirebon",capital:"Sumber",color:"#546E7A"},
+    {id:11,name:"Kota Cirebon",capital:"Cirebon",color:"#6D4C41"},
+    {id:12,name:"Kab. Majalengka",capital:"Majalengka",color:"#039BE5"},
+    {id:13,name:"Kab. Kuningan",capital:"Kuningan",color:"#7CB342"},
+    {id:14,name:"Kab. Sumedang",capital:"Sumedang",color:"#C0CA33"},
+    {id:15,name:"Kab. Bandung",capital:"Soreang",color:"#FFB300"},
+    {id:16,name:"Kota Bandung",capital:"Bandung",color:"#e53935"},
+    {id:17,name:"Kab. Bandung Barat",capital:"Ngamprah",color:"#5E35B1"},
+    {id:18,name:"Kota Cimahi",capital:"Cimahi",color:"#E67C73"},
+    {id:19,name:"Kab. Cianjur",capital:"Cianjur",color:"#33691E"},
+    {id:20,name:"Kab. Garut",capital:"Garut",color:"#BF360C"},
+    {id:21,name:"Kab. Tasikmalaya",capital:"Singaparna",color:"#006064"},
+    {id:22,name:"Kota Tasikmalaya",capital:"Tasikmalaya",color:"#4527A0"},
+    {id:23,name:"Kab. Ciamis",capital:"Ciamis",color:"#880E4F"},
+    {id:24,name:"Kota Banjar",capital:"Banjar",color:"#37474F"},
+    {id:25,name:"Kab. Pangandaran",capital:"Parigi",color:"#1B5E20"},
+    {id:26,name:"Kab. Sukabumi",capital:"Palabuhanratu",color:"#0D47A1"},
+    {id:27,name:"Kota Sukabumi",capital:"Sukabumi",color:"#4A148C"},
+  ],
+  jateng: [
+    {id:1,name:"Kab. Cilacap",capital:"Cilacap",color:"#E53935"},
+    {id:2,name:"Kab. Banyumas",capital:"Purwokerto",color:"#1E88E5"},
+    {id:3,name:"Kab. Purbalingga",capital:"Purbalingga",color:"#43A047"},
+    {id:4,name:"Kab. Banjarnegara",capital:"Banjarnegara",color:"#8E24AA"},
+    {id:5,name:"Kab. Brebes",capital:"Brebes",color:"#F4511E"},
+    {id:6,name:"Kota Tegal",capital:"Tegal",color:"#00897B"},
+    {id:7,name:"Kab. Tegal",capital:"Slawi",color:"#FB8C00"},
+    {id:8,name:"Kab. Pemalang",capital:"Pemalang",color:"#3949AB"},
+    {id:9,name:"Kota Pekalongan",capital:"Pekalongan",color:"#D81B60"},
+    {id:10,name:"Kab. Pekalongan",capital:"Kajen",color:"#546E7A"},
+    {id:11,name:"Kab. Batang",capital:"Batang",color:"#6D4C41"},
+    {id:12,name:"Kab. Wonosobo",capital:"Wonosobo",color:"#039BE5"},
+    {id:13,name:"Kab. Kebumen",capital:"Kebumen",color:"#7CB342"},
+    {id:14,name:"Kab. Purworejo",capital:"Purworejo",color:"#C0CA33"},
+    {id:15,name:"Kab. Magelang",capital:"Mungkid",color:"#FFB300"},
+    {id:16,name:"Kota Magelang",capital:"Magelang",color:"#00ACC1"},
+    {id:17,name:"Kab. Temanggung",capital:"Temanggung",color:"#5E35B1"},
+    {id:18,name:"Kab. Kendal",capital:"Kendal",color:"#E67C73"},
+    {id:19,name:"Kab. Semarang",capital:"Ungaran",color:"#33691E"},
+    {id:20,name:"Kota Semarang",capital:"Semarang",color:"#f97316"},
+    {id:21,name:"Kota Salatiga",capital:"Salatiga",color:"#BF360C"},
+    {id:22,name:"Kab. Boyolali",capital:"Boyolali",color:"#006064"},
+    {id:23,name:"Kab. Demak",capital:"Demak",color:"#4527A0"},
+    {id:24,name:"Kab. Kudus",capital:"Kudus",color:"#880E4F"},
+    {id:25,name:"Kab. Jepara",capital:"Jepara",color:"#37474F"},
+    {id:26,name:"Kab. Pati",capital:"Pati",color:"#1B5E20"},
+    {id:27,name:"Kab. Rembang",capital:"Rembang",color:"#0D47A1"},
+    {id:28,name:"Kab. Blora",capital:"Blora",color:"#4A148C"},
+    {id:29,name:"Kab. Grobogan",capital:"Purwodadi",color:"#B71C1C"},
+    {id:30,name:"Kab. Klaten",capital:"Klaten",color:"#00897B"},
+    {id:31,name:"Kota Surakarta",capital:"Solo",color:"#f97316"},
+    {id:32,name:"Kab. Sukoharjo",capital:"Sukoharjo",color:"#FB8C00"},
+    {id:33,name:"Kab. Karanganyar",capital:"Karanganyar",color:"#3949AB"},
+    {id:34,name:"Kab. Sragen",capital:"Sragen",color:"#D81B60"},
+    {id:35,name:"Kab. Wonogiri",capital:"Wonogiri",color:"#546E7A"},
+  ],
+  jatim: [
+    {id:1,name:"Kab. Pacitan",capital:"Pacitan",color:"#E53935"},
+    {id:2,name:"Kab. Ponorogo",capital:"Ponorogo",color:"#1E88E5"},
+    {id:3,name:"Kab. Trenggalek",capital:"Trenggalek",color:"#43A047"},
+    {id:4,name:"Kab. Tulungagung",capital:"Tulungagung",color:"#8E24AA"},
+    {id:5,name:"Kab. Blitar",capital:"Kanigoro",color:"#F4511E"},
+    {id:6,name:"Kota Blitar",capital:"Blitar",color:"#00897B"},
+    {id:7,name:"Kab. Kediri",capital:"Kediri",color:"#FB8C00"},
+    {id:8,name:"Kota Kediri",capital:"Kediri",color:"#3949AB"},
+    {id:9,name:"Kab. Nganjuk",capital:"Nganjuk",color:"#D81B60"},
+    {id:10,name:"Kab. Madiun",capital:"Mejayan",color:"#546E7A"},
+    {id:11,name:"Kota Madiun",capital:"Madiun",color:"#6D4C41"},
+    {id:12,name:"Kab. Magetan",capital:"Magetan",color:"#039BE5"},
+    {id:13,name:"Kab. Ngawi",capital:"Ngawi",color:"#7CB342"},
+    {id:14,name:"Kab. Bojonegoro",capital:"Bojonegoro",color:"#C0CA33"},
+    {id:15,name:"Kab. Tuban",capital:"Tuban",color:"#FFB300"},
+    {id:16,name:"Kab. Lamongan",capital:"Lamongan",color:"#00ACC1"},
+    {id:17,name:"Kab. Jombang",capital:"Jombang",color:"#5E35B1"},
+    {id:18,name:"Kab. Mojokerto",capital:"Mojokerto",color:"#E67C73"},
+    {id:19,name:"Kota Mojokerto",capital:"Mojokerto",color:"#33691E"},
+    {id:20,name:"Kab. Gresik",capital:"Gresik",color:"#BF360C"},
+    {id:21,name:"Kota Surabaya",capital:"Surabaya",color:"#3b82f6"},
+    {id:22,name:"Kab. Sidoarjo",capital:"Sidoarjo",color:"#006064"},
+    {id:23,name:"Kab. Malang",capital:"Kepanjen",color:"#4527A0"},
+    {id:24,name:"Kota Malang",capital:"Malang",color:"#880E4F"},
+    {id:25,name:"Kota Batu",capital:"Batu",color:"#37474F"},
+    {id:26,name:"Kab. Pasuruan",capital:"Bangil",color:"#1B5E20"},
+    {id:27,name:"Kota Pasuruan",capital:"Pasuruan",color:"#0D47A1"},
+    {id:28,name:"Kab. Probolinggo",capital:"Kraksaan",color:"#4A148C"},
+    {id:29,name:"Kota Probolinggo",capital:"Probolinggo",color:"#B71C1C"},
+    {id:30,name:"Kab. Lumajang",capital:"Lumajang",color:"#00897B"},
+    {id:31,name:"Kab. Jember",capital:"Jember",color:"#E53935"},
+    {id:32,name:"Kab. Bondowoso",capital:"Bondowoso",color:"#1E88E5"},
+    {id:33,name:"Kab. Situbondo",capital:"Situbondo",color:"#43A047"},
+    {id:34,name:"Kab. Banyuwangi",capital:"Banyuwangi",color:"#8E24AA"},
+    {id:35,name:"Kab. Bangkalan",capital:"Bangkalan",color:"#F4511E"},
+    {id:36,name:"Kab. Sampang",capital:"Sampang",color:"#00897B"},
+    {id:37,name:"Kab. Pamekasan",capital:"Pamekasan",color:"#FB8C00"},
+    {id:38,name:"Kab. Sumenep",capital:"Sumenep",color:"#3949AB"},
+  ],
+};
+
+const GLOWS = {
+  jabar: { hover:"url(#glow-jb)", active:"url(#aglow-jb)" },
+  jateng: { hover:"url(#glow-jt)", active:"url(#aglow-jt)" },
+  jatim: { hover:"url(#glow-ji)", active:"url(#aglow-ji)" },
+};
+
+const PREFIX = { jabar:"jb", jateng:"jt", jatim:"ji" };
+const state = { jabar: null, jateng: null, jatim: null };
+
+// ── Build legends
+Object.entries(DATA).forEach(([prov, cities]) => {
+  const grid = document.getElementById(`legend-${prov}`);
+  cities.forEach(c => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.id = `leg-${prov}-${c.id}`;
+    item.style.setProperty('--c', c.color);
+    const num = c.id < 10 ? `0${c.id}` : `${c.id}`;
+    item.innerHTML = `<div class="leg-dot"></div><span class="leg-num">${num}</span><span class="leg-name">${c.name.replace('Kab. ','').replace('Kota ','')}</span>`;
+    item.addEventListener('click', () => toggleCity(prov, c.id));
+    item.addEventListener('mouseenter', () => hoverCity(prov, c.id));
+    item.addEventListener('mouseleave', () => unhoverCity(prov, c.id));
+    grid.appendChild(item);
+  });
+});
+
+function getEl(prov, id) {
+  return document.getElementById(`${PREFIX[prov]}-${id}`);
+}
+
+function applyStyle(prov, id, st) {
+  const el = getEl(prov, id);
+  if (!el) return;
+  const city = DATA[prov].find(c => c.id === id);
+  if (!city) return;
+  const path = el.querySelector('path');
+  const bg = el.querySelector('.badge-bg');
+  const num = el.querySelector('.badge-num');
+  const g = GLOWS[prov];
+
+  if (st === 'active') {
+    path.setAttribute('fill', city.color);
+    path.setAttribute('stroke', city.color);
+    path.setAttribute('stroke-width', '1.6');
+    path.setAttribute('filter', g.active);
+    bg.setAttribute('fill', '#fff'); bg.setAttribute('stroke', city.color); bg.setAttribute('r','10');
+    num.setAttribute('fill', city.color); num.setAttribute('font-size','7.5');
+  } else if (st === 'hover') {
+    path.setAttribute('fill', city.color+'bb');
+    path.setAttribute('stroke', city.color);
+    path.setAttribute('stroke-width', '1.1');
+    path.setAttribute('filter', g.hover);
+    bg.setAttribute('fill', city.color); bg.setAttribute('stroke','#fff'); bg.setAttribute('r','8');
+    num.setAttribute('fill','#fff'); num.setAttribute('font-size','6.5');
+  } else {
+    path.setAttribute('fill','#181818');
+    path.setAttribute('stroke','#2a2a2a');
+    path.setAttribute('stroke-width','0.7');
+    path.setAttribute('filter','none');
+    bg.setAttribute('fill','#222'); bg.setAttribute('stroke','#3a3a3a'); bg.setAttribute('r','6');
+    num.setAttribute('fill','#555'); num.setAttribute('font-size','5.5');
+  }
+}
+
+function hoverCity(prov, id) {
+  if (state[prov] === id) return;
+  applyStyle(prov, id, 'hover');
+}
+function unhoverCity(prov, id) {
+  if (state[prov] === id) return;
+  applyStyle(prov, id, 'default');
+}
+function toggleCity(prov, id) {
+  const prev = state[prov];
+  if (prev === id) {
+    state[prov] = null;
+    applyStyle(prov, id, 'default');
+    document.getElementById(`leg-${prov}-${id}`)?.classList.remove('active');
+    updateInfo(prov, null);
+  } else {
+    if (prev !== null) {
+      applyStyle(prov, prev, 'default');
+      document.getElementById(`leg-${prov}-${prev}`)?.classList.remove('active');
+    }
+    state[prov] = id;
+    applyStyle(prov, id, 'active');
+    document.getElementById(`leg-${prov}-${id}`)?.classList.add('active');
+    const city = DATA[prov].find(c => c.id === id);
+    updateInfo(prov, city);
+  }
+}
+
+function updateInfo(prov, city) {
+  const panel = document.getElementById(`info-${prov}`);
+  if (!city) {
+    panel.style.borderColor = 'var(--border)';
+    panel.innerHTML = '<div class="info-empty">← Klik wilayah untuk detail</div>';
+    return;
+  }
+  const num = city.id < 10 ? `0${city.id}` : `${city.id}`;
+  const isKota = city.name.startsWith('Kota');
+  panel.style.borderColor = city.color + '44';
+  panel.innerHTML = `
+    <div class="info-dot" style="background:${city.color}; box-shadow:0 0 12px ${city.color}55;"></div>
+    <div>
+      <div class="info-name">${city.name}</div>
+      <div class="info-meta">Ibu kota: <span class="info-capital">${city.capital}</span> · No. ${num} · ${isKota ? 'Kota Otonom' : 'Kabupaten'}</div>
+    </div>`;
+}
+
+// Wire up SVG events
+['jabar','jateng','jatim'].forEach(prov => {
+  DATA[prov].forEach(c => {
+    const el = getEl(prov, c.id);
+    if (!el) return;
+    el.addEventListener('mouseenter', () => hoverCity(prov, c.id));
+    el.addEventListener('mouseleave', () => unhoverCity(prov, c.id));
+    el.addEventListener('click', () => toggleCity(prov, c.id));
+  });
+});
+
+// ── TABS
+const tabs = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

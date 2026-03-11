@@ -1,0 +1,11 @@
+.notes-section {
+  font-family: "Space Grotesk", sans-serif;
+  /* background-color: red; */
+  width: 100%;
+  height: 100vh;
+  font-size: 5em;
+  word-spacing: -10px;
+  line-height: 80px;
+  font-weight: 500;
+  padding-right: 18rem;
+}

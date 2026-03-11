@@ -1,0 +1,273 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  nama         String
+  email        String     @unique
+  telepon      String?
+  password     String
+  role         Role       @default(USER)
+  createdAt    DateTime   @default(now())
+  deletedAt    DateTime?
+
+  langganan    Langganan[]
+  ulasan       Ulasan[]
+  notif        Notif[]
+  csTickets    CustomerServiceTicket[]
+  csMessages   CustomerServiceMessage[]
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model ProfilPerusahaan {
+  id             Int    @id @default(autoincrement())
+  namaPerusahaan String
+  deskripsi      String
+  alamat         String
+  telepon        String
+  email          String
+  logo           String?
+  lat            String?
+  lng            String?
+}
+
+model Layanan {
+  id              Int        @id @default(autoincrement())
+  namaLayanan     String
+  hargaBulanan    Int
+  biayaInstalasi  Int
+  kecepatanMbps   Int
+  deskripsi       String
+  status          LayananStatus @default(AKTIF)
+  createdAt       DateTime   @default(now())
+
+  ulasan          Ulasan[]
+  langganan       Langganan[]
+  benefit         Benefit[]
+}
+
+model Benefit{
+  id              Int        @id @default(autoincrement())
+  layananId       Int
+  nama_benefit    String
+
+  layanan           Layanan    @relation(fields: [layananId], references: [id])
+
+}
+
+enum LayananStatus {
+  AKTIF
+  NONAKTIF
+}
+
+model Langganan {
+  id                Int        @id @default(autoincrement())
+  userId            Int
+  layananId         Int
+  alamatPemasangan  String
+  tanggalPengajuan  DateTime   @default(now())
+  status            LanggananStatus @default(PENDING)
+
+  user              User       @relation(fields: [userId], references: [id])
+  layanan           Layanan    @relation(fields: [layananId], references: [id])
+  csTickets         CustomerServiceTicket[]
+}
+
+enum LanggananStatus {
+  PENDING
+  DIPROSES
+  DITERIMA
+  DITOLAK
+}
+
+model Galeri {
+  id        Int      @id @default(autoincrement())
+  judul     String?
+  gambar    String
+  kategoriId  Int
+  deskripsi String?
+  createdAt DateTime @default(now())
+
+  kategori   KategoriGaleri @relation(fields: [kategoriId], references: [id])
+}
+
+model KategoriGaleri {
+  id     Int @id @default(autoincrement())
+  nama   String
+  warna  String?
+
+  galeri Galeri[]
+}
+
+
+model Ulasan {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  layananId Int?
+
+  rating    Int
+  komentar  String
+  helpfulCount Int         @default(0)
+
+  status    UlasanStatus   @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+
+  layanan   Layanan? @relation(fields: [layananId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, layananId])
+}
+
+enum UlasanStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Artikel {
+  id        Int      @id @default(autoincrement())
+  judul     String
+  slug      String   @unique
+  konten    String
+  status    ArtikelStatus @default(DRAFT)
+  gambar    String?
+  createdAt DateTime @default(now())
+}
+
+enum ArtikelStatus {
+  DRAFT
+  PUBLISHED
+}
+
+
+model Faq {
+  id        Int      @id @default(autoincrement())
+  pertanyaan String
+  jawaban    String
+  kategori   FaqKategori
+  urutan     Int @default(0)
+  isActive   Boolean @default(false)
+  views      Int @default(0)
+  helpful    Int @default(0)
+  notHelpful Int @default(0)
+  createdAt  DateTime @default(now())
+}
+
+enum FaqKategori {
+  UMUM
+  PEMBAYARAN
+  TEKNIS
+  LAINNYA
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  email     String
+  telepon   String?
+  pesan     String
+  status ContactStatus @default(NEW)
+  catatanAdmin String?
+  createdAt DateTime @default(now())
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  FOLLOWED_UP
+}
+
+model Notif {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  judul     String?
+  pesan     String?
+  status    NotifStatus @default(UNREAD)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+enum NotifStatus {
+  READ
+  UNREAD
+}
+
+model Banner {
+  id        Int      @id @default(autoincrement())
+  judul     String?
+  gambar    String
+  link      String?
+  status    BannerStatus @default(AKTIF)
+  createdAt DateTime @default(now())
+}
+
+enum BannerStatus {
+  AKTIF
+  NONAKTIF
+}
+
+model CoverageArea {
+  id        Int      @id @default(autoincrement())
+  namaArea  String
+  status    AreaStatus @default(TERSEDIA)
+}
+
+enum AreaStatus {
+  TERSEDIA
+  TIDAK_TERSEDIA
+}
+
+model Promo {
+  id            Int      @id @default(autoincrement())
+  judul         String
+  deskripsi     String
+  diskon        Int
+  berlakuSampai DateTime
+  createdAt     DateTime @default(now())
+}
+
+model CustomerServiceTicket {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  langgananId  Int
+  judul        String
+  status       CSTicketStatus @default(OPEN)
+  createdAt    DateTime @default(now())
+  closedAt     DateTime?
+
+  user         User       @relation(fields: [userId], references: [id])
+  langganan    Langganan  @relation(fields: [langgananId], references: [id])
+  messages     CustomerServiceMessage[]
+}
+
+enum CSTicketStatus {
+  OPEN
+  DIPROSES
+  SELESAI
+}
+
+model CustomerServiceMessage {
+  id        Int      @id @default(autoincrement())
+  ticketId  Int
+  senderId  Int
+  pesan     String
+  createdAt DateTime @default(now())
+
+  ticket    CustomerServiceTicket @relation(fields: [ticketId], references: [id])
+  sender    User @relation(fields: [senderId], references: [id])
+}

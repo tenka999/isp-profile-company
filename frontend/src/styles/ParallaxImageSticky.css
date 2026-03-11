@@ -1,0 +1,86 @@
+.cinematic-section {
+  position: relative;
+  margin-top: 10rem;
+  height: 260vh; /* penting supaya sticky tahan lama */
+  background: #000000;
+}
+
+/* Sticky Text */
+.sticky-wrapper {
+  position: sticky;
+  top: -15rem;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 5vw;
+  z-index: 1;
+}
+
+.big-text {
+  font-size: 10vw;
+  font-weight: 800;
+  line-height: 1;
+}
+.sticky-wrapper .big-text {
+  position: relative;
+  left: -2rem;
+}
+
+/* Images container */
+.images-wrapper {
+  position: relative;
+  /* margin-top: -100vh; bikin overlap ke sticky */
+}
+
+/* Base image style */
+.image {
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  position: sticky;
+  top: 30vh;
+}
+
+.image img {
+  width: 100%;
+  display: block;
+  border-radius: 24px;
+}
+
+/* Overlapping effect */
+.image-1 {
+  z-index: 1;
+}
+
+.image-2 {
+  z-index: 2;
+  top: 20vh;
+}
+.image-3 {
+  top: 10vh;
+  z-index: 3;
+}
+
+.image-text-description {
+  position: absolute;
+  z-index: 1;
+}
+
+.image-text-description .big-text {
+  font-size: 1.4em;
+  padding: 2rem;
+  padding-bottom: 0rem;
+}
+
+.image-text-description.right {
+  right: 0;
+}
+
+.images-wrapper p {
+  position: relative;
+  width: 300px;
+  color: rgba(255, 255, 255, 0.721);
+  padding: 0 4rem;
+}

@@ -1,0 +1,144 @@
+/* @tailwind utilities; */
+:root {
+  --primary-black: #0a0a0f;
+  --white: #fafafa;
+  --neon-pink: #ff006e;
+  --neon-purple: #b537f2;
+  --neon-cyan: #00f5ff;
+  --accent-magenta: #e91e8c;
+  --border-color: #2a2a3e;
+  --bg: #0d0e20;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+.grid {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* progress bar countdown */
+.undo-toast .progress {
+  height: 4px;
+  background: var(--primary-color);
+  animation: shrink 5s linear forwards;
+  border-radius: 4px;
+}
+
+/* shake near end */
+.undo-toast {
+  animation: shake 0.4s ease-out infinite 1.5s;
+}
+
+.bg {
+  background-color: black;
+}
+
+@keyframes shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.stat-card {
+  /* Base styles */
+  background: var(--surface-card, #ffffff);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #4ade80;
+  background-color: #8bfcb5;
+  background-color: #1c1c1c; */
+  cursor: pointer;
+  /* background-color: #3d4858; */
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Subtle shadow */
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* Border for definition */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* Position relative for pseudo-elements */
+  position: relative;
+
+  /* Prevent content shift on hover */
+  transform: translateZ(0);
+
+  /* Better text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hover state with elegant lift */
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.15),
+    0 10px 10px -5px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(99, 102, 241, 0.1) inset;
+}
+
+/* Active/Pressed state */
+.stat-card:active {
+  transform: translateY(-4px) scale(1.01);
+  transition: all 0.1s ease;
+}
+
+/* Elegant glow effect on hover */
+
+/* Subtle shine effect */
+
+.custom-switch.p-inputswitch {
+  width: 42px;
+  height: 22px;
+}
+
+.custom-switch .p-inputswitch-slider {
+  background: #374151;
+}
+
+.custom-switch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #10b981;
+}
+
+.custom-switch .p-inputswitch-slider:before {
+  width: 18px;
+  height: 18px;
+  left: 2px;
+  margin-top: -9px;
+}
+
+.statusActiveFaq {
+  display: flex;
+  gap: 1rem;
+}

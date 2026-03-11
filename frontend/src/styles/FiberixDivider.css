@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --neon-pink: #ff006e;
+  --neon-purple: #b537f2;
+  --neon-cyan: #00f5ff;
+  --primary-black: #0a0a0f;
+}
+
+/* Diagonal Divider Container */
+.diagonal-divider {
+  width: 100%;
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+  transform: scaleY(0.7) skewY(-8deg);
+  font-family: "Manrope", sans-serif;
+  margin-top: -4rem;
+}
+
+/* Dark Theme - Default */
+.diagonal-divider.dark {
+  background: linear-gradient(
+    135deg,
+    rgba(10, 10, 15, 0.95) 0%,
+    rgba(26, 11, 46, 0.95) 100%
+  );
+  border-top: 2px solid var(--neon-pink);
+  border-bottom: 2px solid var(--neon-purple);
+  box-shadow:
+    0 10px 40px rgba(255, 0, 110, 0.2),
+    inset 0 2px 20px rgba(181, 55, 242, 0.1);
+}
+
+/* Text Track Container - Bergerak mengikuti diagonal */
+.text-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  display: flex;
+  animation: scrollDiagonal 25s linear infinite;
+  will-change: transform;
+}
+
+/* Animasi bergerak dari kanan ke kiri */
+@keyframes scrollDiagonal {
+  from {
+    transform: translateX(0) translateY(-50%);
+  }
+  to {
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+/* Individual Text Items */
+.text-item {
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  padding: 0 60px;
+  display: inline-block;
+  position: relative;
+}
+
+/* Dark Theme Text Colors */
+.diagonal-divider.dark .text-item {
+  color: rgba(255, 0, 110, 0.15);
+}
+
+.diagonal-divider.dark .text-item:nth-child(odd) {
+  color: var(--neon-pink);
+  text-shadow: 0 0 30px rgba(255, 0, 110, 0.8);
+}
+
+.diagonal-divider.dark .text-item:nth-child(even) {
+  color: rgba(181, 55, 242, 0.2);
+}
+
+/* Decorative Icons */
+.text-item::before {
+  content: "●";
+  margin-right: 30px;
+  font-size: 24px;
+}
+
+.text-item::after {
+  content: "●";
+  margin-left: 30px;
+  font-size: 24px;
+}
+
+/* Alternative: Gradient variant for dark theme */
+.diagonal-divider.dark-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--neon-pink) 0%,
+    var(--neon-purple) 100%
+  );
+  border: none;
+  box-shadow: 0 10px 40px rgba(255, 0, 110, 0.3);
+}
+
+.diagonal-divider.dark-gradient .text-item {
+  color: rgba(10, 10, 15, 0.15);
+}
+
+.diagonal-divider.dark-gradient .text-item:nth-child(odd) {
+  color: rgba(250, 250, 250, 0.95);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.diagonal-divider.dark-gradient .text-item:nth-child(even) {
+  color: rgba(10, 10, 15, 0.2);
+}
+
+/* Subtle dark variant */
+.diagonal-divider.dark-subtle {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 245, 255, 0.05) 0%,
+    rgba(181, 55, 242, 0.05) 100%
+  );
+  border-top: 2px solid var(--neon-cyan);
+  border-bottom: 2px solid var(--neon-purple);
+  box-shadow: none;
+}
+
+.diagonal-divider.dark-subtle .text-item {
+  color: rgba(0, 245, 255, 0.2);
+}
+
+.diagonal-divider.dark-subtle .text-item:nth-child(odd) {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 30px rgba(0, 245, 255, 0.6);
+}
+
+/* Hover Effect - Optional */
+
+/* Responsive */
+@media (max-width: 768px) {
+  .diagonal-divider {
+    height: 80px;
+  }
+
+  .text-item {
+    font-size: 32px;
+    letter-spacing: 4px;
+    padding: 0 40px;
+  }
+
+  .text-item::before,
+  .text-item::after {
+    font-size: 16px;
+    margin: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .diagonal-divider {
+    height: 60px;
+  }
+
+  .text-item {
+    font-size: 24px;
+    letter-spacing: 3px;
+    padding: 0 30px;
+  }
+
+  .text-item::before,
+  .text-item::after {
+    font-size: 12px;
+    margin: 0 15px;
+  }
+}

@@ -1,0 +1,433 @@
+/* App.css */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* Background Map Effect */
+.map-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: linear-gradient(145deg, #0b2b3b 0%, #1a4b5e 50%, #0e3b4a 100%); */
+  z-index: -2;
+}
+
+.map-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" opacity="0.15"><path d="M200,100 L300,80 L350,150 L280,200 L180,180 L150,120 Z" fill="none" stroke="%23aaddff" stroke-width="2"/><path d="M500,300 L600,280 L650,350 L580,400 L480,380 L450,320 Z" fill="none" stroke="%23aaddff" stroke-width="2"/><circle cx="250" cy="250" r="30" fill="none" stroke="%23aaddff" stroke-width="2"/><circle cx="550" cy="200" r="40" fill="none" stroke="%23aaddff" stroke-width="2"/><path d="M150,400 Q250,350 300,450 T400,480" fill="none" stroke="%23aaddff" stroke-width="2" stroke-dasharray="5,5"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.3;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 20% 30%,
+    rgba(10, 50, 70, 0.4) 0%,
+    rgba(5, 30, 45, 0.8) 100%
+  );
+  backdrop-filter: blur(3px);
+}
+
+/* Header Styles */
+.header {
+  position: relative;
+  padding: 2rem 2rem 1rem;
+  text-align: center;
+  z-index: 10;
+  color: rgb(94, 94, 94);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff 0%, #a8e0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.title i {
+  margin-right: 15px;
+  color: #4db8ff;
+  -webkit-text-fill-color: initial;
+}
+
+.subtitle {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: #cce7ff;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.covered {
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
+}
+
+.dot.not-covered {
+  background: #f87171;
+  box-shadow: 0 0 10px #f87171;
+}
+
+/* Main Content */
+.main {
+  padding: 1rem 2rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 5;
+}
+
+.city-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.province-section {
+  width: 100%;
+}
+
+.province-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  border-left: 5px solid #4db8ff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  cursor: default;
+  transition: transform 0.3s ease;
+}
+
+.province-title:hover {
+  transform: translateX(10px);
+}
+
+.coverage-badge {
+  font-size: 0.9rem;
+  background: rgba(77, 184, 255, 0.3);
+  backdrop-filter: blur(5px);
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(77, 184, 255, 0.5);
+  font-weight: 400;
+}
+
+.city-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Glassmorphism Card Styles */
+.city-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 1.2rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  position: relative;
+  overflow: hidden;
+}
+
+.city-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.7s ease;
+}
+
+.city-card:hover::before {
+  left: 100%;
+}
+
+.city-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.city-card.hover-effect {
+  border-color: #4db8ff;
+  box-shadow: 0 0 20px rgba(77, 184, 255, 0.5);
+}
+
+.city-card.covered {
+  border-left: 4px solid #4ade80;
+}
+
+.city-card.not-covered {
+  border-left: 4px solid #f87171;
+  opacity: 0.9;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.city-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.city-icon {
+  font-size: 1.2rem;
+  color: #aaddff;
+}
+
+.city-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.status-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.wifi-icon {
+  font-size: 1.1rem;
+}
+
+.wifi-icon.covered {
+  color: #4ade80;
+  filter: drop-shadow(0 0 5px #4ade80);
+}
+
+.wifi-icon.not-covered {
+  color: #f87171;
+  filter: drop-shadow(0 0 5px #f87171);
+}
+
+.status-text {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.status-text.covered {
+  color: #4ade80;
+}
+
+.status-text.not-covered {
+  color: #f87171;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.8rem;
+}
+
+.province-tag {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  color: #cce7ff;
+}
+
+.speed-tag {
+  background: rgba(74, 222, 128, 0.2);
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.speed-tag i {
+  font-size: 0.7rem;
+}
+
+/* Footer */
+.footer {
+  position: relative;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 20, 30, 0.5);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 10;
+}
+
+.footer p {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  color: #cce7ff;
+  margin-bottom: 0.5rem;
+}
+
+.interactive-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: #8bb9d1;
+}
+
+.interactive-hint i {
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .province-title {
+    font-size: 1.5rem;
+  }
+
+  .city-cards {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .legend {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .main {
+    padding: 1rem 1rem 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .city-card {
+    padding: 1rem;
+  }
+
+  .city-name {
+    font-size: 1rem;
+  }
+
+  .card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 40, 55, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4db8ff, #1a6b8a);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #6cc5ff, #2d8bb0);
+}

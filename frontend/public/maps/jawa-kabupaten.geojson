@@ -1,0 +1,125 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3171",
+        "name": "Jakarta Selatan",
+        "province": "DKI Jakarta"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [106.79, -6.29],
+            [106.85, -6.29],
+            [106.85, -6.24],
+            [106.79, -6.24],
+            [106.79, -6.29]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3273",
+        "name": "Kota Bandung",
+        "province": "Jawa Barat"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [107.56, -6.95],
+            [107.73, -6.95],
+            [107.73, -6.85],
+            [107.56, -6.85],
+            [107.56, -6.95]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3275",
+        "name": "Kota Bekasi",
+        "province": "Jawa Barat"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [106.95, -6.3],
+            [107.05, -6.3],
+            [107.05, -6.2],
+            [106.95, -6.2],
+            [106.95, -6.3]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3374",
+        "name": "Kota Semarang",
+        "province": "Jawa Tengah"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [110.35, -7.05],
+            [110.5, -7.05],
+            [110.5, -6.9],
+            [110.35, -6.9],
+            [110.35, -7.05]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3471",
+        "name": "Kota Yogyakarta",
+        "province": "DI Yogyakarta"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [110.34, -7.85],
+            [110.45, -7.85],
+            [110.45, -7.75],
+            [110.34, -7.75],
+            [110.34, -7.85]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3578",
+        "name": "Kota Surabaya",
+        "province": "Jawa Timur"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [112.65, -7.35],
+            [112.82, -7.35],
+            [112.82, -7.15],
+            [112.65, -7.15],
+            [112.65, -7.35]
+          ]
+        ]
+      }
+    }
+  ]
+}

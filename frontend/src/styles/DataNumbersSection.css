@@ -1,0 +1,263 @@
+/* DataNumbersSection.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.data-numbers-section {
+  background-color: black;
+  margin-top: 20rem;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    sans-serif;
+}
+
+.data-numbers-section .container {
+  max-width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  /* margin: 0 auto; */
+  /* padding: 0 40px; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.data-numbers-section .section-title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 70px;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 100%;
+}
+
+.section-title .number-item {
+  grid-row-start: 3;
+}
+
+.title-highlight {
+  color: #2563eb;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title-text {
+  padding: 2rem 5rem;
+  font-size: 1.5em;
+  text-align: start;
+  font-weight: 500;
+  grid-row: span 2 / span 2;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.numbers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column: span 2 / span 2;
+  grid-row: span 3 / span 3;
+}
+
+.number-item {
+  text-align: center;
+  padding: 4rem 15px;
+  transition: all 0.3s ease;
+  /* border-bottom: 2px solid transparent; */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.number-item:hover {
+  transform: translateY(-5px);
+}
+
+.number-value {
+  font-size: 72px;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 15px;
+  line-height: 1;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f1f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.number-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.number-item.leave {
+  padding: 6.3rem 0;
+}
+
+/* Specific styling untuk label yang panjang */
+.number-item:nth-child(3) .number-label {
+  max-width: 280px;
+}
+
+/* Hover effect untuk label */
+.number-item:hover {
+  /* background: "#6C3EFF"; */
+  background: #6c3eff;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .numbers-grid {
+    gap: 40px 30px;
+  }
+
+  .number-value {
+    font-size: 60px;
+  }
+
+  .section-title {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 768px) {
+  .data-numbers-section {
+    padding: 70px 0;
+  }
+
+  .container {
+    padding: 0 30px;
+  }
+
+  .numbers-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 25px;
+  }
+
+  .section-title {
+    font-size: 36px;
+    margin-bottom: 50px;
+  }
+
+  .number-value {
+    font-size: 52px;
+  }
+
+  .number-label {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .data-numbers-section {
+    padding: 50px 0;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .numbers-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .number-value {
+    font-size: 48px;
+  }
+
+  .number-label {
+    font-size: 14px;
+    max-width: 100%;
+  }
+}
+
+/* Optional: Animation for entrance */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.number-item {
+  animation: slideUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.number-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.number-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.number-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.number-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.number-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.number-item:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+/* Smooth transition untuk angka */
+.number-value {
+  transition: all 0.1s ease-out;
+}
+
+.about-page-footer {
+  width: 100%;
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rem;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-big-text {
+  margin-left: -1rem;
+  font-size: 20em;
+  font-weight: 800;
+  line-height: 1;
+  color: white;
+}
+
+.about-footer-subtext {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 1rem;
+  align-items: center;
+  color: white;
+  font-size: 1em;
+  font-weight: 300;
+}
