@@ -167,7 +167,7 @@ const LandingPage = () => {
       </section>
       <PrincingSection />
       <ScrollVelocity
-        texts={["FIBERIX", "XIREBIF"]}
+        texts={["FIBERIX •", "FIBERIX •"]}
         velocity={50}
         className="custom-scroll-text"
       />

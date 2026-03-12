@@ -42,7 +42,7 @@ export default function ScrollFillText() {
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         .wrapper {
-          background: #0a0a0a;
+          background: #000;
           min-height: 100vh;
         }
 
