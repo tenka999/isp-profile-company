@@ -138,7 +138,7 @@ const LandingPage = () => {
           </div>
           <div className="about-box6">
             <button
-              className="learn-more-btn .abou"
+              className="learn-more-btn "
               onClick={() => {
                 (navigate("/about"), window.scrollTo(0, 0));
               }}

@@ -214,7 +214,7 @@ const ArticleSection = () => {
   };
 
   return (
-    <div className="container ">
+    <div className="container article-section">
       {/* Events Section */}
       <div className="section-header news">
         {/* <div className="section-icon">C</div> */}

@@ -123,7 +123,7 @@ const SpotlightGallery = () => {
           </div>
           <div className="">
             <div
-              className="learn-more-btn"
+              className="learn-more-btn gallery"
               onClick={() => navigate("/gallery")}
             >
               <span className="btn-text">See More</span>

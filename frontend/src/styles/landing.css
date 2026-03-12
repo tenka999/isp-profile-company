@@ -1008,7 +1008,7 @@ body {
 }
 
 .about-box6 {
-  grid-area: 6 / 3 / 6 / 5;
+  grid-area: 6 / 3 / 3 / 5;
   position: relative;
 }
 
@@ -1471,6 +1471,10 @@ body {
   margin: 0 auto;
   padding: 80px 40px;
   z-index: 10;
+}
+
+.container.article-section {
+  margin-top: 140px;
 }
 
 /* Section Header */

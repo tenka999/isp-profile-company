@@ -357,7 +357,7 @@ body {
 
 .gallery-title {
   position: absolute;
-  font-size: 22em;
+  font-size: 22rem;
   font-weight: 700;
   left: -6rem;
   color: #ffffff;
@@ -383,14 +383,15 @@ body {
   );
 }
 
-.learn-more-btn {
+.learn-more-btn.gallery {
   position: relative;
   padding: 14px 40px;
   font-size: 1rem;
   font-family: "Inter", sans-serif;
   font-weight: 500;
-  color: #ffffff;
-  background: transparent;
+  color: #fff;
+  background: #000;
+  outline: 15px solid #000;
   border: 2px solid #ffffff;
   border-radius: 50px;
   cursor: pointer;
@@ -399,9 +400,11 @@ body {
   align-items: center;
   gap: 8px;
   transition: color 0.4s ease;
-  z-index: 1;
+  z-index: 2;
   transform: scale(0.8);
-  top: -2rem;
+  top: 13rem;
+  backdrop-filter: blur(10px);
+  left: 1rem;
 }
 
 .learn-more-btn::before {
@@ -527,7 +530,8 @@ body {
   width: 64px;
   height: 64px;
   background: rgba(26, 26, 46, 0.8);
-  border: 2px solid var(--border-color);
+  background-color: #000;
+  border: 2px solid white;
   color: var(--white);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -597,7 +601,7 @@ body {
 .btn-text {
   display: flex;
   flex-direction: column;
-  transform: translateY(0);
+  /* transform: translateY(100px); */
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
