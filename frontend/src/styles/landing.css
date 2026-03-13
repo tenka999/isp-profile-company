@@ -1475,6 +1475,7 @@ body {
 
 .container.article-section {
   margin-top: 140px;
+  background-color: black;
 }
 
 /* Section Header */
@@ -1543,7 +1544,7 @@ body {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 20px;
   margin: -20px;
-  background: rgba(26, 26, 46, 0.4);
+  background-color: black;
   border: 1px solid var(--border-color);
 }
 .article-card:hover {

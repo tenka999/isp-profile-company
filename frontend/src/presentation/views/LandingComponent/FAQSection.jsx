@@ -77,6 +77,7 @@ const FAQS = [
 ];
 
 const CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -104,6 +105,7 @@ const CSS = `
   .faq {
     position: relative;
     border-top: 1px solid var(--line);
+    background:black;
   }
 
   /* Top header row (like "LET'S TALK →" area) */
@@ -273,6 +275,103 @@ const CSS = `
     color: var(--text-2);
   }
 
+  .faq-inner{
+  height:400px;
+  
+  }
+
+  .faq-headline h1{
+  font-size: 195px;
+  line-height:0.1;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.05em;
+  text-align:end;
+  line-height: .75;
+  padding-right: 20px;
+  transition: color 0.2s;
+  }
+
+  .faq-subline{
+  padding-right: 20px;
+  text-align:end;
+  font-size: 20px;
+  margin-top: -15px;
+  color: #ffffffa1;
+
+  }
+
+  .faq-bottom-text h1{
+  font-size: 195px;
+  line-height:0.1;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  text-align:start;
+  line-height: .75;
+  padding-right: 20px;
+  transition: color 0.2s;
+  }
+
+  .faq-bottom-subtext{
+  color: #ffffffa1;
+  font-size: 17px;
+  margin-left: 15px;
+  
+  margin-top: -55px;}
+
+  .faq-bottom-buttons{
+  position:relative;
+  top:-9rem;
+  left:-11rem;
+  display:flex;
+  height:120px;
+  gap:10px;
+  width:340px;
+  flex-direction: column;
+  }
+
+  .faq-bottom-btn{
+  font-weight: 600;
+  letter-spacing: 2px ;
+  flex:1;
+  z-index:1;
+  overflow:hidden;
+  background:black;
+  position:relative;
+  }
+  
+  .faq-bottom-btn::before{
+  content:"";
+  left:0;
+  top:0;
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:white;
+  
+  opacity:1;
+  z-index:-1;
+  tranform-origin:bottom;
+  transform:translateY(-120%);
+  transition:transform 0.3s ease;
+  }
+
+  .faq-bottom-btn:hover::before{
+  opacity:1;
+  transform:translateY(0);
+  transition:transform 0.3s ease;
+  }
+
+  .faq-bottom-btn:active{
+  transform:translateY(2px) scale(0.98);
+  box-shadow:inset 0 3px 8px rgba(0,0,0,0.6);
+}
+
+  .faq-bottom-btn:hover{
+  color:black;
+  }
+
   /* Middle: answer text */
   .faq-row-answer { padding: 0 40px 0 0; }
 
@@ -374,13 +473,24 @@ export function FAQSection() {
     <>
       <style>{CSS}</style>
       <section className="faq">
-        {/* Top bar */}
-        <div className="faq-topbar">
+        {/* <div className="faq-topbar">
           <div className="faq-topbar-left">
             Veloxity · FAQ · Pertanyaan Umum
           </div>
           <button className="faq-talk-btn">Hubungi Support &nbsp;→</button>
           <div className="faq-plus-deco">+</div>
+        </div> */}
+        <div className="faq-inner">
+          <div className="faq-headline">
+            <h1>
+              KNOWLEDGE <br />
+              <span>TERMINAL</span>
+            </h1>
+          </div>
+          <div className="faq-subline">
+            Everything you need to know about synchronizing with our network.
+            Clear answers for a seamless connection.
+          </div>
         </div>
 
         {/* Rows */}
@@ -443,7 +553,7 @@ export function FAQSection() {
 
         {/* Bottom bar */}
         <div className="faq-bottom">
-          <div className="faq-bottom-left">
+          {/* <div className="faq-bottom-left">
             Masih ada pertanyaan lain? Hubungi tim kami kapan saja.
           </div>
           <div className="faq-bottom-stats">
@@ -461,6 +571,16 @@ export function FAQSection() {
               <div className="faq-bstat-num">&lt;15m</div>
               <div className="faq-bstat-label">Respons</div>
             </div>
+          </div> */}
+          <div className="faq-bottom-text">
+            <h1>Still Out Of Range?</h1>
+          </div>
+          <div className="faq-bottom-subtext">
+            Connect with our technical advisors.
+          </div>
+          <div className="faq-bottom-buttons">
+            <button className="faq-bottom-btn">OPEN TRANSMISSION</button>
+            <button className="faq-bottom-btn">CONTACT SUPPORT</button>
           </div>
         </div>
       </section>

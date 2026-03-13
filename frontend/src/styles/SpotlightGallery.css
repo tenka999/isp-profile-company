@@ -33,6 +33,7 @@ body {
 .gallery-section {
   padding: 80px 0;
   overflow: hidden;
+  background-color: black;
 }
 
 .gallery-section::before {

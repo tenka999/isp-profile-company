@@ -142,7 +142,7 @@ model Artikel {
   id        Int      @id @default(autoincrement())
   judul     String
   slug      String   @unique
-  konten    String
+  konten    String  
   status    ArtikelStatus @default(DRAFT)
   gambar    String?
   createdAt DateTime @default(now())

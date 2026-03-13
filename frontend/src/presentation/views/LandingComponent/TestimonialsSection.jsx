@@ -13,6 +13,7 @@ const css = `
     flex-direction: column;
     align-items:center;
     padding: 128px 24px;
+    background:black;
   }
 
   .ts-inner {
@@ -45,7 +46,7 @@ const css = `
     font-weight: 900;
     font-size: clamp(60px, 9vw, 118px);
     line-height: 0.9;
-    letter-spacing: -0.07em;
+    letter-spacing: -0.02em;
     color: #f5f5f0;
 
   }
@@ -199,6 +200,10 @@ const css = `
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 24px;
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 30px;
+    padding: 10px 36px;
 
   }
 
@@ -211,7 +216,7 @@ const css = `
 
   .ts-dot {
     height: 2px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.25);
     border-radius: 2px;
     transition: width 0.4s ease, background 0.4s ease;
     cursor: pointer;
@@ -228,7 +233,7 @@ const css = `
     display: flex;
     align-items: center;
     gap: 0;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
     border-radius: 100px;
     overflow: hidden;
   }
@@ -274,9 +279,9 @@ const css = `
   /* Count */
   .ts-count {
     font-family: 'Playfair Display', serif;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 700;
-    color: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.38);
     letter-spacing: 0.05em;
   }
 
