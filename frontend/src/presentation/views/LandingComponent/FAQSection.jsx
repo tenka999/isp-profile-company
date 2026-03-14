@@ -151,7 +151,6 @@ const CSS = `
     border-bottom: 1px solid var(--line);
     position: relative; overflow: hidden;
     cursor: pointer;
-    transition: background 0.2s;
   }
   .faq-row:hover { 
     background:white;
@@ -186,7 +185,7 @@ const CSS = `
   .faq-row-num {
     font-size: clamp(36px, 5vw, 60px);
     font-weight: 800;
-    color: var(--text-4);
+    color: white;
     letter-spacing: -0.02em;
     line-height: 1;
     transition: color 0.22s;

@@ -218,7 +218,9 @@ const ArticleSection = () => {
       {/* Events Section */}
       <div className="section-header news">
         {/* <div className="section-icon">C</div> */}
-        <h1 className="section-title-news">News</h1>
+        <h1 className="section-title-news">
+          News <span>FIBERIX</span>
+        </h1>
         <div className="see-more-btn news" onClick={() => navigate("/article")}>
           <span className="btn-text">See More</span>
           <span className="btn-icon">

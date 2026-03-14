@@ -1094,10 +1094,13 @@ body {
 .see-more-btn {
   position: relative;
   top: 5.5rem;
-  padding: 10px 0px 10px 0px;
   display: flex;
   cursor: pointer;
   /* border-bottom: 1px solid white; */
+}
+
+.see-more-btn.news {
+  top: -6.5rem;
 }
 .see-more-btn::after {
   content: "";
@@ -1482,7 +1485,7 @@ body {
 .section-header {
   display: flex;
   align-items: center;
-  gap: 20px;
+  flex-direction: column;
   animation: slideDown 0.8s ease-out;
 }
 
@@ -1509,13 +1512,40 @@ body {
 .section-title-news {
   font-family: "Spectral", serif;
   font-size: 15em;
-  left: 0;
   position: relative;
   font-weight: 700;
+  font-size: clamp(4rem, 15vw, 15rem);
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: #ffffff;
-  bottom: -3rem;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #ffffff;
+  top: -2rem;
+  z-index: 0;
+}
+
+.section-title-news span {
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  top: 49%;
+  font-size: clamp(10px, 3.1vw, 50px);
+  transform: translate(-48%, -50%);
+  padding: 0 1rem;
+  color: #ffffff;
+  background-color: black;
+}
+
+.section-title-news::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  border-bottom: 8px solid #ffffff;
+  z-index: -1;
 }
 
 .learn-more-btn.news {
