@@ -165,7 +165,7 @@ const CSS = `
   }
 
   .faq-row.open{
-  background:white;
+  background:#eaeaea;
   }
   .faq-row.open .faq-row-q{
   color:black;
@@ -206,27 +206,39 @@ const CSS = `
 
   .faq-row-cat {
     font-family: 'DM Mono', monospace;
-    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
     color: var(--text-3);
     padding: 0 40px;
     white-space: nowrap;
     transition: color 0.2s;
+    color: #ededed;
   }
-  .faq-row.open .faq-row-cat { color: var(--text-2); }
+
+  .faq-row:hover .faq-row-cat{
+  color:black;
+  }
+
+  .faq-row.open .faq-row-cat { color: black; }
 
   .faq-row-icon {
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 1px solid var(--line-h);
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 300; color: var(--text-3);
+    font-size: 38px; font-weight: 300; color: var(--text-3);
     transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
                 border-color 0.2s, color 0.2s;
     flex-shrink: 0;
+    color: #eaeaea;
+
   }
+
+  .faq-row:hover .faq-row-icon{
+  color:black;
+  }
+
+
   .faq-row.open .faq-row-icon {
     transform: rotate(45deg);
     border-color: rgba(255,255,255,0.25);
-    color: var(--text-2);
+    color: #000;
   }
 
   /* EXPANDED panel */
@@ -242,7 +254,7 @@ const CSS = `
     grid-template-columns: 120px 1fr 1fr;
     gap: 0;
     padding: 0 48px 44px;
-    background: white;
+    background: #eaeaea;
     border-top: 1px solid var(--line);
     padding-top: 36px;
     color:black;
@@ -378,13 +390,13 @@ const CSS = `
   }
 
   .faq-ans-label {
-    font-family: 'DM Mono', monospace;
+    font-fa mily: 'DM Mono', monospace;
     font-size: 7.5px; letter-spacing: 0.3em; color: var(--text-3);
     text-transform: uppercase; margin-bottom: 14px;
   }
 
   .faq-ans-text {
-    font-family: 'DM Mono', monospace;
+    font-family: 'sora', monospace;
     font-size: clamp(15px, 1.1vw, 13px);
     letter-spacing: 0.04em; color: var(--text-2);
     line-height: 1.85;
@@ -417,18 +429,23 @@ const CSS = `
   }
   .faq-row-cta {
     font-family: 'DM Mono', monospace;
-    font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--text-3); background: var(--surf);
+    font-weight: 600;
+    font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #eaeaea; background: black;
     border: 1px solid var(--line); border-radius: 3px;
     padding: 9px 16px; cursor: pointer;
     display: flex; align-items: center; gap: 8px;
     transition: all 0.18s;
   }
   .faq-row-cta:hover {
-    border-color: var(--line-h);
-    color: var(--text-2);
-    background: rgba(255,255,255,0.04);
+    border-color: black;
+    color: black;
+    background: rgba(0,0,0,0.04);
   }
+
+  .faq-row-cta:active{
+  transform:translateY(2px) scale(0.98);
+}
 
     .faq-row.open .faq-row-num{
   color:black;
@@ -519,18 +536,10 @@ export function FAQSection() {
                     onClick={(e) => e.stopPropagation()}
                   >
                     {/* Tags column */}
-                    <div className="faq-row-tags">
-                      <div className="faq-tag-label">Tags</div>
-                      {faq.tags.map((t, ti) => (
-                        <div key={ti} className="faq-tag">
-                          {t}
-                        </div>
-                      ))}
-                    </div>
+                    <div className="faq-row-tags"></div>
 
                     {/* Answer column */}
                     <div className="faq-row-answer">
-                      <div className="faq-ans-label">Jawaban</div>
                       <p className="faq-ans-text">{faq.answer}</p>
                       <div className="faq-row-cta-row">
                         <button className="faq-row-cta">
