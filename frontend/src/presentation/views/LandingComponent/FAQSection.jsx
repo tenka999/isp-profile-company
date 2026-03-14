@@ -148,12 +148,12 @@ const CSS = `
   .faq-list { }
 
   .faq-row {
-    border-bottom: 1px solid var(--line);
+    border-bottom: 2px dotted #ffffffa1;
     position: relative; overflow: hidden;
     cursor: pointer;
   }
   .faq-row:hover { 
-    background:white;
+    background:#eaeaea;
   
   }
 
@@ -283,7 +283,7 @@ const CSS = `
   font-size: 195px;
   line-height:0.1;
   font-weight: 900;
-  color: var(--text);
+  color: #eaeaea;
   letter-spacing: -0.05em;
   text-align:end;
   line-height: .75;
