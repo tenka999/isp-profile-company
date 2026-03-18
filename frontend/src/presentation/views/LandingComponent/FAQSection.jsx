@@ -93,6 +93,12 @@ const CSS = `
     --surf: rgba(255,255,255,0.025);
   }
 
+  @font-face {
+  font-family: "Stadium";
+  src: url("../../public/themes/fonts/Stadium.ttf")
+    format("opentype");
+}
+
   body {
     background: var(--bg);
     color: var(--text);
@@ -148,7 +154,6 @@ const CSS = `
   .faq-list { }
 
   .faq-row {
-    border-bottom: 2px dotted #ffffffa1;
     position: relative; overflow: hidden;
     cursor: pointer;
   }
@@ -175,6 +180,8 @@ const CSS = `
   /* COLLAPSED: title bar */
   .faq-row-header {
     display: grid;
+    border-top: 2px dotted #ffffffa1;
+
     grid-template-columns: 120px 1fr auto auto;
     align-items: center;
     padding: 28px 48px;
@@ -286,30 +293,39 @@ const CSS = `
     color: var(--text-2);
   }
 
-  .faq-inner{
+  .faq-inner-faq{
   height:400px;
-  
+  width:100%;
+  align-items:start;
+  padding:0;
+  margin:0;
+  position:relative;
   }
 
   .faq-headline h1{
-  font-size: 195px;
-  line-height:0.1;
-  font-weight: 900;
+  font-family: 'Stadium', monospace;
+  font-size: 35vw;
   color: #eaeaea;
-  letter-spacing: -0.05em;
   text-align:end;
-  line-height: .75;
-  padding-right: 20px;
+  letter-spacing: 0.02em;
+  position:relative;
+  width:100%;
+  flex:1;
+  top:6rem;
+  line-height: 0.4;
   transition: color 0.2s;
   }
 
   .faq-subline{
+  flex:1;
+  position:relative;
+  top:-2rem;
+  right:2.8rem;
   padding-right: 20px;
   text-align:end;
-  font-size: 20px;
-  margin-top: -15px;
+  font-size: 2.1vw;
+  align-self: flex-end;
   color: #ffffffa1;
-
   }
 
   .faq-bottom-text h1{
@@ -338,7 +354,7 @@ const CSS = `
   display:flex;
   height:120px;
   gap:10px;
-  width:340px;
+  width:510px;
   flex-direction: column;
   }
 
@@ -346,10 +362,19 @@ const CSS = `
   font-weight: 600;
   letter-spacing: 2px ;
   flex:1;
+  width:60%;
   z-index:1;
   overflow:hidden;
   background:black;
   position:relative;
+  }
+
+  .faq-bottom-btn.top{
+  align-self:flex-end;
+  }
+
+  .faq-bottom-btn.bottom{
+  align-self:flex-start;
   }
   
   .faq-bottom-btn::before{
@@ -496,16 +521,12 @@ export function FAQSection() {
           <button className="faq-talk-btn">Hubungi Support &nbsp;→</button>
           <div className="faq-plus-deco">+</div>
         </div> */}
-        <div className="faq-inner">
-          <div className="faq-headline">
-            <h1>
-              KNOWLEDGE <br />
-              <span>TERMINAL</span>
-            </h1>
-          </div>
+        <div className="faq-inner-faq">
           <div className="faq-subline">
-            Everything you need to know about synchronizing with our network.
-            Clear answers for a seamless connection.
+            Answers to our most frequent inquiries
+          </div>
+          <div className="faq-headline">
+            <h1>QUESTION.</h1>
           </div>
         </div>
 
@@ -581,14 +602,14 @@ export function FAQSection() {
             </div>
           </div> */}
           <div className="faq-bottom-text">
-            <h1>Still Out Of Range?</h1>
+            <h1>Need More Help?</h1>
           </div>
           <div className="faq-bottom-subtext">
             Connect with our technical advisors.
           </div>
           <div className="faq-bottom-buttons">
-            <button className="faq-bottom-btn">OPEN TRANSMISSION</button>
-            <button className="faq-bottom-btn">CONTACT SUPPORT</button>
+            <button className="faq-bottom-btn top">MORE QUESTIONS</button>
+            <button className="faq-bottom-btn bottom">CONTACT SUPPORT</button>
           </div>
         </div>
       </section>
