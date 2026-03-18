@@ -11,6 +11,15 @@
   --bg: #000000;
 }
 
+@font-face {
+  font-family: "Druk";
+  src: url("../../public/themes/fonts/DrukWideBold.woff") format("opentype");
+}
+@font-face {
+  font-family: "Sigana";
+  src: url("../../public/themes/fonts/big_noodle_titling.ttf")
+    format("opentype");
+}
 /* 
 body {
   font-family: "Manrope", sans-serif;
@@ -358,11 +367,12 @@ body {
 }
 
 .gallery-title {
+  font-family: "Sigana", serif;
   position: absolute;
-  font-size: 22rem;
-  font-weight: 700;
-  left: -6rem;
-  color: #ffffff;
+  font-size: 43vw;
+  left: -1.5rem;
+  top: -10rem;
+  color: #ffffff82;
 }
 
 .gallery-title.dua {
