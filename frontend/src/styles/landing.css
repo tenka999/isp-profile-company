@@ -39,6 +39,11 @@ body {
     format("opentype");
 }
 @font-face {
+  font-family: "Striker";
+  src: url("../../public/themes/fonts/striker.otf") format("opentype");
+}
+
+@font-face {
   font-family: "Flexible";
   src: url("../../public/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
     format("opentype");
@@ -597,14 +602,13 @@ body {
 }
 
 .pricing-head-title {
-  font-family: "Extenda 30 Deca";
-  font-size: 40em;
+  font-family: "Striker";
+  font-size: 83vw;
   font-weight: 900;
   line-height: 1;
   position: absolute;
-  top: -13rem;
-  left: -20px;
-  letter-spacing: 0.1em;
+  top: -9rem;
+  left: -90px;
   color: #000;
   -webkit-text-stroke: 2px rgba(255, 255, 255, 0.495);
 }
