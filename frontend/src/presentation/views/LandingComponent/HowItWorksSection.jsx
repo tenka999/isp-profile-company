@@ -55,7 +55,7 @@ export default function HowItWorksSection() {
 
         body {
           font-family: 'Inter', sans-serif;
-          background: #0a0a0a;
+          background: #000;
           color: #fff;
         }
 
@@ -65,7 +65,7 @@ export default function HowItWorksSection() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #0a0a0a;
+          background: #000;
         }
 
         .how-it-works-container {
@@ -93,7 +93,7 @@ export default function HowItWorksSection() {
           padding: 14px;
           box-shadow: 
             0 50px 100px rgba(0, 0, 0, 0.8),
-            inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            inset 0 0 0 2px rgba(255, 255, 255, 0.2);
           position: relative;
         }
 
@@ -264,7 +264,7 @@ export default function HowItWorksSection() {
 
         .step-card:hover {
           background: rgba(255, 255, 255, 0.05);
-          border-color: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 1);
           transform: translateX(8px);
         }
 
@@ -278,7 +278,7 @@ export default function HowItWorksSection() {
         }
 
         .step-card.active::before {
-          opacity: 1;
+          opacity: 0;
         }
 
         .step-header {
@@ -464,8 +464,11 @@ export default function HowItWorksSection() {
           {/* Right Side - Steps */}
           <div className="steps-content">
             <div className="steps-header">
-              <p className="steps-subtitle">How it works</p>
-              <h2 className="steps-title">How it works?</h2>
+              <p className="steps-subtitle">
+                Getting connected to our fiber network is a straightforward
+                process.
+              </p>
+              <h2 className="steps-title">Simple Connection</h2>
             </div>
 
             <div className="steps-list">

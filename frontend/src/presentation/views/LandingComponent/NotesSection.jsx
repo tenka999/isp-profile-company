@@ -37,6 +37,12 @@ export default function ScrollFillText() {
   return (
     <>
       <style>{`
+
+      @font-face {
+  font-family: "Flexible";
+  src: url("../../public/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
+    format("opentype");
+}
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,7 +60,7 @@ export default function ScrollFillText() {
         }
 
         .hint {
-          font-family: 'Barlow Condensed', sans-serif;
+          font-family: times, sans-serif;
           font-size: 0.65rem;
           letter-spacing: 0.35em;
           text-transform: uppercase;
@@ -62,7 +68,7 @@ export default function ScrollFillText() {
         }
 
         .section {
-          padding: 110px 64px 130px;
+          padding: 150px 64px 130px;
           position: relative;
         }
 
@@ -81,9 +87,9 @@ export default function ScrollFillText() {
 
         .line {
           display: block;
-          font-family: 'Barlow Condensed', sans-serif;
+          font-family: "timess", sans-serif;
           font-weight: 800;
-          font-size: clamp(3.5rem, 9vw, 9rem);
+          font-size: clamp(3.5rem, 10vw, 6rem);
           line-height: 1.0;
           letter-spacing: -0.01em;
           text-transform: uppercase;
