@@ -216,6 +216,7 @@ const ArticleSection = () => {
   return (
     <div className="container article-section">
       {/* Events Section */}
+      <div className="news-bg-text">NEWS</div>
       <div className="section-header news">
         {/* <div className="section-icon">C</div> */}
         <h1 className="section-title-news">

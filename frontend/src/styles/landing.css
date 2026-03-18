@@ -1501,6 +1501,16 @@ body {
   flex-direction: column;
   animation: slideDown 0.8s ease-out;
 }
+.news-bg-text {
+  position: absolute;
+  left: -0%;
+  font-size: 32vw;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.215);
+  line-height: 1;
+  pointer-events: none;
+  transition: transform 0.1s linear;
+}
 
 .section-icon {
   width: 48px;
