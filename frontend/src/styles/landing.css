@@ -34,6 +34,11 @@ body {
 }
 
 @font-face {
+  font-family: "pocity";
+  src: url("../../public/themes/fonts/pocity.otf") format("opentype");
+}
+
+@font-face {
   font-family: "Nokia Exp XBold";
   src: url("../../public/themes/fonts/NokiaExpanded-NormalExtraBold.otf")
     format("opentype");
@@ -1945,17 +1950,25 @@ body {
 }
 
 .landing-hero-title {
-  font-family: "montserrat", times;
-  font-size: 10rem;
+  font-family: "pocity", times;
+  font-size: 25vw;
   font-weight: 900;
 
   text-align: start;
-  line-height: 4.5rem;
+  line-height: 5rem;
+}
+
+.btn-hero-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .landing-hero-title span {
   color: linear-gradient(135deg, #8a2be2 0%, #0000ff 100%);
   font-weight: 800;
+  position: relative;
+  left: 8rem;
   padding-left: 1.5px;
   font-size: 9rem;
   line-height: 1;
@@ -1964,6 +1977,18 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.hero-bg-text {
+  font-size: 29vw;
+  position: absolute;
+  font-weight: 900;
+  left: -1rem;
+  top: 26rem;
+  z-index: -1;
+  color: #d8d8d83c;
+  letter-spacing: -2rem;
+}
+
 .landing-hero-title span {
   font-family: "Nokia Exp XBold", sans-serif;
   font-weight: 800; /* Memastikan menggunakan varian ExtraBold */

@@ -42,25 +42,27 @@ const LandingPage = () => {
       <div
         id="hero"
         className="hero-content min-h-screen bg-[url('/layout/background/realistic_wallpaper.jpg')] bg-cover bg-center"
+        style={{ overflow: "hidden" }}
       >
         <div className="">
           {/* <div className="badge">Case Study & Research</div> */}
           <h1 className="landing-hero-title">
             FUTURE <span>DRIVEN.</span>
           </h1>
-          <p className="landing-hero-subtitle">
+          {/* <p className="landing-hero-subtitle">
             Empowering your digital lifestyle with ultra-low latency and
             unbreakable bandwidth. The future of fiber is here.
-          </p>
+          </p> */}
           <div
-            className="gap-4 flex align-center justify-center  "
+            className="btn-hero-container"
             style={{
               position: "relative",
               left: "1rem",
-              top: "-2rem",
+              top: "-3rem",
               display: "flex",
               alignItems: "start",
-              justifyContent: "start",
+              justifyContent: "end",
+              gap: "1rem",
             }}
           >
             <button
@@ -93,6 +95,7 @@ const LandingPage = () => {
             </button>
           </div>
         </div>
+        <div className="hero-bg-text">FIBERIX</div>
       </div>
       <div className="gradient"></div>
       {/* <section className="remark ">
