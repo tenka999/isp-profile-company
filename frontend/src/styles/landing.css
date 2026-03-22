@@ -465,8 +465,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
+
   max-width: 1200px;
-  transform: scale(1);
+  transform: scale(1) translateX(-20px);
 }
 
 .pricing-card {
@@ -602,15 +603,29 @@ body {
 }
 
 .pricing-head-title {
+  display: flex;
   font-family: "Striker";
-  font-size: 83vw;
+  font-size: 70vw;
   font-weight: 900;
   line-height: 1;
   position: absolute;
   top: -9rem;
-  left: -90px;
+  width: 100%;
+  justify-content: center;
   color: #000;
   -webkit-text-stroke: 2px rgba(255, 255, 255, 0.495);
+}
+
+.pricing-head-title span {
+  display: flex;
+  font-family: "Nokia Exp XBold", sans-serif;
+  width: 100%;
+  padding-top: 5rem;
+  padding-left: -1rem;
+  justify-content: space-around;
+  font-size: 20vw;
+  width: 100%;
+  height: 100%;
 }
 
 .pricing-btn {

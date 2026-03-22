@@ -5,7 +5,17 @@ const PrincingSection = () => {
   return (
     <section className="pricing fade-section" ref={useFadeSectionOnce()}>
       <div className="pricing-header">
-        <h1 className="pricing-head-title">PRICING</h1>
+        <h1 className="pricing-head-title">
+          P
+          <span>
+            <div className="">R</div>
+            <div className="">I</div>
+            <div className="">C</div>
+            <div className="">I</div>
+            <div className="">N</div>
+          </span>
+          G
+        </h1>
       </div>
       <div className="pricing-container">
         <div className="pricing-card">
