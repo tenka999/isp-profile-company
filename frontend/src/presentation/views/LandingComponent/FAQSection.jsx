@@ -328,6 +328,8 @@ const CSS = `
   color: #ffffffa1;
   }
 
+ 
+
   .faq-bottom-text h1{
   font-size: 195px;
   line-height:0.1;
@@ -347,22 +349,30 @@ const CSS = `
   
   margin-top: -55px;}
 
+  .faq-button-container{
+    flex:1;
+    gap: 16px;
+    align-items: center;
+    display:flex;
+  }
+
   .faq-bottom-buttons{
   position:relative;
   top:-9rem;
-  left:-11rem;
+  left:-4rem;
   display:flex;
   height:120px;
   gap:10px;
-  width:510px;
+  width:620px;
   flex-direction: column;
   }
 
   .faq-bottom-btn{
   font-weight: 600;
   letter-spacing: 2px ;
-  flex:1;
-  width:60%;
+  width:50%;
+  cursor:pointer;
+  height:100%;
   z-index:1;
   overflow:hidden;
   background:black;
@@ -604,12 +614,44 @@ export function FAQSection() {
           <div className="faq-bottom-text">
             <h1>Need More Help?</h1>
           </div>
-          <div className="faq-bottom-subtext">
-            Connect with our technical advisors.
-          </div>
+          <div className="faq-bottom-subtext"></div>
           <div className="faq-bottom-buttons">
-            <button className="faq-bottom-btn top">MORE QUESTIONS</button>
-            <button className="faq-bottom-btn bottom">CONTACT SUPPORT</button>
+            <div className="faq-button-container">
+              Find what you're looking for.
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={20}
+                height={20}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+              <button className="faq-bottom-btn top">MORE QUESTIONS</button>
+            </div>
+            <div className="faq-button-container">
+              <button className="faq-bottom-btn bottom">GET IN TOUCH</button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={20}
+                height={20}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 5 5 12 12 19" />
+              </svg>
+              We're here to solve your issues.
+            </div>
           </div>
         </div>
       </section>

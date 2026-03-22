@@ -465,7 +465,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-
+  color: #bababa;
   max-width: 1200px;
   transform: scale(1) translateX(-20px);
 }
