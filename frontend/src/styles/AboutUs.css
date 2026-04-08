@@ -274,6 +274,7 @@
 }
 
 .about-design {
+  overflow: hidden;
   display: flex;
 }
 

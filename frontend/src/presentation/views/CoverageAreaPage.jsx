@@ -48,16 +48,39 @@ background-color: black;
         </defs>
       </svg>
 
-      <h1 className="coverage-title">COVERAGE AREA</h1>
+      <h1 className="coverage-title">COVERAGE AREA </h1>
       <section className="coverage-hero">
         <div className="coverage-image-hero">
-          <img
-            className="image-coverage-hero"
-            src="/layout/background/coverage-area-hero.jpg"
-            alt="About Veloxity"
-            loading="lazy"
-            decoding="async"
-          />
+          <main className="search-coverage">
+            <div className="">
+              <h1>LOCATE YOUR LINK</h1>
+              {/* <div className="coverage-search-input">
+            <input type="text" />
+          </div>
+           */}
+              <form className="coverage-search" onSubmit={handleSubmit}>
+                <div className="coverage-glow" />
+
+                <div className="coverage-input-wrapper">
+                  <span className="icon left"></span>
+
+                  <input
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    placeholder="Enter your city..."
+                    className="coverage-input"
+                  />
+
+                  <button className="coverage-btn" type="submit">
+                    Check
+                  </button>
+                </div>
+              </form>
+              <h1 className="coverage-sublink">
+                Or explore our interactive map below
+              </h1>
+            </div>
+          </main>
         </div>
         <div className="coverage-hero-content">
           <div className="coverage-hero-subtext">
@@ -73,33 +96,7 @@ background-color: black;
           </div>
         </div>
       </section>
-      <main className="search-coverage">
-        <div className="">
-          <h1>LOCATE YOUR LINK</h1>
-          {/* <div className="coverage-search-input">
-            <input type="text" />
-          </div>
-           */}
-          <form className="coverage-search" onSubmit={handleSubmit}>
-            <div className="coverage-glow" />
 
-            <div className="coverage-input-wrapper">
-              <span className="icon left"></span>
-
-              <input
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                placeholder="Enter your city..."
-                className="coverage-input"
-              />
-
-              <button className="coverage-btn" type="submit">
-                Check
-              </button>
-            </div>
-          </form>
-        </div>
-      </main>
       <JavaProvincesMap />
 
       {/* <section className="coverage-area-content">
@@ -142,10 +139,7 @@ background-color: black;
           </svg>
         </div>
       </section> */}
-      <footer
-        className="about-page-footer"
-        style={{ background: "black", padding: "0" }}
-      >
+      <footer className="about-page-footer">
         <div className="footer-big-text-container">
           <h1 className="footer-big-text">FIBERIX</h1>
         </div>

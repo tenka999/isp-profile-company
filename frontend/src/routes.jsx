@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 // import Layout from '@/layouts/Layout'
 import LandingPage from "@/presentation/views/LandingComponent/Landing";
 import React from "react";
-import withLenis from "@/presentation/views/withLenis";
+// import withLenis from "@/presentation/views/withLenis";
 import authMiddleware, {
   redirectMiddleware,
 } from "./middleware/AuthMiddleware";
@@ -17,27 +17,23 @@ import { useLocation } from "react-router";
 
 //#region Pages
 //#region Login
-const Login = withLenis(React.lazy(() => import("@/presentation/views/Login")));
+const Login = React.lazy(() => import("@/presentation/views/Login"));
 //#endregion Login
 //#region Register
 const Register = React.lazy(() => import("@/presentation/views/Registrasi"));
-const AboutUs = withLenis(
-  React.lazy(() => import("@/presentation/views/AboutUsPage")),
+const AboutUs = React.lazy(() => import("@/presentation/views/AboutUsPage"));
+const CoverageAreaPage = React.lazy(
+  () => import("@/presentation/views/CoverageAreaPage"),
 );
-const CoverageAreaPage = withLenis(
-  React.lazy(() => import("@/presentation/views/CoverageAreaPage")),
+const PricingPage = React.lazy(
+  () => import("@/presentation/views/PricingPage"),
 );
-const PricingPage = withLenis(
-  React.lazy(() => import("@/presentation/views/PricingPage")),
+const ArticlePage = React.lazy(
+  () => import("@/presentation/views/ArticleListPage"),
 );
-const ArticlePage = withLenis(
-  React.lazy(() => import("@/presentation/views/ArticleListPage")),
-);
-const GaleriPage = withLenis(
-  React.lazy(() => import("@/presentation/views/GalleryPage")),
-);
-const ArticleDetail = withLenis(
-  React.lazy(() => import("@/presentation/views/ArticleDetail")),
+const GaleriPage = React.lazy(() => import("@/presentation/views/GalleryPage"));
+const ArticleDetail = React.lazy(
+  () => import("@/presentation/views/ArticleDetail"),
 );
 //#endregion Register
 //#region Layout

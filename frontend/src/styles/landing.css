@@ -35,22 +35,22 @@ body {
 
 @font-face {
   font-family: "pocity";
-  src: url("../../public/themes/fonts/pocity.otf") format("opentype");
+  src: url("/themes/fonts/pocity.otf") format("opentype");
 }
 
 @font-face {
   font-family: "Nokia Exp XBold";
-  src: url("../../public/themes/fonts/NokiaExpanded-NormalExtraBold.otf")
+  src: url("/themes/fonts/NokiaExpanded-NormalExtraBold.otf")
     format("opentype");
 }
 @font-face {
   font-family: "Striker";
-  src: url("../../public/themes/fonts/striker.otf") format("opentype");
+  src: url("/themes/fonts/striker.otf") format("opentype");
 }
 
 @font-face {
   font-family: "Flexible";
-  src: url("../../public/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
+  src: url("/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
     format("opentype");
 }
 

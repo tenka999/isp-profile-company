@@ -95,7 +95,7 @@ const CSS = `
 
   @font-face {
   font-family: "Stadium";
-  src: url("../../public/themes/fonts/Stadium.ttf")
+  src: url("/themes/fonts/Stadium.ttf")
     format("opentype");
 }
 
@@ -617,7 +617,7 @@ export function FAQSection() {
           <div className="faq-bottom-subtext"></div>
           <div className="faq-bottom-buttons">
             <div className="faq-button-container">
-              Find what you're looking for.
+              Find what you're looking for
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={20}
@@ -650,7 +650,7 @@ export function FAQSection() {
                 <line x1="19" y1="12" x2="5" y2="12" />
                 <polyline points="12 5 5 12 12 19" />
               </svg>
-              We're here to solve your issues.
+              We're here to solve your issues
             </div>
           </div>
         </div>

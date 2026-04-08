@@ -67,7 +67,7 @@ export default function WhyChoose() {
               style={{
                 transform: "translateX(100px)",
                 display: "inline-block",
-                width: "1000px",
+                width: "800px",
               }}
             >
               CHOOSE

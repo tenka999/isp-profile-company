@@ -1,15 +1,30 @@
+@font-face {
+  font-family: "Flexible";
+  src: url("/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
+    format("opentype");
+}
+@font-face {
+  font-family: "Highest";
+  src: url("/themes/fonts/Highest.ttf") format("opentype");
+}
+
 .coverage-title {
-  font-size: 5em;
+  font-family: "Flexible", sans-serif;
+  font-size: 20em;
   font-weight: 600;
-  word-spacing: 1rem;
+  word-spacing: 4rem;
   margin: 0 1rem;
+  position: relative;
+  margin-top: -14rem;
+  margin-bottom: -2rem;
+  line-height: 1.2;
 }
 
 .coverage-image-hero {
   width: 100%;
   height: 100%;
   padding: 1.5rem;
-  padding-top: 2rem;
+  margin-bottom: -1rem;
 }
 
 .image-coverage-hero {
@@ -50,8 +65,7 @@
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
-  background-color: black;
+  background-color: white;
 }
 
 .coverage-search-input {
@@ -86,7 +100,7 @@
   background-position: center;
   background-repeat: no-repeat;
   height: 50vh;
-  margin-top: 10rem;
+  margin-top: 1rem;
 }
 
 .coverage-area-content {
@@ -324,6 +338,22 @@
   width: 100%;
   max-width: 720px;
   margin: auto;
+  margin-top: -1rem;
+}
+
+.coverage-sublink {
+  margin-top: 1rem;
+  font-size: 1.2em;
+  color: #ff2bd6;
+
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.coverage-sublink:hover {
+  color: #f8c2ff;
 }
 
 /* neon glow border */

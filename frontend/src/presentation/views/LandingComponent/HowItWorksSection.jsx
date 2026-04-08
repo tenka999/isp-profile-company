@@ -63,9 +63,11 @@ export default function HowItWorksSection() {
           min-height: 100vh;
           padding: 80px 40px;
           display: flex;
+          height: 200vh;
           align-items: center;
           justify-content: center;
           background: #000;
+          z-index: 10;
         }
 
         .how-it-works-container {
@@ -83,6 +85,8 @@ export default function HowItWorksSection() {
           justify-content: center;
           align-items: center;
           position: relative;
+          top: -7rem;
+          left: -1rem;
         }
 
         .phone-mockup {
@@ -212,7 +216,10 @@ export default function HowItWorksSection() {
         /* Right Side - Steps */
         .steps-content {
           display: flex;
+          position: relative;
+          left: 4rem;
           flex-direction: column;
+          z-index: 9;
         }
 
         .steps-header {
@@ -228,20 +235,38 @@ export default function HowItWorksSection() {
         }
 
         .steps-title {
-          font-size: 48px;
-          font-weight: 700;
-          line-height: 1.2;
+          font-size: 32vw;
+          position:absolute;
+          font-family: "Flexible", times;
+          line-height: .7;
+          z-index: 0;
+
+        }
+        
+        .steps-title span{
+        position: relative;
+        display: inline-block;
+        transform: rotate(-90deg);
+        left: 30rem;
+        width: 20rem;
+        height: 4rem;
+        background:white;
         }
 
         .steps-list {
+          margin-top: -17rem;
           display: flex;
           flex-direction: column;
           gap: 20px;
+          position: relative;
+          z-index: 3;
+
         }
 
         .step-card {
           background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background:black;
+          border: 1px solid rgba(255, 255, 255, 0.5);
           border-radius: 16px;
           padding: 28px 32px;
           cursor: pointer;
@@ -274,6 +299,7 @@ export default function HowItWorksSection() {
 
         .step-card.active {
           background: rgba(255, 255, 255, 0.08);
+          background: rgba(0, 0, 0, 0.9);
           border-color: rgba(255, 255, 255, 0.2);
         }
 
@@ -403,6 +429,11 @@ export default function HowItWorksSection() {
           }
         }
       `}</style>
+      <h2 className="steps-title">
+        Simples <br />
+        <span></span>
+        Connection
+      </h2>
 
       <div className="how-it-works-section">
         <div className="how-it-works-container">
@@ -465,10 +496,9 @@ export default function HowItWorksSection() {
           <div className="steps-content">
             <div className="steps-header">
               <p className="steps-subtitle">
-                Getting connected to our fiber network is a straightforward
-                process.
+                {/* Getting connected to our fiber network is a straightforward
+                process. */}
               </p>
-              <h2 className="steps-title">Simple Connection</h2>
             </div>
 
             <div className="steps-list">

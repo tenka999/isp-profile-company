@@ -172,7 +172,7 @@ const Layout = () => {
       ></ProgressBar>
       <div className={containerClass}>
         <AppTopbar ref={topbarRef} />
-        <div ref={sidebarRef} className="layout-sidebar" data-lenis-prevent>
+        <div ref={sidebarRef} className="layout-sidebar">
           <AppSidebar />
         </div>
         <div className="layout-main-container">

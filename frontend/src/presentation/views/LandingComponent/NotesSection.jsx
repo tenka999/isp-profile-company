@@ -40,7 +40,7 @@ export default function ScrollFillText() {
 
       @font-face {
   font-family: "Flexible";
-  src: url("../../public/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
+  src: url("/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
     format("opentype");
 }
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap');
@@ -92,6 +92,7 @@ export default function ScrollFillText() {
           font-size: clamp(3.5rem, 10vw, 6rem);
           line-height: 1.0;
           letter-spacing: -0.01em;
+          text-align: center;
           text-transform: uppercase;
         }
 

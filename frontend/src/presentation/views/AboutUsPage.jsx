@@ -15,6 +15,8 @@ const styles = `
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+         outline: 1px solid red;
+
   }
 
 
@@ -873,16 +875,18 @@ function AboutUs() {
         <CinematicParallax></CinematicParallax>
         <DataNumbersSection></DataNumbersSection>
 
-        <footer className="about-page-footer">
-          <div className="">
-            <h1 className="footer-big-text">FIBERIX</h1>
-          </div>
-          <div className="about-footer-subtext">
-            <p>FIBERIX Company &copy; 2026</p>
-            <p>Legal mention, kukis preferences</p>
-            <p>Website by Danigazzz</p>
-          </div>
-        </footer>
+        <div className="red">
+          <footer className="about-page-footer">
+            <div className="">
+              <h1 className="footer-big-text">FIBERIX</h1>
+            </div>
+            <div className="about-footer-subtext">
+              <p>FIBERIX Company &copy; 2026</p>
+              <p>Legal mention, kukis preferences</p>
+              <p>Website by Danigazzz</p>
+            </div>
+          </footer>
+        </div>
         {/* <section className="about-design">
         <div class="about-design-title satu">A NETWORK</div>
         <div class="about-design-title dua">THAT FEELS</div>

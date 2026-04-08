@@ -1,6 +1,12 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
+const styles = `
+*{
+}
+
+`;
+
 export default function AboutDesign() {
   const ref = useRef(null);
 
@@ -22,6 +28,8 @@ export default function AboutDesign() {
   const imageScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
   return (
     <section ref={ref} className="about-design">
+      <style>{styles}</style>
+
       {/* MAIN TITLES */}
       <motion.div style={{ x: title1Y }} className="about-design-title satu">
         A NETWORK
