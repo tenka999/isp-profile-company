@@ -112,6 +112,8 @@ const CSS = `
     position: relative;
     border-top: 1px solid var(--line);
     background:black;
+    margin-top: 130px;
+
   }
 
   /* Top header row (like "LET'S TALK →" area) */
@@ -359,7 +361,7 @@ const CSS = `
   .faq-bottom-buttons{
   position:relative;
   top:-9rem;
-  left:-4rem;
+  left:3rem;
   display:flex;
   height:120px;
   gap:10px;

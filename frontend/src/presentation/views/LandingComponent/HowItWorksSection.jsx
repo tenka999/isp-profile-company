@@ -260,6 +260,8 @@ export default function HowItWorksSection() {
           gap: 20px;
           position: relative;
           z-index: 3;
+          transform: scale(0.9) translateX(-2rem);
+
 
         }
 

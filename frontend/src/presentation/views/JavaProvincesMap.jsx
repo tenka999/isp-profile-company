@@ -191,6 +191,7 @@ export default function JavaProvincesMap() {
   return (
     <>
       <div
+        id="javaMap"
         style={{
           minHeight: "100vh",
           display: "flex",

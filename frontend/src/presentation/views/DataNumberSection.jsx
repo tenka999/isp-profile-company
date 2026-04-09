@@ -107,7 +107,7 @@ const DataNumbersSection = () => {
 
   return (
     <section className="data-numbers-section" ref={sectionRef}>
-      <div className="container">
+      <div className="container-data-numbers">
         <div className="section-title">
           <div className="section-title-text">WE LET THE DATA TALK</div>
           <div className="number-item">

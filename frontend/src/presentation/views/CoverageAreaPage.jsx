@@ -19,6 +19,25 @@ body{
 background-color: black;
 }
 `;
+  const smoothScrollTo = (target) => {
+    const start = window.scrollY;
+    const end = target.getBoundingClientRect().top + start;
+    const duration = 500;
+    let startTime = null;
+
+    const easeInOut = (t) =>
+      t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+    function animate(time) {
+      if (!startTime) startTime = time;
+      const progress = Math.min((time - startTime) / duration, 1);
+      window.scrollTo(0, start + (end - start) * easeInOut(progress));
+      if (progress < 1) requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  };
+
   return (
     <>
       <style>{styles}</style>
@@ -76,7 +95,12 @@ background-color: black;
                   </button>
                 </div>
               </form>
-              <h1 className="coverage-sublink">
+              <h1
+                className="coverage-sublink"
+                onClick={() =>
+                  smoothScrollTo(document.getElementById("javaMap"))
+                }
+              >
                 Or explore our interactive map below
               </h1>
             </div>
@@ -97,7 +121,9 @@ background-color: black;
         </div>
       </section>
 
-      <JavaProvincesMap />
+      <div className="" id="javaMap">
+        <JavaProvincesMap />
+      </div>
 
       {/* <section className="coverage-area-content">
         <div

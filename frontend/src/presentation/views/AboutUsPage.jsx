@@ -15,7 +15,6 @@ const styles = `
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-         outline: 1px solid red;
 
   }
 
@@ -179,7 +178,7 @@ const styles = `
     z-index: 1;
   }
 
-  .hero-content {
+  .hero-content-about {
     position: relative;
     z-index: 2;
     padding: 120px 48px 60px;
@@ -199,9 +198,9 @@ const styles = `
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   }
 
-  .hero-title {
+  .hero-title-about {
     font-family: "Space Grotesk", sans-serif;
-    font-size: 4rem;
+    font-size: 8rem;
     font-weight: 900;
     color: #fff;
     line-height: 1.1;
@@ -783,11 +782,8 @@ function AboutUs() {
             className="hero image-clip-path"
             style={{ clipPath: "url(#customClip)" }}
           >
-            <div className="hero-content">
-              <div className="hero-tag">
-                <div className="hero-tag-icon" />
-              </div>
-              <h1 className="hero-title fade-up fade-up-1">About Us</h1>
+            <div className="hero-content-about">
+              <h1 className="hero-title-about ">About Us</h1>
             </div>
 
             <div className="breadcrumb">
@@ -798,8 +794,8 @@ function AboutUs() {
           </div>
           {/* <div className="hero-notch-text">Get Started</div> */}
 
-          <div className="hero-button">
-            <p className="about-link" onClick={() => navigate("/")}>
+          <div className="hero-button" onClick={() => navigate("/")}>
+            <p className="about-link">
               <svg
                 width="24"
                 height="24"
@@ -831,7 +827,6 @@ function AboutUs() {
             </svg>
           </div>
 
-          <div className="hero-button-content"></div>
           {/* <div className="button-about-container">
           <div className="about-button">ABOUT US</div>
         </div> */}

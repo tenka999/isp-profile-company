@@ -44,7 +44,7 @@ const LandingPage = () => {
         className="hero-content min-h-screen bg-[url('/layout/background/realistic_wallpaper.jpg')] bg-cover bg-center"
         style={{ overflow: "hidden" }}
       >
-        <div className="">
+        <div className="hero-text-container">
           {/* <div className="badge">Case Study & Research</div> */}
           <h1 className="landing-hero-title">
             FUTURE <span>DRIVEN.</span>
@@ -57,7 +57,7 @@ const LandingPage = () => {
             className="btn-hero-container"
             style={{
               position: "relative",
-              left: "1rem",
+              left: "4rem",
               top: "-3rem",
               display: "flex",
               alignItems: "start",
@@ -115,7 +115,7 @@ const LandingPage = () => {
       {/* <JawaBaratMap /> */}
       {/* <JawaTengahMap /> */}
 
-      <section className="about ">
+      <section className="about-section">
         <div className="about-container">
           <div className="about-box1">
             <h1 className="">ABOUT</h1>

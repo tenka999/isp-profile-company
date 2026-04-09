@@ -201,8 +201,8 @@ const css = `
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    border: 1px solid rgba(255,255,255,0.6);
-    border-radius: 30px;
+    position: relative;
+    top: 3rem;
     padding: 10px 36px;
 
   }

@@ -10,12 +10,12 @@
 
 .coverage-title {
   font-family: "Flexible", sans-serif;
-  font-size: 20em;
+  font-size: clamp(10rem, 20vw, 40rem);
   font-weight: 600;
   word-spacing: 4rem;
   margin: 0 1rem;
   position: relative;
-  margin-top: -14rem;
+  margin-top: -11rem;
   margin-bottom: -2rem;
   line-height: 1.2;
 }
@@ -50,7 +50,7 @@
 }
 
 .coverage-hero-subline h1 {
-  font-size: 4em;
+  font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 600;
   word-spacing: 1rem;
 }

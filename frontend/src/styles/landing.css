@@ -40,8 +40,7 @@ body {
 
 @font-face {
   font-family: "Nokia Exp XBold";
-  src: url("/themes/fonts/NokiaExpanded-NormalExtraBold.otf")
-    format("opentype");
+  src: url("/themes/fonts/NokiaExpanded-NormalExtraBold.otf") format("opentype");
 }
 @font-face {
   font-family: "Striker";
@@ -224,7 +223,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem;
+  padding: 0 10rem;
   padding-bottom: 5rem;
   background-size: cover;
   background-position: center;
@@ -431,7 +430,6 @@ body {
   left: 0;
   width: 100%;
   height: 150px;
-  /* background: white; */
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000000 100%);
 }
 .remark {
@@ -472,7 +470,7 @@ body {
   gap: 10px;
   color: #bababa;
   max-width: 1200px;
-  transform: scale(1) translateX(-20px);
+  transform: scale(0.95) translateX(-35px);
 }
 
 .pricing-card {
@@ -922,7 +920,7 @@ body {
   }
 }
 
-.about {
+.about-section {
   position: relative;
   z-index: 10;
   flex: 1;
@@ -931,15 +929,15 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem;
+  padding: -0rem 2rem;
   height: 90vh;
   width: 95%;
   margin: 0 auto;
   background-color: rgb(8, 0, 28);
   background-color: #190133;
   background-color: #15043e;
-
   border-radius: 30px;
+  margin-bottom: 5rem;
 }
 /* 
 .about::before {
@@ -954,7 +952,7 @@ body {
 
 .about-container {
   position: relative;
-  top: 2rem;
+  top: 1rem;
   width: 90%;
   height: 90%;
   display: grid;
@@ -1953,9 +1951,10 @@ body {
   font-family: "pocity", times;
   font-size: 25vw;
   font-weight: 900;
-
   text-align: start;
   line-height: 5rem;
+  position: relative;
+  left: -4rem;
 }
 
 .btn-hero-container {
@@ -1970,7 +1969,7 @@ body {
   position: relative;
   left: 8rem;
   padding-left: 1.5px;
-  font-size: 9rem;
+  font-size: clamp(5rem, 10vw, 8rem);
   line-height: 1;
   letter-spacing: 0em;
   background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);

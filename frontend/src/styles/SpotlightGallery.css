@@ -17,8 +17,7 @@
 }
 @font-face {
   font-family: "Sigana";
-  src: url("/themes/fonts/big_noodle_titling.ttf")
-    format("opentype");
+  src: url("/themes/fonts/big_noodle_titling.ttf") format("opentype");
 }
 /* 
 body {
@@ -369,8 +368,8 @@ body {
 .gallery-title {
   font-family: "Sigana", serif;
   position: absolute;
-  font-size: 43vw;
-  left: -1.5rem;
+  font-size: clamp(10px, 45vw, 50rem);
+  left: -4rem;
   top: -10rem;
   color: #ffffff82;
 }
@@ -416,7 +415,7 @@ body {
   transform: scale(0.8);
   top: 13rem;
   backdrop-filter: blur(10px);
-  left: 1rem;
+  left: 2rem;
 }
 
 .learn-more-btn::before {
@@ -615,13 +614,6 @@ body {
   flex-direction: column;
   /* transform: translateY(100px); */
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-text span {
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .fullscreen-modal .nav-button.prev {
