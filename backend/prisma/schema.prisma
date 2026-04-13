@@ -224,11 +224,14 @@ enum BannerStatus {
 model CoverageArea {
   id        Int      @id @default(autoincrement())
   namaArea  String
+  provinsi  String?
+  singkatan String?
   status    AreaStatus @default(TERSEDIA)
 }
 
 enum AreaStatus {
   TERSEDIA
+  SEGERA_HADIR
   TIDAK_TERSEDIA
 }
 

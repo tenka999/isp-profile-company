@@ -13,10 +13,14 @@
 
 @font-face {
   font-family: "Druk";
+  font-display: swap;
+
   src: url("/themes/fonts/DrukWideBold.woff") format("opentype");
 }
 @font-face {
   font-family: "Sigana";
+  font-display: swap;
+
   src: url("/themes/fonts/big_noodle_titling.ttf") format("opentype");
 }
 /* 

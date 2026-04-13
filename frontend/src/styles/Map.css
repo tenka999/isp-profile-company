@@ -2,16 +2,18 @@
   font-family: "Flexible";
   src: url("/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
     format("opentype");
+  font-display: swap;
 }
 @font-face {
   font-family: "Highest";
   src: url("/themes/fonts/Highest.ttf") format("opentype");
+  font-display: swap;
 }
 
 .coverage-title {
   font-family: "Flexible", sans-serif;
   font-size: clamp(10rem, 20vw, 40rem);
-  font-weight: 600;
+  font-weight: 100;
   word-spacing: 4rem;
   margin: 0 1rem;
   position: relative;
@@ -31,6 +33,12 @@
   width: 100%;
   height: 400px;
   object-fit: cover;
+}
+
+.search-text {
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 600;
+  color: white;
 }
 
 .coverage-hero-content {
@@ -148,7 +156,7 @@
   box-shadow: inset 0 0 30px rgba(255, 10, 10, 0.29);
 }
 .coverage-cta-button.available {
-  background-color: #00f5a0;
+  background-color: #067b52;
   box-shadow: inset 0px 0 30px rgba(0, 245, 159, 0.221);
 }
 
@@ -217,13 +225,12 @@
   font-size: 2.5em;
   font-weight: 800;
   position: relative;
-  top: -60px;
   color: #e6edf3;
+  margin-top: -90px;
 }
 
 .coverage-cta-button-sub-headline {
   position: relative;
-  top: -120px;
   padding: 0 2rem;
   text-align: center;
   color: #8b949e;
@@ -330,7 +337,6 @@
 
 .coverage-cta-button-icon {
   position: relative;
-  top: 30px;
 }
 
 .coverage-search {
@@ -344,7 +350,7 @@
 .coverage-sublink {
   margin-top: 1rem;
   font-size: 1.2em;
-  color: #ff2bd6;
+  color: #d3baff;
 
   text-align: center;
   text-decoration: underline;
@@ -353,7 +359,7 @@
 }
 
 .coverage-sublink:hover {
-  color: #f8c2ff;
+  color: #f18bff;
 }
 
 /* neon glow border */
@@ -412,7 +418,8 @@
   color: white;
   font-weight: 500;
   cursor: pointer;
-  background: linear-gradient(90deg, #ff2bd6, #7a5cff);
+  /* background: linear-gradient(90deg, #ff2bd6, #7a5cff); */
+  background-color: #7c3aed;
   transition: 0.25s;
 }
 
@@ -421,5 +428,5 @@
 }
 
 .coverage-search:hover .coverage-glow {
-  opacity: 0.3;
+  opacity: 0.2;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import "@/styles/Map.css";
 
-export default function StatusIcon({ status = "available", size = 48 }) {
+export default function StatusIcon({ size = 48, status }) {
   return (
     <div
       className={`status-icon ${status}`}

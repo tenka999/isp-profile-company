@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CoverageCityGrid } from "./CityList";
+import CoverageGrid from "./CoverageGrid";
 
 // Paths carefully traced from reference image (colorful flat-style map)
 // Each province matches the shape, color, and relative proportion from the reference
@@ -178,9 +179,9 @@ export default function JavaProvincesMap() {
   };
 
   const getFill = (id, color) => {
-    const warna = "#f00";
-    if (active === id) return brighten(color, 1);
-    if (hovered === id) return brighten(warna, 0.74);
+    const warna = "#7c3aed";
+    if (active === id) return "#533b94";
+    if (hovered === id) return "#2f2255";
     return color;
   };
 
@@ -255,7 +256,7 @@ export default function JavaProvincesMap() {
               textShadow: "0 2px 20px rgba(70,150,255,0.5)",
             }}
           >
-            PULAU JAWA
+            REGIONAL COVERAGE
           </h1>
           <p
             style={{
@@ -266,7 +267,8 @@ export default function JavaProvincesMap() {
               textTransform: "uppercase",
             }}
           >
-            Peta Interaktif Provinsi · Indonesia
+            Select a province to explore our active network nodes and future
+            expansions.
           </p>
         </div>
 
@@ -285,7 +287,7 @@ export default function JavaProvincesMap() {
                 <g key={p.id}>
                   <path
                     d={p.path}
-                    fill={getFill(p.id, p.color)}
+                    fill={getFill(p.id, "#e1e5ea")}
                     stroke="#000"
                     strokeWidth={isActive ? 2.5 : isHov ? 2 : 4}
                     strokeLinejoin="round"
@@ -335,7 +337,9 @@ export default function JavaProvincesMap() {
                     cy={p.labelY - 50}
                     r={9}
                     fill="#000"
-                    stroke={isActive || isHov ? "rgba(255,255,255,1)" : "#f00"}
+                    stroke={
+                      isActive || isHov ? "rgba(255,255,255,1)" : "#7c3aed"
+                    }
                     strokeWidth={isActive ? 2.5 : 1.5}
                     style={{ pointerEvents: "none", transition: "stroke 0.2s" }}
                   />
@@ -385,7 +389,7 @@ export default function JavaProvincesMap() {
                 margin: 0,
               }}
             >
-              Hover atau klik provinsi untuk detail
+              Tap on the map for sector details.
             </p>
           </div>
 
@@ -445,11 +449,12 @@ export default function JavaProvincesMap() {
           </div> */}
         </div>
       </div>
-      <CoverageCityGrid
+      {/* <CoverageCityGrid
         provinces={provinces}
         defaultProvinceId="dki"
         activeIdd={active}
-      />
+      /> */}
+      <CoverageGrid></CoverageGrid>
     </>
   );
 }

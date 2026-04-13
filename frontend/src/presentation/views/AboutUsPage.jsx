@@ -8,6 +8,7 @@ import CinematicParallax from "./ParallaxImageSticky";
 
 import { useNavigate } from "react-router";
 import DataNumbersSection from "./DataNumberSection";
+import FooterPage from "./FooterPage";
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&display=swap');
@@ -870,18 +871,6 @@ function AboutUs() {
         <CinematicParallax></CinematicParallax>
         <DataNumbersSection></DataNumbersSection>
 
-        <div className="red">
-          <footer className="about-page-footer">
-            <div className="">
-              <h1 className="footer-big-text">FIBERIX</h1>
-            </div>
-            <div className="about-footer-subtext">
-              <p>FIBERIX Company &copy; 2026</p>
-              <p>Legal mention, kukis preferences</p>
-              <p>Website by Danigazzz</p>
-            </div>
-          </footer>
-        </div>
         {/* <section className="about-design">
         <div class="about-design-title satu">A NETWORK</div>
         <div class="about-design-title dua">THAT FEELS</div>
@@ -1029,6 +1018,7 @@ function AboutUs() {
         </div>
       </footer> */}
       </section>
+      <FooterPage />
     </>
   );
 }

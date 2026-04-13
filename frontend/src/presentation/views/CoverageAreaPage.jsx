@@ -6,19 +6,13 @@ import StatusIcon from "./StatusIcon";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { CoverageCityGrid } from "./CityList";
+import FooterPage from "./FooterPage";
+import Footer from "@/layouts/Footer";
 
 const CoverageAreaPage = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(value);
-  };
-  const styles = `
-body{
-background-color: black;
-}
-`;
+  const [isSearching, setIsSearching] = useState(false);
   const smoothScrollTo = (target) => {
     const start = window.scrollY;
     const end = target.getBoundingClientRect().top + start;
@@ -37,6 +31,22 @@ background-color: black;
 
     requestAnimationFrame(animate);
   };
+
+  const handleSubmit = (e) => {
+    if (!value.trim()) return;
+    e.preventDefault();
+    setIsSearching(true);
+    setTimeout(() => {
+      smoothScrollTo(document.getElementById("card-status"));
+    }, 100);
+    console.log(value);
+  };
+  const status = "available"; // Change to "unavailable" to test the unavailable state
+  const styles = `
+body{
+background-color: black;
+}
+`;
 
   return (
     <>
@@ -72,7 +82,7 @@ background-color: black;
         <div className="coverage-image-hero">
           <main className="search-coverage">
             <div className="">
-              <h1>LOCATE YOUR LINK</h1>
+              <h1 className="search-text">LOCATE YOUR LINK</h1>
               {/* <div className="coverage-search-input">
             <input type="text" />
           </div>
@@ -120,61 +130,68 @@ background-color: black;
           </div>
         </div>
       </section>
+      {isSearching && (
+        <section id="card-status" className="coverage-area-content">
+          <div
+            className={`coverage-area-card ${status}`}
+            style={{ clipPath: "url(#customClip)" }}
+          >
+            <div className="coverage-cta-button-headline">
+              {status === "available"
+                ? "You're Within Reach"
+                : status === "coming"
+                  ? "Almost There"
+                  : "Out of Reach"}
+            </div>
+            <div className="coverage-cta-button-sub-headline">
+              {status === "available"
+                ? "Great news! Your coordinates are officially within our high-performance fiber zone. High-speed signals are fully operational at your address."
+                : status === "coming"
+                  ? "We are currently initializing our network nodes in your area. Your location is in our immediate expansion plan. We’re working to bring the future to you soon."
+                  : "Signal not detected. Our fiber backbone hasn't reached your sector yet, but we are expanding daily. Help us prioritize your area by requesting a connection."}
+            </div>
+            <div className="coverage-cta-button-icon">
+              <StatusIcon size={50} status={status} />
+            </div>
+
+            <div className="coverage-cta-button-text">
+              {status === "available"
+                ? "Your location is officially within our fiber zone. High-speed signals are fully operational at your address."
+                : status === "coming"
+                  ? "We’re currently building our network in your sector. The future is arriving at your doorstep very soon."
+                  : "Our fiber hasn’t reached your area yet. Help us prioritize your neighborhood by requesting a link below."}
+            </div>
+          </div>
+
+          <div className={`coverage-cta-button ${status}`}>
+            {status === "available"
+              ? "SELECT PLAN"
+              : status === "coming"
+                ? "NOTIFY ME"
+                : "REQUEST LINK"}
+            {/* <div className="">PLAN</div> */}
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="chevron-icon-coverage"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </div>
+        </section>
+      )}
 
       <div className="" id="javaMap">
         <JavaProvincesMap />
       </div>
 
-      {/* <section className="coverage-area-content">
-        <div
-          className="coverage-area-card unavailable"
-          style={{ clipPath: "url(#customClip)" }}
-        >
-          <div className="coverage-cta-button-headline">
-            Coordinate Synchronized!
-          </div>
-          <div className="coverage-cta-button-icon">
-            <StatusIcon size={56} />
-          </div>
-          <div className="coverage-cta-button-sub-headline">
-            High-speed signals detected. Your location is officially within our
-            hyper-growth fiber zone.
-          </div>
-
-          <div className="coverage-cta-button-text">
-            Experience zero-latency connectivity with speeds up to 1 Gbps. Our
-            infrastructure is fully operational at your address.
-          </div>
-        </div>
-
-        <div className="coverage-cta-button unavailable ">
-          INITIALIZE
-          <div className="">CONNECTION</div>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="chevron-icon-coverage"
-          >
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </div>
-      </section> */}
-      <footer className="about-page-footer">
-        <div className="footer-big-text-container">
-          <h1 className="footer-big-text">FIBERIX</h1>
-        </div>
-        <div className="about-footer-subtext">
-          <p>FIBERIX Company &copy; 2026</p>
-          <p onClick={() => navigate("/")}>Home, kukis preferences</p>
-          <p>Website by Danigazzz</p>
-        </div>
-      </footer>
+      <FooterPage />
     </>
   );
 };

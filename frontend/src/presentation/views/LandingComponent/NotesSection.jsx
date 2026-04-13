@@ -40,6 +40,8 @@ export default function ScrollFillText() {
 
       @font-face {
   font-family: "Flexible";
+  font-display: swap;
+
   src: url("/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
     format("opentype");
 }

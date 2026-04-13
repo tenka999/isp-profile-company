@@ -95,6 +95,8 @@ const CSS = `
 
   @font-face {
   font-family: "Stadium";
+  font-display: swap;
+
   src: url("/themes/fonts/Stadium.ttf")
     format("opentype");
 }

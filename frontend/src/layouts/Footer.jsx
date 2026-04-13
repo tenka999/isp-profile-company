@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import "@/styles/landing.css";
 
 export default function Footer() {
   const footerRef = useRef(null);

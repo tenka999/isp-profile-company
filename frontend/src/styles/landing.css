@@ -35,20 +35,28 @@ body {
 
 @font-face {
   font-family: "pocity";
+  font-display: swap;
+
   src: url("/themes/fonts/pocity.otf") format("opentype");
 }
 
 @font-face {
   font-family: "Nokia Exp XBold";
+  font-display: swap;
+
   src: url("/themes/fonts/NokiaExpanded-NormalExtraBold.otf") format("opentype");
 }
 @font-face {
   font-family: "Striker";
+  font-display: swap;
+
   src: url("/themes/fonts/striker.otf") format("opentype");
 }
 
 @font-face {
   font-family: "Flexible";
+  font-display: swap;
+
   src: url("/themes/fonts/Fontspring-DEMO-flexible-h200w300.otf")
     format("opentype");
 }
@@ -1173,18 +1181,26 @@ body {
 .footer-bg-text {
   position: absolute;
   bottom: -20%;
-  left: -6%;
-  font-size: 30vw;
+  left: -0.5rem;
+  font-size: clamp(10rem, 35vw, 21rem);
   font-weight: 800;
   color: rgba(255, 255, 255, 0.215);
   line-height: 1;
   pointer-events: none;
   transition: transform 0.1s linear;
+  z-index: 2;
 }
 
 .footer-bg-text.seconde {
-  top: 18rem;
-  left: -10rem;
+  top: 16rem;
+  left: -0.5rem;
+  color: rgba(255, 255, 255, 0);
+  z-index: 0;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.265);
+}
+.footer-bg-text.triplet {
+  top: 20rem;
+  left: -0.5rem;
   color: rgba(255, 255, 255, 0);
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.265);
 }
