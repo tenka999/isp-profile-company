@@ -8,11 +8,17 @@ import { useNavigate } from "react-router";
 import { CoverageCityGrid } from "./CityList";
 import FooterPage from "./FooterPage";
 import Footer from "@/layouts/Footer";
+import { useCoverageAreaApi } from "../logics/app/useCoverageAreaApi";
+import Navbar from "./LandingComponent/Navbar";
 
 const CoverageAreaPage = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [searchResult, setSearchResult] = useState(null);
+  const { useAllCoverageArea } = useCoverageAreaApi();
+  const { data: coverageAreas, isLoading } = useAllCoverageArea();
+
   const smoothScrollTo = (target) => {
     const start = window.scrollY;
     const end = target.getBoundingClientRect().top + start;
@@ -32,16 +38,119 @@ const CoverageAreaPage = () => {
     requestAnimationFrame(animate);
   };
 
+  const handleSearch = (input) => {
+    setValue(input);
+  };
+
+  const normalizeText = (text) =>
+    (text || "").toString().toLowerCase().replace(/\s+/g, " ").trim();
+
+  const searchCoverageArea = (query, areas = []) => {
+    const q = normalizeText(query);
+    if (!q) return null;
+    if (q.length < 2) return null;
+
+    const exactMatch = areas.find((area) => {
+      const name = normalizeText(area.namaArea);
+      const abbr = normalizeText(area.singkatan);
+      return name === q || abbr === q;
+    });
+    if (exactMatch) return exactMatch;
+
+    return areas.find((area) => {
+      const name = normalizeText(area.namaArea);
+      const abbr = normalizeText(area.singkatan);
+      const prov = normalizeText(area.provinsi);
+      const nameWords = name.split(" ");
+      const provWords = prov ? prov.split(" ") : [];
+      return (
+        nameWords.some((w) => w.startsWith(q)) ||
+        abbr.startsWith(q) ||
+        provWords.some((w) => w.startsWith(q))
+      );
+    });
+  };
+
+  const getSuggestions = (query, areas = []) => {
+    const q = normalizeText(query);
+    if (!q || q.length < 2) return [];
+
+    const matches = areas.filter((area) => {
+      const name = normalizeText(area.namaArea);
+      const abbr = normalizeText(area.singkatan);
+      const prov = normalizeText(area.provinsi);
+      const nameWords = name.split(" ");
+      const provWords = prov ? prov.split(" ") : [];
+      return (
+        nameWords.some((w) => w.startsWith(q)) ||
+        abbr.startsWith(q) ||
+        provWords.some((w) => w.startsWith(q))
+      );
+    });
+
+    const uniqueByName = new Map();
+    matches.forEach((area) => {
+      if (!uniqueByName.has(area.namaArea)) {
+        uniqueByName.set(area.namaArea, area);
+      }
+    });
+
+    return Array.from(uniqueByName.values()).slice(0, 5);
+  };
+
+  const handleSuggestionSelect = (area) => {
+    setValue(area.namaArea);
+    setSearchResult(area);
+    setIsSearching(true);
+    setTimeout(() => {
+      smoothScrollTo(document.getElementById("card-status"));
+    }, 100);
+  };
+
   const handleSubmit = (e) => {
-    if (!value.trim()) return;
     e.preventDefault();
+    if (!value.trim()) return;
+    const result = searchCoverageArea(value, coverageAreas || []);
+    setSearchResult(result);
     setIsSearching(true);
     setTimeout(() => {
       smoothScrollTo(document.getElementById("card-status"));
     }, 100);
     console.log(value);
   };
-  const status = "available"; // Change to "unavailable" to test the unavailable state
+
+  const statusMap = {
+    TERSEDIA: "available",
+    SEGERA_HADIR: "coming",
+    TIDAK_TERSEDIA: "unavailable",
+  };
+  const status = searchResult
+    ? statusMap[searchResult.status] || "unavailable"
+    : "unavailable";
+
+  const headlineText = searchResult
+    ? status === "available"
+      ? "You're Within Reach"
+      : status === "coming"
+        ? "Almost There"
+        : "Out of Reach"
+    : "Out of Reach";
+
+  const subHeadlineText = searchResult
+    ? status === "available"
+      ? "Great news! Your coordinates are officially within our high-performance fiber zone. High-speed signals are fully operational at your address."
+      : status === "coming"
+        ? "We are currently initializing our network nodes in your area. Your location is in our immediate expansion plan. We’re working to bring the future to you soon."
+        : "Signal not detected. Our fiber backbone hasn't reached your sector yet, but we are expanding daily. Help us prioritize your area by requesting a connection."
+    : "Signal not detected. Our fiber backbone hasn't reached your sector yet, but we are expanding daily. Help us prioritize your area by requesting a connection.";
+
+  const bodyText = searchResult
+    ? status === "available"
+      ? "Your location is officially within our fiber zone. High-speed signals are fully operational at your address."
+      : status === "coming"
+        ? "We’re currently building our network in your sector. The future is arriving at your doorstep very soon."
+        : "Our fiber hasn’t reached your area yet. Help us prioritize your neighborhood by requesting a link below."
+    : "Our fiber hasn’t reached your area yet. Help us prioritize your neighborhood by requesting a link below.";
   const styles = `
 body{
 background-color: black;
@@ -51,7 +160,7 @@ background-color: black;
   return (
     <>
       <style>{styles}</style>
-
+      <Navbar />
       <svg width="0" height="0">
         <defs>
           <clipPath id="customClip" clipPathUnits="objectBoundingBox">
@@ -95,7 +204,7 @@ background-color: black;
 
                   <input
                     value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={(e) => handleSearch(e.target.value)}
                     placeholder="Enter your city..."
                     className="coverage-input"
                   />
@@ -105,6 +214,52 @@ background-color: black;
                   </button>
                 </div>
               </form>
+              {value.trim().length >= 2 &&
+                getSuggestions(value, coverageAreas || []).length > 0 && (
+                  <div
+                    className="coverage-suggestions"
+                    style={{
+                      marginTop: 10,
+                      display: "grid",
+                      position: "absolute",
+                      gap: 6,
+                      maxWidth: 520,
+                    }}
+                  >
+                    {getSuggestions(value, coverageAreas || []).map((area) => (
+                      <button
+                        key={area.namaArea}
+                        type="button"
+                        onClick={() => handleSuggestionSelect(area)}
+                        style={{
+                          textAlign: "left",
+                          background: "rgba(255,255,255,0.04)",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          color: "#fff",
+                          padding: "10px 300px 10px 20px",
+                          borderRadius: 8,
+                          cursor: "pointer",
+                          backdropFilter: "blur(6px)",
+                        }}
+                      >
+                        <div style={{ fontSize: 14, fontWeight: 600 }}>
+                          {area.namaArea}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            opacity: 0.6,
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          {area.provinsi || "Provinsi tidak diketahui"} ·{" "}
+                          {area.singkatan || "-"}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               <h1
                 className="coverage-sublink"
                 onClick={() =>
@@ -136,31 +291,15 @@ background-color: black;
             className={`coverage-area-card ${status}`}
             style={{ clipPath: "url(#customClip)" }}
           >
-            <div className="coverage-cta-button-headline">
-              {status === "available"
-                ? "You're Within Reach"
-                : status === "coming"
-                  ? "Almost There"
-                  : "Out of Reach"}
-            </div>
+            <div className="coverage-cta-button-headline">{headlineText}</div>
             <div className="coverage-cta-button-sub-headline">
-              {status === "available"
-                ? "Great news! Your coordinates are officially within our high-performance fiber zone. High-speed signals are fully operational at your address."
-                : status === "coming"
-                  ? "We are currently initializing our network nodes in your area. Your location is in our immediate expansion plan. We’re working to bring the future to you soon."
-                  : "Signal not detected. Our fiber backbone hasn't reached your sector yet, but we are expanding daily. Help us prioritize your area by requesting a connection."}
+              {subHeadlineText}
             </div>
             <div className="coverage-cta-button-icon">
               <StatusIcon size={50} status={status} />
             </div>
 
-            <div className="coverage-cta-button-text">
-              {status === "available"
-                ? "Your location is officially within our fiber zone. High-speed signals are fully operational at your address."
-                : status === "coming"
-                  ? "We’re currently building our network in your sector. The future is arriving at your doorstep very soon."
-                  : "Our fiber hasn’t reached your area yet. Help us prioritize your neighborhood by requesting a link below."}
-            </div>
+            <div className="coverage-cta-button-text">{bodyText}</div>
           </div>
 
           <div className={`coverage-cta-button ${status}`}>

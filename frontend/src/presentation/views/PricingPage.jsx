@@ -1,5 +1,8 @@
 import { color } from "framer-motion";
 import { useState } from "react";
+import Navbar from "./LandingComponent/Navbar";
+import Footer from "@/layouts/Footer";
+import FooterPage from "./FooterPage";
 
 const CATEGORIES = [
   { id: "all", label: "All", short: "ALL" },
@@ -647,7 +650,6 @@ export default function PricingPage() {
   return (
     <>
       <style>{CSS}</style>
-
       {/* ── HERO ── */}
       <section className="pricing-hero">
         <div className="hero-img" />
@@ -792,13 +794,7 @@ export default function PricingPage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="footer-strip">
-        <div className="fs-logo">Veloxity</div>
-        <div className="fs-note">
-          Harga belum termasuk pajak · SLA tersedia untuk paket bisnis ke atas
-        </div>
-        <div className="fs-note">© 2026 Veloxity Indonesia</div>
-      </footer>
+      <FooterPage />
     </>
   );
 }
@@ -809,111 +805,116 @@ function PlanRow({ plan, index, yearly, expanded, onToggle, delay }) {
   const img = DETAIL_IMAGES[plan.category];
 
   return (
-    <div
-      className="plan-row"
-      style={{
-        animationDelay: `${delay}ms`,
-        display: "grid",
-        gridTemplateColumns: expanded ? "1fr" : "48px 1fr auto auto 180px",
-        flexDirection: "column",
-      }}
-      onClick={onToggle}
-    >
-      {/* Use a nested grid trick: always render all cols, collapse with wrapper */}
+    <>
       <div
+        className="plan-row"
         style={{
+          animationDelay: `${delay}ms`,
           display: "grid",
-          gridTemplateColumns: "48px 1fr auto auto 180px",
-          width: "100%",
-          alignItems: "center",
+          gridTemplateColumns: expanded ? "1fr" : "48px 1fr auto auto 180px",
+          flexDirection: "column",
         }}
+        onClick={onToggle}
       >
-        <div className="row-idx" style={{ color: "white" }}>
-          {String(index).padStart(2, "0")}
-        </div>
-
-        <div className="row-main">
-          {plan.tag && <div className="row-tag">{plan.tag}</div>}
-          <div className="row-name">{plan.name}</div>
-          <div
-            className="row-desc"
-            style={{ color: "rgb(136, 136, 136)", fontSize: "14px" }}
-          >
-            {plan.desc}
-          </div>
-        </div>
-
-        <div className="row-speed">
-          <div className="row-speed-val">{plan.speed}</div>
-          <div
-            className="row-speed-label"
-            style={{ color: "rgb(136, 136, 136)" }}
-          >
-            Download
-          </div>
-        </div>
-
+        {/* Use a nested grid trick: always render all cols, collapse with wrapper */}
         <div
-          className="row-category"
           style={{
-            color: "rgb(136, 136, 136)",
-            fontSize: "12px",
-            marginRight: "25px",
+            display: "grid",
+            gridTemplateColumns: "48px 1fr auto auto 180px",
+            width: "100%",
+            alignItems: "center",
           }}
         >
-          {plan.category}
-        </div>
+          <div className="row-idx" style={{ color: "white" }}>
+            {String(index).padStart(2, "0")}
+          </div>
 
-        <div className="row-price">
-          <div className="row-price-box">
-            <div>
-              <span className="row-price-sym" style={{ color: "white" }}>
-                $
-              </span>
-              <span className="row-price-amount">{price}</span>
-            </div>
+          <div className="row-main">
+            {plan.tag && <div className="row-tag">{plan.tag}</div>}
+            <div className="row-name">{plan.name}</div>
             <div
-              className="row-price-per"
+              className="row-desc"
               style={{ color: "rgb(136, 136, 136)", fontSize: "14px" }}
             >
-              {yearly ? "mo · yearly" : "/ month"}
+              {plan.desc}
             </div>
           </div>
-          <button
-            className="row-cta"
-            style={{ color: "rgb(136, 136, 136)" }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggle();
+
+          <div className="row-speed">
+            <div className="row-speed-val">{plan.speed}</div>
+            <div
+              className="row-speed-label"
+              style={{ color: "rgb(136, 136, 136)" }}
+            >
+              Download
+            </div>
+          </div>
+
+          <div
+            className="row-category"
+            style={{
+              color: "rgb(136, 136, 136)",
+              fontSize: "12px",
+              marginRight: "25px",
             }}
           >
-            {expanded ? "−" : "+"}
-          </button>
-        </div>
-      </div>
+            {plan.category}
+          </div>
 
-      {expanded && (
-        <div className="row-detail" onClick={(e) => e.stopPropagation()}>
-          <div className="detail-image">
-            <img src={img} alt={plan.name} />
-          </div>
-          <div className="detail-content">
-            <div className="detail-heading">Termasuk dalam paket</div>
-            <div className="detail-features">
-              {feats.map((f, i) => (
-                <div key={i} className="detail-feat">
-                  {f}
-                </div>
-              ))}
+          <div className="row-price">
+            <div className="row-price-box">
+              <div>
+                <span className="row-price-sym" style={{ color: "white" }}>
+                  $
+                </span>
+                <span className="row-price-amount">{price}</span>
+              </div>
+              <div
+                className="row-price-per"
+                style={{ color: "rgb(136, 136, 136)", fontSize: "14px" }}
+              >
+                {yearly ? "mo · yearly" : "/ month"}
+              </div>
             </div>
-          </div>
-          <div className="detail-cta-wrap">
-            <button className="detail-cta" onClick={(e) => e.stopPropagation()}>
-              Pilih Paket →
+            <button
+              className="row-cta"
+              style={{ color: "rgb(136, 136, 136)" }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggle();
+              }}
+            >
+              {expanded ? "−" : "+"}
             </button>
           </div>
         </div>
-      )}
-    </div>
+
+        {expanded && (
+          <div className="row-detail" onClick={(e) => e.stopPropagation()}>
+            <div className="detail-image">
+              <img src={img} alt={plan.name} />
+            </div>
+            <div className="detail-content">
+              <div className="detail-heading">Termasuk dalam paket</div>
+              <div className="detail-features">
+                {feats.map((f, i) => (
+                  <div key={i} className="detail-feat">
+                    {f}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="detail-cta-wrap">
+              <button
+                className="detail-cta"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Pilih Paket →
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

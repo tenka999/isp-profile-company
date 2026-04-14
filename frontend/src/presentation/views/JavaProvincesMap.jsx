@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { CoverageCityGrid } from "./CityList";
 import CoverageGrid from "./CoverageGrid";
+import { useCoverageAreaApi } from "../logics/app/useCoverageAreaApi";
+import { data } from "react-router";
+import Navbar from "./LandingComponent/Navbar";
 
 // Paths carefully traced from reference image (colorful flat-style map)
 // Each province matches the shape, color, and relative proportion from the reference
@@ -8,7 +11,7 @@ import CoverageGrid from "./CoverageGrid";
 
 const provinces = [
   {
-    id: "banten",
+    id: "Banten",
     number: 1,
     name: "Banten",
     capital: "Serang",
@@ -35,7 +38,7 @@ const provinces = [
     ],
   },
   {
-    id: "dki-jakarta",
+    id: "DKI Jakarta",
     number: 2,
     name: "DKI Jakarta",
     capital: "Jakarta",
@@ -56,7 +59,7 @@ const provinces = [
     ],
   },
   {
-    id: "jawa-barat",
+    id: "Jawa Barat",
     number: 3,
     name: "Jawa Barat",
     capital: "Bandung",
@@ -86,7 +89,7 @@ const provinces = [
     ],
   },
   {
-    id: "jawa-tengah",
+    id: "Jawa Tengah",
     number: 4,
     name: "Jawa Tengah",
     capital: "Semarang",
@@ -113,7 +116,7 @@ const provinces = [
     ],
   },
   {
-    id: "diy",
+    id: "DI Yogyakarta",
     number: 5,
     name: "DI Yogyakarta",
     capital: "Yogyakarta",
@@ -133,7 +136,7 @@ const provinces = [
     ],
   },
   {
-    id: "jawa-timur",
+    id: "Jawa Timur",
     number: 6,
     name: "Jawa Timur",
     capital: "Surabaya",
@@ -167,23 +170,43 @@ const provinces = [
 ];
 
 export default function JavaProvincesMap() {
+  const { useAllCoverageArea } = useCoverageAreaApi();
+  const { data: coverageAreas, isLoading } = useAllCoverageArea();
+
   const [hovered, setHovered] = useState(null);
-  const [active, setActive] = useState("dki-jakarta");
-
-  const brighten = (hex, pct) => {
-    const num = parseInt(hex.replace("#", ""), 16);
-    const r = Math.min(255, ((num >> 16) & 255) + Math.round(255 * pct));
-    const g = Math.min(255, ((num >> 8) & 255) + Math.round(255 * pct));
-    const b = Math.min(255, (num & 255) + Math.round(255 * pct));
-    return `rgba(${255},${0},${0},${pct})`;
-  };
-
+  const [active, setActive] = useState("DKI Jakarta");
+  const [selectedProvinceAreas, setSelectedProvinceAreas] = useState([]);
   const getFill = (id, color) => {
     const warna = "#7c3aed";
     if (active === id) return "#533b94";
     if (hovered === id) return "#2f2255";
     return color;
   };
+  const smoothScrollTo = (target) => {
+    const start = window.scrollY;
+    const end = target.getBoundingClientRect().top + start;
+    const duration = 500;
+    let startTime = null;
+
+    const easeInOut = (t) =>
+      t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+    function animate(time) {
+      if (!startTime) startTime = time;
+      const progress = Math.min((time - startTime) / duration, 1);
+      window.scrollTo(0, start + (end - start) * easeInOut(progress));
+      if (progress < 1) requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  };
+
+  function handleClick(id) {
+    setActive(active === id ? null : id);
+    setSelectedProvinceAreas(coverageAreas.filter((p) => p.provinsi === id));
+    console.log(selectedProvinceAreas);
+    smoothScrollTo(document.getElementById("coverageGrid"));
+  }
 
   const displayProvince =
     provinces.find((p) => p.id === active) ||
@@ -302,7 +325,7 @@ export default function JavaProvincesMap() {
                     }}
                     onMouseEnter={() => setHovered(p.id)}
                     onMouseLeave={() => setHovered(null)}
-                    onClick={() => setActive(active === p.id ? null : p.id)}
+                    onClick={() => handleClick(p.id)}
                   />
                   {/* Province name */}
                   {p.name.split(" ").map((word, i) => (
@@ -454,7 +477,9 @@ export default function JavaProvincesMap() {
         defaultProvinceId="dki"
         activeIdd={active}
       /> */}
-      <CoverageGrid></CoverageGrid>
+      <div className="" id="coverageGrid">
+        <CoverageGrid provinces={selectedProvinceAreas}></CoverageGrid>
+      </div>
     </>
   );
 }

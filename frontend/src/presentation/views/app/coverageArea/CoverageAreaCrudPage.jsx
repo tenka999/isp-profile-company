@@ -24,6 +24,8 @@ const CoverageAreaCrudPage = () => {
   let emptyCoverageArea = {
     id: null,
     namaArea: "",
+    provinsi: "",
+    singkatan: "",
     status: "TERSEDIA",
   };
 
@@ -34,6 +36,7 @@ const CoverageAreaCrudPage = () => {
   const [deleteCoverageAreasDialog, setDeleteCoverageAreasDialog] =
     useState(false);
   const [coverageArea, setCoverageArea] = useState(emptyCoverageArea);
+  const [provinsi, setProvinsi] = useState(emptyCoverageArea);
   const [selectedCoverageAreas, setSelectedCoverageAreas] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -53,7 +56,16 @@ const CoverageAreaCrudPage = () => {
   const { data, isLoading, isPending } = useAllCoverageArea();
   const statusOptions = [
     { label: "Tersedia", value: "TERSEDIA" },
+    { label: "Segera Hadir", value: "SEGERA_HADIR" },
     { label: "Tidak Tersedia", value: "TIDAK_TERSEDIA" },
+  ];
+  const provinsiOptions = [
+    { label: "Banten", value: "Banten" },
+    { label: "DKI Jakarta", value: "DKI Jakarta" },
+    { label: "Jawa Barat", value: "Jawa Barat" },
+    { label: "Jawa Tengah", value: "Jawa Tengah" },
+    { label: "DI Yogyakarta", value: "DI Yogyakarta" },
+    { label: "Jawa Timur", value: "Jawa Timur" },
   ];
 
   useEffect(() => {
@@ -361,9 +373,27 @@ const CoverageAreaCrudPage = () => {
 
     return (
       <Tag
-        value={available ? "Tersedia" : "Tidak Tersedia"}
-        severity={available ? "success" : "danger"}
-        icon={available ? "pi pi-check-circle" : "pi pi-times-circle"}
+        value={
+          rowData.status === "TERSEDIA"
+            ? "Tersedia"
+            : rowData.status === "SEGERA_HADIR"
+              ? "Segera Hadir"
+              : "Tidak Tersedia"
+        }
+        severity={
+          rowData.status === "TERSEDIA"
+            ? "success"
+            : rowData.status === "SEGERA_HADIR"
+              ? "warning"
+              : "danger"
+        }
+        icon={
+          rowData.status === "TERSEDIA"
+            ? "pi pi-check-circle"
+            : rowData.status === "SEGERA_HADIR"
+              ? "pi pi-clock"
+              : "pi pi-times-circle"
+        }
       />
     );
   };
@@ -546,8 +576,20 @@ const CoverageAreaCrudPage = () => {
               style={{ minWidth: "4rem" }}
             ></Column>
             <Column
+              field="provinsi"
+              header="Provinsi"
+              sortable
+              style={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
               field="namaArea"
               header="Nama Area"
+              sortable
+              style={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="singkatan"
+              header="Singkatan"
               sortable
               style={{ minWidth: "15rem" }}
             ></Column>
@@ -622,6 +664,55 @@ const CoverageAreaCrudPage = () => {
                   Informasi Area
                 </h4>
 
+                <div className="field" style={{ marginTop: "1.5rem" }}>
+                  <label htmlFor="status" className="required-field">
+                    Provinsi
+                    <span
+                      className="asterisk"
+                      style={{ color: "red", marginLeft: "0.25rem" }}
+                    >
+                      *
+                    </span>
+                  </label>
+
+                  <div className="p-inputgroup">
+                    <span className="p-inputgroup-addon">
+                      <i className="pi pi-map-marker"></i>
+                    </span>
+                    <Dropdown
+                      id="provinsi"
+                      value={coverageArea.provinsi}
+                      options={
+                        provinsiOptions || [
+                          { label: "Tersedia", value: "TERSEDIA" },
+                          { label: "Tidak Tersedia", value: "TIDAK_TERSEDIA" },
+                        ]
+                      }
+                      onChange={(e) => onInputChange(e, "provinsi")}
+                      placeholder="Pilih Provinsi"
+                      className={classNames({
+                        "w-full": true,
+                        "p-invalid": submitted && !coverageArea.provinsi,
+                      })}
+                      optionLabel="label"
+                      optionValue="value"
+                      showClear={false}
+                    />
+                  </div>
+
+                  {submitted && !coverageArea.provinsi && (
+                    <small className="p-error">
+                      <i
+                        className="pi pi-exclamation-circle"
+                        style={{ marginRight: "0.25rem" }}
+                      ></i>
+                      Provinsi harus dipilih
+                    </small>
+                  )}
+
+                  {/* Status Helper */}
+                </div>
+
                 {/* Nama Area Field */}
                 <div className="field">
                   <label htmlFor="namaArea" className="required-field">
@@ -683,6 +774,70 @@ const CoverageAreaCrudPage = () => {
                         }}
                       >
                         {coverageArea.namaArea?.length || 0}/100
+                      </small>
+                    </div>
+                  )}
+                </div>
+                <div className="field">
+                  <label htmlFor="singkatan" className="required-field">
+                    Singkatan
+                    <span
+                      className="asterisk"
+                      style={{ color: "red", marginLeft: "0.25rem" }}
+                    >
+                      *
+                    </span>
+                  </label>
+
+                  <div className="p-inputgroup">
+                    <span className="p-inputgroup-addon">
+                      <i className="pi pi-map"></i>
+                    </span>
+                    <InputText
+                      id="singkatan"
+                      value={coverageArea.singkatan}
+                      onChange={(e) => onInputChange(e, "singkatan")}
+                      placeholder="Contoh: JKT, SUR, BND"
+                      required
+                      autoFocus={!coverageArea.id}
+                      maxLength={100}
+                      className={classNames({
+                        "p-invalid": submitted && !coverageArea.singkatan,
+                      })}
+                    />
+                  </div>
+
+                  {submitted && !coverageArea.singkatan ? (
+                    <small className="p-error">
+                      <i
+                        className="pi pi-exclamation-circle"
+                        style={{ marginRight: "0.25rem" }}
+                      ></i>
+                      Singkatan area harus diisi
+                    </small>
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginTop: "0.25rem",
+                      }}
+                    >
+                      <small
+                        className="field-hint"
+                        style={{ color: "#6c757d" }}
+                      >
+                        Masukkan singkatan wilayah/kota area layanan
+                      </small>
+                      <small
+                        style={{
+                          color:
+                            coverageArea.singkatan?.length > 80
+                              ? "#f59e0b"
+                              : "#6c757d",
+                        }}
+                      >
+                        {coverageArea.singkatan?.length || 0}/100
                       </small>
                     </div>
                   )}
@@ -761,6 +916,28 @@ const CoverageAreaCrudPage = () => {
                           <span>
                             Area ini <strong>tersedia</strong> untuk layanan.
                             Pelanggan dapat memilih area ini.
+                          </span>
+                        </div>
+                      ) : coverageArea.status === "SEGERA_HADIR" ? (
+                        <div
+                          style={{
+                            backgroundColor: "#ff9800",
+                            color: "#fff",
+                            padding: "0.5rem",
+                            borderRadius: "4px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                            fontSize: "0.85rem",
+                          }}
+                        >
+                          <i
+                            className="pi pi-ban"
+                            style={{ fontSize: "1rem" }}
+                          ></i>
+                          <span>
+                            Area ini <strong>akan hadir</strong> untuk layanan.
+                            Pelanggan tidak dapat memilih area ini.
                           </span>
                         </div>
                       ) : (
@@ -872,6 +1049,23 @@ const CoverageAreaCrudPage = () => {
                           >
                             <i className="pi pi-check"></i>
                             Tersedia
+                          </span>
+                        ) : coverageArea.status === "SEGERA_HADIR" ? (
+                          <span
+                            style={{
+                              backgroundColor: "#ff9800",
+                              color: "white",
+                              padding: "0.25rem 0.5rem",
+                              borderRadius: "4px",
+                              fontSize: "0.85rem",
+                              fontWeight: "500",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "0.25rem",
+                            }}
+                          >
+                            <i className="pi pi-clock"></i>
+                            Segera Hadir
                           </span>
                         ) : (
                           <span

@@ -105,7 +105,12 @@ const PrincingSection = () => {
       </div>
 
       <div className="pricing-footer">
-        <button className="learn-more-btn" onClick={() => navigate("/pricing")}>
+        <button
+          className="learn-more-btn"
+          onClick={() => {
+            (navigate("/pricing"), window.scrollTo(0, 0));
+          }}
+        >
           <span className="btn-text">See More</span>
           <span className="btn-icon">
             <svg

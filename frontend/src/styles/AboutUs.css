@@ -223,7 +223,7 @@
   margin-top: 3rem;
   font-size: 2.8em;
   padding: 0 4rem;
-  margin-top: 5rem;
+  margin-top: 1rem;
   margin-bottom: 0rem;
   text-align: center;
   font-family: "Familjen Grotesk", sans-serif;
@@ -368,4 +368,7 @@
   grid-column-start: 7;
   grid-row-start: 5;
   margin-top: -2rem;
+}
+
+.about-footer {
 }

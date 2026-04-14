@@ -1,5 +1,5 @@
 import { transform } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const cities = [
   { name: "Jakarta", code: "JKT", status: "available" },
@@ -25,7 +25,7 @@ const cities = [
 ];
 
 const STATUS = {
-  available: {
+  TERSEDIA: {
     label: "Ready",
     dot: "#236958",
     border: "#2c8670",
@@ -36,7 +36,7 @@ const STATUS = {
     codeColor: "#ace3d6",
     pulse: true,
   },
-  coming_soon: {
+  SEGERA_HADIR: {
     label: "In Progress",
     dot: "#fbbf24",
     border: "#92400e",
@@ -47,7 +47,7 @@ const STATUS = {
     codeColor: "#f59e0b",
     pulse: false,
   },
-  unavailable: {
+  TIDAK_TERSEDIA: {
     label: "Planned",
     dot: "#ff7c68",
     border: "#374151",
@@ -62,16 +62,17 @@ const STATUS = {
 
 const filters = [
   { key: "all", label: "All Cities" },
-  { key: "available", label: "Available" },
-  { key: "coming_soon", label: "Coming Soon" },
-  { key: "unavailable", label: "Next Locations" },
+  { key: "TERSEDIA", label: "Available" },
+  { key: "SEGERA_HADIR", label: "Coming Soon" },
+  { key: "TIDAK_TERSEDIA", label: "Next Locations" },
 ];
 
-export default function CoverageGrid() {
+export default function CoverageGrid({ provinces }) {
+  console.log("Received provinces in CoverageGrid:", provinces);
   const [active, setActive] = useState("all");
 
   const filtered =
-    active === "all" ? cities : cities.filter((c) => c.status === active);
+    active === "all" ? provinces : provinces.filter((c) => c.status === active);
 
   return (
     <div style={styles.wrapper}>
@@ -184,7 +185,7 @@ export default function CoverageGrid() {
         {filtered.map((city) => {
           const s = STATUS[city.status];
           return (
-            <div key={city.code} className={`city-card ${city.status}`}>
+            <div key={city.singkatan} className={`city-card ${city.status}`}>
               {/* Top row: code + status badge */}
               <div
                 style={{
@@ -203,7 +204,7 @@ export default function CoverageGrid() {
                     fontWeight: 700,
                   }}
                 >
-                  {city.code}
+                  {city.singkatan}
                 </span>
                 <span
                   style={{
@@ -240,7 +241,7 @@ export default function CoverageGrid() {
                   letterSpacing: "0.01em",
                 }}
               >
-                {city.name}
+                {city.namaArea}
               </p>
 
               {/* Bottom divider line (available only) */}
@@ -262,7 +263,7 @@ export default function CoverageGrid() {
 
       <div style={styles.cta}>
         <p style={styles.count}>
-          Menampilkan {filtered.length} dari {cities.length} kota
+          Menampilkan {filtered.length} dari {provinces.length} kota
         </p>
         <p>
           Don't see your city?{" "}

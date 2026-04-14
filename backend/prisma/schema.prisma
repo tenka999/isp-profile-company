@@ -47,6 +47,7 @@ model Layanan {
   hargaBulanan    Int
   biayaInstalasi  Int
   kecepatanMbps   Int
+  kategori        String?
   deskripsi       String
   status          LayananStatus @default(AKTIF)
   createdAt       DateTime   @default(now())
@@ -230,7 +231,7 @@ model CoverageArea {
 }
 
 enum AreaStatus {
-  TERSEDIA
+  TERSEDIA  
   SEGERA_HADIR
   TIDAK_TERSEDIA
 }

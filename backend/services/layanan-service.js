@@ -28,6 +28,7 @@ async function create(data) {
       hargaBulanan: parseInt(data.hargaBulanan),
       biayaInstalasi: parseInt(data.biayaInstalasi),
       kecepatanMbps: parseInt(data.kecepatanMbps),
+      kategori: data.kategori,
       deskripsi: data.deskripsi,
       status: data.status || "AKTIF",
 
@@ -60,6 +61,7 @@ async function update(id, data) {
       hargaBulanan: parseInt(data.hargaBulanan),
       biayaInstalasi: parseInt(data.biayaInstalasi),
       kecepatanMbps: parseInt(data.kecepatanMbps),
+      kategori: data.kategori,
       deskripsi: data.deskripsi,
       status: data.status,
 

@@ -152,6 +152,7 @@ const LayananCrudPage = () => {
           "Nama Layanan",
           "Harga Bulanan",
           "Biaya Instalasi",
+          "Kategori",
           "Kecepatan",
           "Status",
         ],
@@ -187,6 +188,12 @@ const LayananCrudPage = () => {
   const inactiveAnim = useCountUp(inactiveLayanans);
   const selectedAnim = useCountUp(selectedCount);
 
+  const kategoriOptions = [
+    { label: "Rumahan", value: "RUMAHAN" },
+    { label: "Bisnis", value: "BISNIS" },
+    { label: "Enterprise", value: "ENTERPRISE" },
+    { label: "Dedicated", value: "DEDICATED" },
+  ];
   // ─── DIALOG CONTROLS ─────────────────────────────────────────────────────────
 
   const openNew = () => {
@@ -657,6 +664,12 @@ const LayananCrudPage = () => {
               style={{ minWidth: "10rem" }}
             />
             <Column
+              field="kategori"
+              header="Kategori"
+              sortable
+              style={{ minWidth: "10rem" }}
+            />
+            <Column
               field="kecepatanMbps"
               header="Kecepatan"
               body={kecepatanBodyTemplate}
@@ -1061,6 +1074,50 @@ const LayananCrudPage = () => {
                       </small>
                     )}
                   </div>
+                </div>
+
+                <div className="field" style={{ marginTop: "1.5rem" }}>
+                  <label htmlFor="status" className="required-field">
+                    Kategori
+                    <span
+                      className="asterisk"
+                      style={{ color: "red", marginLeft: "0.25rem" }}
+                    >
+                      *
+                    </span>
+                  </label>
+
+                  <div className="p-inputgroup">
+                    <span className="p-inputgroup-addon">
+                      <i className="pi pi-list"></i>
+                    </span>
+                    <Dropdown
+                      id="kategori"
+                      value={layanan.kategori}
+                      options={kategoriOptions}
+                      onChange={(e) => onInputChange(e, "kategori")}
+                      placeholder="Pilih Kategori"
+                      className={classNames({
+                        "w-full": true,
+                        "p-invalid": submitted && !layanan.kategori,
+                      })}
+                      optionLabel="label"
+                      optionValue="value"
+                      showClear={false}
+                    />
+                  </div>
+
+                  {submitted && !layanan.kategori && (
+                    <small className="p-error">
+                      <i
+                        className="pi pi-exclamation-circle"
+                        style={{ marginRight: "0.25rem" }}
+                      ></i>
+                      Provinsi harus dipilih
+                    </small>
+                  )}
+
+                  {/* Status Helper */}
                 </div>
 
                 {/* Price Summary (optional visual helper) */}

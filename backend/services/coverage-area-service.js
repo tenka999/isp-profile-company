@@ -16,6 +16,8 @@ async function create(data) {
   return await prisma.coverageArea.create({
     data: {
       namaArea: data.namaArea,
+      provinsi: data.provinsi,
+      singkatan: data.singkatan,
       status: data.status || "TERSEDIA",
     },
   });
@@ -27,6 +29,8 @@ async function update(id, data) {
       id: id,
     },
     data: {
+      provinsi: data.provinsi,
+      singkatan: data.singkatan,
       namaArea: data.namaArea,
       status: data.status,
     },
